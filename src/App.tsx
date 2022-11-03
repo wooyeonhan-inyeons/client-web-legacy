@@ -1,26 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import { recoil_User } from "./recoil/index";
+import { useRecoilState } from "recoil";
+import RouterIndex from "./routes";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [user, setUser] = useRecoilState(recoil_User.user);
+
+  const getUser = () => {
+    console.log("GetUser");
+    // setUser()
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  return <RouterIndex />;
 }
 
 export default App;
