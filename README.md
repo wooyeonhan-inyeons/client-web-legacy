@@ -1,1 +1,1 @@
-# 우아한 인연들 Frontend Repository
+# 우연한 인연들 Frontend Repository
