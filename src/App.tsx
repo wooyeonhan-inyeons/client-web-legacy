@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { recoil_User } from "./recoil/index";
 import { useRecoilState } from "recoil";
+import { recoil_User } from "./recoil/index";
 import { USER_ROLE } from "./constants";
 import {
   createBrowserRouter,
-  redirect,
   RouterProvider,
+  redirect,
 } from "react-router-dom";
 
 import Admin from "./page/Admin";
@@ -14,26 +14,10 @@ import Login from "./page/Admin/Login";
 import NoMatch from "./page/NoMatch";
 
 function App() {
-  const [user, setUser] = useRecoilState(recoil_User.user);
+  const [user, setUser] = useRecoilState(recoil_User.userState);
 
   const getUser = () => {
-    setUser({ userId: 1, role: USER_ROLE.ADMIN });
-  };
-
-  const HeaderLayout = () => (
-    <>
-      <a href="/">home</a>
-      <br />
-      <a href="/admin">admin</a>
-      <br />
-      <a href="/admin/login">admin login</a>
-    </>
-  );
-
-  const redirectUser = () => {
-    if (user.role === 2) {
-      console.log("redirect");
-    }
+    //api로 user 정보 불러오기
   };
 
   const router = createBrowserRouter([
@@ -48,13 +32,14 @@ function App() {
         {
           path: "login",
           element: <Login />,
+          loader: () => user.role === 2 && redirect("/admin"),
         },
         {
           path: "*",
           element: <Admin />,
+          loader: () => user.role !== 2 && redirect("/admin/login"),
         },
       ],
-      loader: redirectUser,
     },
   ]);
 
@@ -62,12 +47,7 @@ function App() {
     getUser();
   }, []);
 
-  return (
-    <>
-      <HeaderLayout />
-      <RouterProvider router={router} />
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

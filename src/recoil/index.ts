@@ -1,5 +1,5 @@
-import { user } from "./user";
+import { userState } from "./user";
 
 export const recoil_User = {
-  user,
+  userState,
 };
