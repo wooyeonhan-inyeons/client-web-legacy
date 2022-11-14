@@ -32,12 +32,13 @@ function App() {
         {
           path: "login",
           element: <Login />,
-          loader: () => user.role === 2 && redirect("/admin"),
+          loader: () => user.role === USER_ROLE.ADMIN && redirect("/admin"),
         },
         {
           path: "*",
           element: <Admin />,
-          loader: () => user.role !== 2 && redirect("/admin/login"),
+          loader: () =>
+            user.role !== USER_ROLE.ADMIN && redirect("/admin/login"),
         },
       ],
     },
