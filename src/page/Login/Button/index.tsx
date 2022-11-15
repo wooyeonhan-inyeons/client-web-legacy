@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { SNS } from "../../../constants";
+import { SNS, zIndex } from "../../../constants";
 
 export interface CommonState {
   sns: SNS;
@@ -21,7 +21,9 @@ export const SnsButton = styled.button<{ sns: SNS }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  position: relative;
+  z-index: ${zIndex.default};
 
   cursor: pointer;
   :hover {

@@ -1,9 +1,10 @@
 import React from "react";
-import { LeftOutlined } from "@ant-design/icons";
+import { SNS } from "../../constants";
+
 import { StyledContainer } from "./StyledContainer";
 import { SnsButton } from "./Button";
 import { LoginTitle } from "./Title";
-import { SNS } from "../../constants";
+import { Rectangle } from "./Rectangle";
 
 import googleLogo from "./Button/img/googleLogo.png";
 import kakaoLogo from "./Button/img/kakaoLogo.png";
@@ -12,9 +13,7 @@ const Login = () => {
   return (
     <>
       <StyledContainer>
-        {/* <div>
-          <LeftOutlined onClick={() => (window.location.href = "/")} />
-        </div> */}
+        <Rectangle />
         <LoginTitle>
           우연한 <br />
           발견

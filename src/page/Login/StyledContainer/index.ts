@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { COLOR } from "../../../color";
+import { COLOR } from "../../../constants";
 
 export const StyledContainer = styled.div`
   padding: 0 1rem;
@@ -9,10 +9,11 @@ export const StyledContainer = styled.div`
   justify-content: space-evenly;
 
   height: 100vh;
-  max-width: 600px;
+  max-height: 100vmax;
 
   overflow-y: hidden;
 
   background-color: ${COLOR.background};
+
   color: ${COLOR.content};
 `;
