@@ -9,7 +9,7 @@ export const StyledContainer = styled.div`
   justify-content: space-evenly;
 
   height: 100vh;
-  max-height: 100vmax;
+  max-width: 600px;
 
   overflow-y: hidden;
 
