@@ -7,8 +7,7 @@ import {
   RouterProvider,
   redirect,
 } from "react-router-dom";
-
-import Admin from "./page/Admin";
+import AdminHome from "./page/Admin/Home";
 import Home from "./page/Home";
 import Login from "./page/Admin/Login";
 import NoMatch from "./page/NoMatch";
@@ -36,7 +35,7 @@ function App() {
         },
         {
           path: "*",
-          element: <Admin />,
+          element: <AdminHome />,
           loader: () =>
             user.role !== USER_ROLE.ADMIN && redirect("/admin/login"),
         },
