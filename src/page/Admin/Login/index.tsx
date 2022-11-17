@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { Button, Col, Form, Input, Row, Typography } from "antd";
 import {
   ArrowRightOutlined,
@@ -11,7 +11,7 @@ import { useRecoilState } from "recoil";
 import { recoil_User } from "../../../recoil";
 import { USER_ROLE } from "../../../constants";
 
-const Login = () => {
+const AdminLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -66,4 +66,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AdminLogin;

@@ -10,8 +10,9 @@ import {
 
 import Admin from "./page/Admin";
 import Home from "./page/Home";
-import Login from "./page/Admin/Login";
+import AdminLogin from "./page/Admin/Login";
 import NoMatch from "./page/NoMatch";
+import Login from "./page/Login";
 
 function App() {
   const [user, setUser] = useRecoilState(recoil_User.userState);
@@ -22,7 +23,7 @@ function App() {
 
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "/*",
       element: <Home />,
       errorElement: <NoMatch />,
     },
@@ -31,7 +32,7 @@ function App() {
       children: [
         {
           path: "login",
-          element: <Login />,
+          element: <AdminLogin />,
           loader: () => user.role === USER_ROLE.ADMIN && redirect("/admin"),
         },
         {
@@ -41,6 +42,11 @@ function App() {
             user.role !== USER_ROLE.ADMIN && redirect("/admin/login"),
         },
       ],
+    },
+    {
+      path: "login",
+      element: <Login />,
+      loader: () => user.role !== USER_ROLE.GUEST && redirect("/"),
     },
   ]);
 
