@@ -5,15 +5,15 @@ export const StyledContainer = styled.div`
   padding: 0 1rem;
   margin: 0 auto;
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: space-evenly;
 
   height: 100vh;
   max-width: 600px;
 
-  overflow-y: hidden;
+  overflow: hidden;
 
   background-color: ${COLOR.background};
-
   color: ${COLOR.content};
 `;

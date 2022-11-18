@@ -20,7 +20,7 @@ export const Rectangle = styled.div`
   box-shadow: 20px 20px 100px 0px #00000045;
   animation: ${animation} 3.5s linear infinite; //1초동안 선형 무한 속성값주기
 
-  position: fixed;
+  position: absolute;
   top: -20%;
   right: 20%;
   z-index: ${zIndex.background};
