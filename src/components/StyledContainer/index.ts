@@ -1,13 +1,13 @@
 import styled from "styled-components";
-import { COLOR } from "../../../constants";
+import { COLOR } from "../../constants";
 
 export const StyledContainer = styled.div`
   padding: 0 1rem;
   margin: 0 auto;
-  display: flex;
   position: relative;
-  flex-direction: column;
-  justify-content: space-evenly;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: space-evenly;
 
   height: 100vh;
   max-width: 600px;
