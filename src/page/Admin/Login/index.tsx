@@ -1,25 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { Button, Col, Form, Input, message, Row, Typography } from "antd";
 import {
-  Alert,
-  Button,
-  Col,
-  Form,
-  Input,
-  message,
-  Row,
-  Typography,
-} from "antd";
-import {
-  ArrowRightOutlined,
   ArrowLeftOutlined,
   UserOutlined,
   LockOutlined,
-  LoadingOutlined,
 } from "@ant-design/icons";
-import { Spin } from "antd";
 
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
+
 import { recoil_User } from "../../../recoil";
 import { USER_ROLE } from "../../../constants";
 import { GetAdmin } from "./api";
