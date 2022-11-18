@@ -53,7 +53,7 @@ const AdminLogin = () => {
   const { Title } = Typography;
 
   return (
-    <Row align="middle" style={{ height: "100vh" }}>
+    <Row align="middle" style={{ height: "100vh", backgroundColor: "#fff" }}>
       <Col xs={2} sm={4} md={6} lg={8} xl={10} />
       <Col xs={20} sm={16} md={12} lg={8} xl={4}>
         <Link to="/" style={{ display: "block", marginBottom: "1.5rem" }}>
