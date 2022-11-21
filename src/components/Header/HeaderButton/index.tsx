@@ -12,9 +12,10 @@ import {
 import { HEADER_FN, COLOR } from "../../../constants";
 
 const StyledButton = styled.div`
-  padding: 0.8rem 1rem;
+  padding: 0.5rem 0.7rem;
   cursor: pointer;
-  display: inline-block;
+  display: flex;
+  align-items: center;
 `;
 
 const AlarmBadge = styled.div`
@@ -38,7 +39,7 @@ interface FN {
   fn: () => void;
 }
 
-const HeaderButton = ({ fn = HEADER_FN.EMPTY }: Props) => {
+export const HeaderButton = ({ fn = HEADER_FN.EMPTY }: Props) => {
   const navigate = useNavigate();
 
   const BUTTON_TYPE: { [key in HEADER_FN]: FN } = {
@@ -68,5 +69,3 @@ const HeaderButton = ({ fn = HEADER_FN.EMPTY }: Props) => {
     </>
   );
 };
-
-export default HeaderButton;

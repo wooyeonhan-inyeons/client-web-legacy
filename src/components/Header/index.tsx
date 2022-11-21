@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
-import HeaderButton from "./HeaderButton";
+// import HeaderButton from "./HeaderButton";
 import { COLOR, HEADER_FN, zIndex } from "../../constants";
+import { HeaderButton } from "./HeaderButton";
 
 const StyledHeader = styled.div`
   position: fixed;
@@ -9,13 +10,19 @@ const StyledHeader = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  width: 100vw;
+  width: 100%;
   height: 3.5rem;
   font-size: 1.3rem;
 
   color: ${COLOR.content} !important;
   background-color: ${COLOR.background};
   z-index: ${zIndex.default};
+
+  & > .left_side,
+  & > .right_side {
+    display: flex;
+    height: 100%;
+  }
 `;
 
 const HeaderTitle = styled.div`
@@ -25,30 +32,34 @@ const HeaderTitle = styled.div`
   transform: translate(-50%, 0px);
 `;
 
-interface Props {
+export interface HeaderProps {
+  /** @param {string} title - 기본값: ""*/
   title?: string;
-  go_back?: boolean;
+  /** @param {string} vis_goBack - on/off*/
+  vis_goBack?: boolean;
+  /** @param {HEADER_FN} rightButton1 - 알람 | 뒤로가기 | 마이페이지 | + | empty*/
   rightButton1?: HEADER_FN;
+  /** @param {HEADER_FN} rightButton2 - 알람 | 뒤로가기 | 마이페이지 | + | empty*/
   rightButton2?: HEADER_FN;
 }
 
 /**
  * @props {string} title - 표시할 헤더 텍스트
- * @props {go_back} boolean - 뒤로가기 on/off
+ * @props {vis_goBack} boolean - 뒤로가기 on/off
  * @props {rightButtonN} HEADER_FN - 우측 버튼
  */
 
-const Header = ({
+export const Header = ({
   title = "",
-  go_back = true,
+  vis_goBack = true,
   rightButton1 = undefined,
   rightButton2 = undefined,
-}: Props) => {
+}: HeaderProps) => {
   return (
     <StyledHeader>
       <HeaderTitle>{title}</HeaderTitle>
       <div className="left_side">
-        {go_back && <HeaderButton fn={HEADER_FN.GO_BACK} />}
+        {vis_goBack && <HeaderButton fn={HEADER_FN.GO_BACK} />}
       </div>
       <div className="right_side">
         {/* 기능2 */}
@@ -59,5 +70,3 @@ const Header = ({
     </StyledHeader>
   );
 };
-
-export default Header;
