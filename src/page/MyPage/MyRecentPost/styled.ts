@@ -34,4 +34,16 @@ export const MyRecentPostContainer = styled.div`
   .postThumb:hover {
     filter: brightness(0.7);
   }
+
+  .morePost::after {
+    content: "더보기";
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #000000a1;
+    backdrop-filter: blur(7px);
+  }
 `;

@@ -66,8 +66,16 @@ export const MyPostButton = ({ url1, url2, onClick }: ImageURL) => {
     <MyPostButtonContainer onClick={onClick}>
       <div>최근에 발견한 우연들</div>
       <MyPostImages>
-        <div className="images one">{url1 && <img src={url1} />}</div>
-        <div className="images two">{url2 && <img src={url2} />}</div>
+        {url1 && (
+          <div className="images one">
+            <img src={url1} />
+          </div>
+        )}
+        {url2 && (
+          <div className="images two">
+            <img src={url2} />
+          </div>
+        )}
         <div className="images another">···</div>
       </MyPostImages>
     </MyPostButtonContainer>

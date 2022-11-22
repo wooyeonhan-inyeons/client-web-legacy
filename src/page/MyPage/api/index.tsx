@@ -1,5 +1,5 @@
 const Access_Key = "7thniUbxHNlyVoEUsrEvYzlOsyqLr2y7FgU8086WyeE";
-const url = `https://api.unsplash.com/photos/random/?client_id=${Access_Key}&count=8`;
+const url = `https://api.unsplash.com/photos/random/?client_id=${Access_Key}&count=9`;
 
 export interface UserInfoProp {
   userPost: number;
