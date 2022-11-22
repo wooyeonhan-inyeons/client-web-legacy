@@ -16,7 +16,7 @@ import {
   ProfileLeft,
 } from "./styled";
 import { FriendsButton } from "./FriendsButton";
-import { GetImages, GetUserExperience } from "../api";
+import { GetUserExperience } from "../api";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 

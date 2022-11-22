@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { HEADER_FN } from "../../constants";
 import { StyledContainer } from "../../components/StyledContainer";
 
 import { Header } from "../../components/Header";
 import { MyProfile } from "./MyProfile";
 import { MyRecentPost } from "./MyRecentPost";
-import { GetImages, GetUserExperience, UserInfoProp } from "./api";
+import { GetImages } from "./api";
 import { useQuery } from "react-query";
 import { LogoutButton } from "./MyProfile/LogoutButton";
 import { LoadingBox } from "../../components/LoadingContainer";
