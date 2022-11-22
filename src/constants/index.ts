@@ -30,3 +30,11 @@ export const zIndex = {
   default: 999,
   background: 0,
 };
+
+export const AvatarColor = [
+  "#F06D61",
+  "#DA825F",
+  "#C4975C",
+  "#A8AB7B",
+  "#8CBF99",
+];
