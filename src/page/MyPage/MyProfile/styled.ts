@@ -5,6 +5,10 @@ export const ProfileContainer = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 1.5rem 1rem;
+
+  @media (max-width: 351px) {
+    gap: 1.5rem 0.5rem;
+  }
 `;
 
 export const ProfileInfoContainer = styled.div`
@@ -19,9 +23,19 @@ export const ProfileInfoContainer = styled.div`
 
   background-color: #61708a;
 `;
+
 export const ProfileLeft = styled.div`
   display: flex;
   gap: 1rem;
+
+  @media (max-width: 351px) {
+    gap: 0.5rem;
+
+    & > svg {
+      width: 2rem;
+      // display: none;
+    }
+  }
 `;
 
 export const ProfileEditButton = styled.div`
@@ -43,19 +57,39 @@ export const ProfileEditButton = styled.div`
     line-height: 3rem;
     color: #3a3a3a;
   }
+
+  @media (max-width: 351px) {
+    width: 2.5rem;
+    height: 2.5rem;
+    
+    & > * {
+      line-height: 2.5rem;
+    }
+  }
 `;
 
-export const MyProfileTextBox = styled.div`d
+export const MyProfileTextBox = styled.div`
   display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   .username {
     font-weight: bold;
     font-size: 1.3rem;
   }
+
+  @media (max-width: 351px) {
+    font-size: 0.75rem;
+    .username {
+      font-size: 0.9rem;
+    }
+  }
 `;
 
 export const MyProfileInfo = styled.div`
   width: 100%;
+  display: flex;
+  align-items: center;
 
   & > * {
     display: inline-block;

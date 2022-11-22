@@ -1,11 +1,13 @@
 import { LoadingOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const MyRecentPostContainer = styled.div`
   width: 100vw;
+  max-width: 600px;
   position: relative;
-  left: -1rem;
-
+  transform: translate(-50%, 0);
+  left: 50%;
   padding-top: 1rem;
 
   .title {
@@ -16,30 +18,41 @@ const MyRecentPostContainer = styled.div`
     line-height: 3rem;
   }
 
-  & > * {
-    width: 100%;
-  }
   .ImageContainer {
     display: flex;
     flex-wrap: wrap;
+    gap: 0.05%;
   }
 
   .postThumb {
     width: 33.3vw;
-    height: 33.3vw;
-    object-fit: cover;
+    max-width: 33.3%;
+    aspect-ratio: auto 1 / 1;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    cursor: pointer;
+  }
+
+  .postThumb:hover {
+    filter: brightness(0.7);
   }
 `;
 
 export const MyRecentPost = ({ data }: any) => {
-  // data.map((data: any) => console.log(data));
+  const navigate = useNavigate();
   return (
     <MyRecentPostContainer>
       <div className="title">👀 나의 우연들</div>
       <div className="ImageContainer">
         {data ? (
           data.map((data: any, index: number) => (
-            <img className="postThumb" src={data.urls.thumb} key={index} />
+            <div
+              className="postThumb"
+              key={index}
+              style={{ background: `url(${data.urls.thumb})` }}
+              onClick={() => navigate("/")}
+            ></div>
           ))
         ) : (
           <LoadingOutlined />

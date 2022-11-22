@@ -21,6 +21,10 @@ const FriendsButtonContainer = styled.div`
     opacity: 0.8;
     box-shadow: 0.5rem 0.5rem 0.5rem #202a3bd9, -0.5rem -0.5rem 0.5rem #2c384f6e;
   }
+
+  @media (max-width: 351px) {
+    font-size: 0.7rem;
+  }
 `;
 export const FriendsButton = ({ onClick }: any) => {
   return (

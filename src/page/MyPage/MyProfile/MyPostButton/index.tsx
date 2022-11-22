@@ -21,6 +21,11 @@ const MyPostButtonContainer = styled.div`
     background: linear-gradient(145deg, #ddddddd9, #ffffffd9);
     box-shadow: 0.5rem 0.5rem 0.5rem #202a3bd9, -0.5rem -0.5rem 0.5rem #2c384f6e;
   }
+
+  @media (max-width: 351px) {
+    gap: 0.3rem;
+    font-size: 0.7rem;
+  }
 `;
 
 const MyPostImages = styled.div`

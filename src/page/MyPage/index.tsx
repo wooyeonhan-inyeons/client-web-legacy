@@ -38,7 +38,6 @@ const Mypage = () => {
       ) : (
         <LoadingBox />
       )}
-      qu
       <Outlet />
     </>
   );
