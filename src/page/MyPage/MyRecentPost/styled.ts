@@ -19,6 +19,7 @@ export const MyRecentPostContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 0.05%;
+    justify-content: space-between;
   }
 
   .postThumb {
@@ -29,6 +30,7 @@ export const MyRecentPostContainer = styled.div`
     background-repeat: no-repeat !important;
     background-size: cover !important;
     cursor: pointer;
+    font-size: 0;
   }
 
   .postThumb:hover {
@@ -42,6 +44,7 @@ export const MyRecentPostContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 1rem;
 
     background-color: #000000a1;
     backdrop-filter: blur(7px);
