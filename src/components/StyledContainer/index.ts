@@ -1,18 +1,14 @@
 import styled from "styled-components";
-import { COLOR } from "../../../constants";
+import { COLOR } from "../../constants";
 
 export const StyledContainer = styled.div`
-  padding: 0 1rem;
+  padding: 4rem 1rem;
+  // padding-top: 4rem;
   margin: 0 auto;
-  display: flex;
   position: relative;
-  flex-direction: column;
-  justify-content: space-evenly;
 
-  height: 100vh;
+  min-height: 100vh;
   max-width: 600px;
-
-  overflow: hidden;
 
   background-color: ${COLOR.background};
   color: ${COLOR.content};
