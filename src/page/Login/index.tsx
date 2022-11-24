@@ -14,6 +14,7 @@ import { CenterBox } from "./CenterBox";
 
 import googleLogo from "./Button/img/googleLogo.png";
 import kakaoLogo from "./Button/img/kakaoLogo.png";
+import { BACK_URL } from "../../constants/GlobalConstants";
 
 const Login = () => {
   const [, setUser] = useRecoilState(recoil_User.userState);
@@ -50,7 +51,10 @@ const Login = () => {
               <img src={kakaoLogo} />
               <div
                 className="title"
-                onClick={() => mutate({ service: "kakao" })}
+                // onClick={() => mutate({ service: "kakao" })}
+                onClick={() =>
+                  (window.location.href = `${BACK_URL}/auth/kakao`)
+                }
               >
                 Kakao 계정으로 로그인
               </div>

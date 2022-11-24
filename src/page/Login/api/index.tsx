@@ -9,13 +9,10 @@ export interface ServiceType {
 }
 
 export const GetLogin = async ({ service }: ServiceType) => {
-  await fetch(`${BACK_URL}/auth/${service}`, {
+  await fetch(`${BACK_URL}/auth/kakao`, {
     method: "GET",
-    mode: "cors", // no-cors, *cors, same-origin
+    mode: "cors",
     credentials: "include", // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
-    headers: {
-      "Content-Type": `application/json`,
-    },
   })
     .then((response) => response.json())
     .then((response) => {
