@@ -14,6 +14,7 @@ import AdminLogin from "./page/Admin/Login";
 import NoMatch from "./page/NoMatch";
 import Login from "./page/Login";
 import Mypage from "./page/MyPage";
+import { MyPostes } from "./page/MyPage/MyPostes";
 
 function App() {
   const [user] = useRecoilState(recoil_User.userState);
@@ -50,8 +51,17 @@ function App() {
       loader: () => user.role !== USER_ROLE.GUEST && redirect("/"),
     },
     {
-      path: "mypage",
-      element: <Mypage />,
+      path: "mypage/*",
+      children: [
+        {
+          path: "mypostes",
+          element: <MyPostes />,
+        },
+        {
+          path: "*",
+          element: <Mypage />,
+        },
+      ],
       loader: () => user.role === USER_ROLE.GUEST && redirect("/"),
     },
   ]);
