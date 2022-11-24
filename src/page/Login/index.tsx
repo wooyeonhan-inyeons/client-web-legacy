@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { SNS } from "../../constants";
 
 import { StyledContainer } from "../../components/StyledContainer";
@@ -9,8 +10,11 @@ import { CenterBox } from "./CenterBox";
 
 import googleLogo from "./Button/img/googleLogo.png";
 import kakaoLogo from "./Button/img/kakaoLogo.png";
+import { BACK_URL } from "../../constants/GlobalConstants";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <StyledContainer>
@@ -23,16 +27,20 @@ const Login = () => {
           <div>
             <SnsButton sns={SNS.KAKAO}>
               <img src={kakaoLogo} />
-              <div className="title">Kakao 계정으로 로그인</div>
+              <div
+                className="title"
+                onClick={() =>
+                  (window.location.href = `${BACK_URL}/auth/kakao`)
+                }
+              >
+                Kakao 계정으로 로그인
+              </div>
             </SnsButton>
             <SnsButton sns={SNS.GOOGLE}>
               <img src={googleLogo} />
               <div className="title">Google 계정으로 로그인</div>
             </SnsButton>
-            <SnsButton
-              sns={SNS.NONE}
-              onClick={() => (window.location.href = "/")}
-            >
+            <SnsButton sns={SNS.NONE} onClick={() => navigate("/")}>
               게스트로 볼래요
             </SnsButton>
           </div>

@@ -14,9 +14,10 @@ import AdminLogin from "./page/Admin/Login";
 import NoMatch from "./page/NoMatch";
 import Login from "./page/Login";
 import Mypage from "./page/MyPage";
+import { LoginRedirect } from "./components/api";
 
 function App() {
-  const [user] = useRecoilState(recoil_User.userState);
+  const [user, setUser] = useRecoilState(recoil_User.userState);
 
   const getUser = () => {
     //api로 user 정보 불러오기
@@ -53,6 +54,11 @@ function App() {
       path: "mypage",
       element: <Mypage />,
       loader: () => user.role === USER_ROLE.GUEST && redirect("/"),
+    },
+    {
+      path: "auth/kakao/redirect",
+      element: <LoginRedirect />,
+      // loader: () => {},
     },
   ]);
 
