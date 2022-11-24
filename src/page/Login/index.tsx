@@ -1,10 +1,6 @@
 import React from "react";
-import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { recoil_User } from "../../recoil";
-import { SNS, USER_ROLE } from "../../constants";
-import { GetLogin } from "./api";
+import { SNS } from "../../constants";
 
 import { StyledContainer } from "../../components/StyledContainer";
 import { SnsButton } from "./Button";
@@ -17,25 +13,7 @@ import kakaoLogo from "./Button/img/kakaoLogo.png";
 import { BACK_URL } from "../../constants/GlobalConstants";
 
 const Login = () => {
-  const [, setUser] = useRecoilState(recoil_User.userState);
   const navigate = useNavigate();
-
-  const { mutate } = useMutation(GetLogin, {
-    onMutate: () => {
-      //시작
-      console.log("로그인시작");
-    },
-    onError: (error) => {
-      console.log("onError", error);
-    },
-    onSuccess: (response) => {
-      console.log("onError", response);
-      setUser({ userId: 0, role: USER_ROLE.USER });
-    },
-    onSettled: () => {
-      //종료
-    },
-  });
 
   return (
     <>
@@ -51,7 +29,6 @@ const Login = () => {
               <img src={kakaoLogo} />
               <div
                 className="title"
-                // onClick={() => mutate({ service: "kakao" })}
                 onClick={() =>
                   (window.location.href = `${BACK_URL}/auth/kakao`)
                 }
