@@ -13,6 +13,8 @@ import Home from "./page/Home";
 import AdminLogin from "./page/Admin/Login";
 import NoMatch from "./page/NoMatch";
 import Login from "./page/Login";
+import Mypage from "./page/MyPage";
+import { LoginRedirect } from "./components/api";
 
 function App() {
   const [user, setUser] = useRecoilState(recoil_User.userState);
@@ -47,6 +49,16 @@ function App() {
       path: "login",
       element: <Login />,
       loader: () => user.role !== USER_ROLE.GUEST && redirect("/"),
+    },
+    {
+      path: "mypage",
+      element: <Mypage />,
+      loader: () => user.role === USER_ROLE.GUEST && redirect("/"),
+    },
+    {
+      path: "auth/kakao/redirect",
+      element: <LoginRedirect />,
+      // loader: () => {},
     },
   ]);
 
