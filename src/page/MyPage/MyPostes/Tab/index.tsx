@@ -34,8 +34,8 @@ export const Tab = () => {
         </div>
         <div
           className="item"
-          onClick={() => setTab(MYPAGE_.RECENT_POST)}
-          style={tab === MYPAGE_.RECENT_POST ? ActiveButton : {}}
+          onClick={() => setTab(MYPAGE_.VISITED_POST)}
+          style={tab === MYPAGE_.VISITED_POST ? ActiveButton : {}}
         >
           발견한 우연들
         </div>

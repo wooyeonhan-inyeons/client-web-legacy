@@ -4,7 +4,7 @@ import { StyledContainer } from "../../components/StyledContainer";
 
 import { Header } from "../../components/Header";
 import { MyProfile } from "./MyProfile";
-import { MyRecentPost } from "./MyRecentPost";
+import { MyPost } from "./MyPost";
 import { GetImages } from "./api";
 import { useQuery } from "react-query";
 import { LogoutButton } from "./MyProfile/LogoutButton";
@@ -28,7 +28,7 @@ const Mypage = () => {
       {!loading ? (
         <StyledContainer>
           <MyProfile userPost={data} />
-          <MyRecentPost data={data} />
+          <MyPost data={data} />
           <LogoutButton onClick={() => navigate("/logout")}>
             로그아웃
           </LogoutButton>

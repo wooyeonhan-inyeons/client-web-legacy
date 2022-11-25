@@ -20,7 +20,7 @@ export enum SNS {
 
 export enum MYPAGE_ {
   MY_POST,
-  RECENT_POST,
+  VISITED_POST,
 }
 
 export const COLOR = {
