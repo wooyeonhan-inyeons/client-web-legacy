@@ -9,6 +9,7 @@ export const StyledContainer = styled.div`
 
   min-height: 100vh;
   max-width: 600px;
+  overflow-x: hidden;
 
   background-color: ${COLOR.background};
   color: ${COLOR.content};

@@ -5,12 +5,12 @@ import { useRecoilState, useResetRecoilState } from "recoil";
 import { Button } from "antd";
 
 import { USER_ROLE } from "../../constants";
-import { recoil_User } from "../../recoil";
+import { recoil_ } from "../../recoil";
 
 const Home = () => {
-  const [user, setUser] = useRecoilState(recoil_User.userState);
+  const [user, setUser] = useRecoilState(recoil_.userState);
 
-  const resetUser = useResetRecoilState(recoil_User.userState);
+  const resetUser = useResetRecoilState(recoil_.userState);
 
   return (
     <>

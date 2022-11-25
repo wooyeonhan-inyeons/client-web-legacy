@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { recoil_User } from "./recoil/index";
+import { recoil_ } from "./recoil/index";
 import { USER_ROLE } from "./constants";
 import {
   createBrowserRouter,
@@ -17,7 +17,7 @@ import Mypage from "./page/MyPage";
 import { MyPostes } from "./page/MyPage/MyPostes";
 
 function App() {
-  const [user] = useRecoilState(recoil_User.userState);
+  const [user] = useRecoilState(recoil_.userState);
 
   const getUser = () => {
     //api로 user 정보 불러오기
@@ -54,7 +54,7 @@ function App() {
       path: "mypage/*",
       children: [
         {
-          path: "mypostes",
+          path: "postes",
           element: <MyPostes />,
         },
         {

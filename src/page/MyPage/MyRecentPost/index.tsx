@@ -1,4 +1,3 @@
-import { LoadingOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { MyRecentPostContainer } from "./styled";
 
@@ -14,7 +13,7 @@ const PostImage = ({ url, morePost }: PostProps) => {
       <div
         className="postThumb morePost"
         style={{ background: `url(${url})` }}
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/mypage/postes")}
       ></div>
     );
   } else {

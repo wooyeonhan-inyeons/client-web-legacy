@@ -15,7 +15,6 @@ const Mypage = () => {
   const { data } = useQuery("images", GetImages, {
     retry: 1,
     refetchOnReconnect: false,
-    staleTime: 10 * 1000, // 1분
     onSuccess: () => {
       setLoading(false);
     },

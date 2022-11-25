@@ -1,3 +1,8 @@
+import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { GetUserExperience } from "../api";
+import { AvatarColor } from "../../../constants";
+
 import Avatar from "boring-avatars";
 import {
   EditOutlined,
@@ -5,8 +10,6 @@ import {
   HeartOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
-import { AvatarColor, COLOR } from "../../../constants";
-import { MyPostButton } from "./MyPostButton";
 import {
   MyProfileInfo,
   MyProfileTextBox,
@@ -16,9 +19,7 @@ import {
   ProfileLeft,
 } from "./styled";
 import { FriendsButton } from "./FriendsButton";
-import { GetUserExperience } from "../api";
-import { useQuery } from "react-query";
-import { useNavigate } from "react-router-dom";
+import { MyPostButton } from "./MyPostButton";
 
 export const MyProfile = ({ userPost }: any) => {
   const { data } = useQuery("user", GetUserExperience, {
