@@ -21,5 +21,5 @@ export const GetUserExperience = () => {
     userFavorite: Math.floor(Math.random() * 50),
     userFriend: Math.floor(Math.random() * 50),
   };
-  return experience;
+  return [experience, experience, experience];
 };

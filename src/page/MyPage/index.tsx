@@ -1,21 +1,22 @@
 import React, { useState } from "react";
+import { useQuery } from "react-query";
 import { Outlet, useNavigate } from "react-router-dom";
-import { StyledContainer } from "../../components/StyledContainer";
+import { GetImages } from "./api";
 
 import { Header } from "../../components/Header";
 import { MyProfile } from "./MyProfile";
 import { MyPost } from "./MyPost";
-import { GetImages } from "./api";
-import { useQuery } from "react-query";
 import { LogoutButton } from "./MyProfile/LogoutButton";
 import { LoadingBox } from "../../components/LoadingContainer";
+import { StyledContainer } from "../../components/StyledContainer";
 
 const Mypage = () => {
   const [loading, setLoading] = useState(true);
   const { data } = useQuery("images", GetImages, {
     retry: 1,
     refetchOnReconnect: false,
-    onSuccess: () => {
+    onSuccess: (res) => {
+      console.log(res);
       setLoading(false);
     },
   });

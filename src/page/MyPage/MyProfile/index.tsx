@@ -43,7 +43,7 @@ export const MyProfile = ({ userPost }: any) => {
             <MyProfileTextBox>
               <div className="username">username</div>
               <MyProfileInfo>
-                <div>
+                {/* <div>
                   <PushpinOutlined />
                   {data?.userPost}
                 </div>
@@ -54,7 +54,7 @@ export const MyProfile = ({ userPost }: any) => {
                 <div className="divider"></div>
                 <div>
                   <TeamOutlined /> {data?.userFriend}
-                </div>
+                </div> */}
               </MyProfileInfo>
             </MyProfileTextBox>
           </ProfileLeft>

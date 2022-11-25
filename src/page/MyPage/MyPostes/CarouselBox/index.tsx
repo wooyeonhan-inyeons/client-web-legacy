@@ -1,60 +1,62 @@
 import { useEffect, useRef, useState } from "react";
+import { useInfiniteQuery } from "react-query";
+import { useInView } from "react-intersection-observer";
 import { useRecoilState } from "recoil";
 import { recoil_ } from "../../../../recoil";
+import { GetImages, GetUserExperience, UserInfoProp } from "../../api";
+
 import { PostImage } from "../../PostImage";
 import { CarouselBox, MyPostContainer } from "./styled";
 import { ActiveStyle } from "./styled";
 
 export const Carousel = () => {
-  const [posts, setPosts] = useState<
-    Array<{
-      key: number;
-      value: number;
-    }>
-  >([]);
+  const [posts, setPosts] = useState<Array<{ key: number; value: number }>>([]);
+  const [posts2, setPosts2] = useState<any>([]);
   const [tab] = useRecoilState(recoil_.tabState);
   const target = useRef(null);
-  const [isFully, setIsFully] = useState(false);
-  const [scrolling, setScrolling] = useState(false);
-
+  const [ref, inView] = useInView();
   let idx = Number.MAX_SAFE_INTEGER;
 
-  const onIntersect = ([entry]: any, observer: any) => {
-    // idx가 마지막값 이하로 못가게 막아야함.
-    // 어떻게 받을진 모르겠지만 N 번 idx 이하의 M 개 가져오기
-    // idx는 response 값 마지막의 idx로 재설정
-    if (entry.isIntersecting && !scrolling && idx > 0 && !isFully) {
-      observer.unobserve(entry.target);
-
-      setPosts((prev) => [...prev, ...[{ key: idx, value: idx }]]);
-      idx--;
-
-      observer.observe(entry.target);
+  const { data, error, isFetching, fetchNextPage } = useInfiniteQuery(
+    ["image"],
+    GetUserExperience,
+    {
+      getNextPageParam: (lastPage, pages) => {
+        // lastPage와 pages는 콜백함수에서 리턴한 값을 의미한다!!
+        // lastPage: 직전에 반환된 리턴값, pages: 여태 받아온 전체 페이지
+        if (lastPage) return lastPage[0];
+        // 마지막 페이지면 undefined가 리턴되어서 hasNextPage는 false가 됨!
+        return undefined;
+      },
+      onSuccess: (response) => {
+        console.log(response);
+        // setPosts((prev) => [...prev, ...[{ key: idx, value: idx }]]);
+        // setPosts2((prev: any) => [...prev, ...[123]]);
+      },
     }
-  };
+  );
 
   useEffect(() => {
-    let observer: any;
-    if (target) {
-      // callback 함수, option
-      observer = new IntersectionObserver(onIntersect, { threshold: 0.5 });
-      observer.observe(target.current); // 타겟 엘리먼트 지정
-    }
-    return () => {
-      observer && observer.disconnect();
-    };
-  }, [target]);
+    fetchNextPage();
+  }, [inView]);
 
   return (
     <>
       <CarouselBox style={ActiveStyle(tab)}>
         <MyPostContainer>
+          <div onClick={() => console.log("이것은 !!", data?.pages)}>
+            이것은!!!
+          </div>
           <div className="ImageContainer">
-            {posts.map((post, index) => (
-              <PostImage url={post.value.toString()} />
-            ))}
+            {/* {posts.map((post, index) => (
+              <PostImage url={post.value.toString()} key={index} />
+            ))} */}
 
-            <div style={{ width: "100wv", height: "1rem" }} ref={target}></div>
+            {data?.pages.map((post, index) => (
+              <PostImage key={index} />
+            ))}
+            <div style={{ width: "100vw", height: "110vh" }}></div>
+            <div style={{ width: "100vw", height: "1rem" }} ref={ref}></div>
             {/* 이거 보이면 실행 */}
           </div>
         </MyPostContainer>
