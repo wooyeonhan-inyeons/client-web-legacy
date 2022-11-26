@@ -9,8 +9,11 @@ import {
 } from "react-router-dom";
 import AdminHome from "./page/Admin/Home";
 import Home from "./page/Home";
-import Login from "./page/Admin/Login";
+import AdminLogin from "./page/Admin/Login";
 import NoMatch from "./page/NoMatch";
+import Login from "./page/Login";
+import Mypage from "./page/MyPage";
+import { LoginRedirect } from "./components/api";
 
 function App() {
   const [user, setUser] = useRecoilState(recoil_User.userState);
@@ -21,7 +24,7 @@ function App() {
 
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "/*",
       element: <Home />,
       errorElement: <NoMatch />,
     },
@@ -30,7 +33,7 @@ function App() {
       children: [
         {
           path: "login",
-          element: <Login />,
+          element: <AdminLogin />,
           loader: () => user.role === USER_ROLE.ADMIN && redirect("/admin"),
         },
         {
@@ -40,6 +43,21 @@ function App() {
             user.role !== USER_ROLE.ADMIN && redirect("/admin/login"),
         },
       ],
+    },
+    {
+      path: "login",
+      element: <Login />,
+      loader: () => user.role !== USER_ROLE.GUEST && redirect("/"),
+    },
+    {
+      path: "mypage",
+      element: <Mypage />,
+      loader: () => user.role === USER_ROLE.GUEST && redirect("/"),
+    },
+    {
+      path: "auth/kakao/redirect",
+      element: <LoginRedirect />,
+      // loader: () => {},
     },
   ]);
 
