@@ -57,7 +57,7 @@ export const MyProfile = ({ userPost }: any) => {
               </MyProfileInfo>
             </MyProfileTextBox>
           </ProfileLeft>
-          <ProfileEditButton onClick={() => navigate("/")}>
+          <ProfileEditButton onClick={() => navigate("/mypage/edit")}>
             <EditOutlined />
           </ProfileEditButton>
         </ProfileInfoContainer>
@@ -67,7 +67,7 @@ export const MyProfile = ({ userPost }: any) => {
           url1={data && userPost[0]?.urls.thumb}
           url2={data && userPost[1]?.urls.thumb}
         />
-        <FriendsButton onClick={() => navigate("/")} />
+        <FriendsButton onClick={() => navigate("/mypage/friends")} />
       </ProfileContainer>
     </>
   );

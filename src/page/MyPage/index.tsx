@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { StyledContainer } from "../../components/StyledContainer";
-
 import { Header } from "../../components/Header";
 import { MyProfile } from "./MyProfile";
 import { MyRecentPost } from "./MyRecentPost";
