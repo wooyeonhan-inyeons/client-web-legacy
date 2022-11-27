@@ -12,7 +12,9 @@ export const LoginRedirect = () => {
   useEffect(() => {
     localStorage.setItem("key", query);
     setUser({ userId: 0, role: USER_ROLE.USER });
-    navigate("/");
+
+    // navigate("/");
+    window.location.href = "/";
   }, []);
 
   return <></>;

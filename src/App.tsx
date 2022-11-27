@@ -24,6 +24,8 @@ function App() {
 
   const getUser = () => {
     //api로 user 정보 불러오기
+    console.log(user);
+    // setUser({ userId: 0, role: USER_ROLE.USER });
   };
 
   const router = createBrowserRouter([
@@ -74,12 +76,12 @@ function App() {
           element: <Mypage />,
         },
       ],
-      loader: () => user.role === USER_ROLE.GUEST && redirect("/"),
+      loader: () => user.role === USER_ROLE.GUEST && redirect("/login"),
     },
     {
       path: "auth/kakao/redirect",
       element: <LoginRedirect />,
-      // loader: () => {},
+      loader: () => user.role !== USER_ROLE.GUEST && redirect("/login"),
     },
   ]);
 
