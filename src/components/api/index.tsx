@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { recoil_User } from "../.././recoil/index";
+import { recoil_ } from "../.././recoil/index";
 import { USER_ROLE } from "../.././constants";
 import { useNavigate } from "react-router-dom";
 
 export const LoginRedirect = () => {
-  const [, setUser] = useRecoilState(recoil_User.userState);
+  const [, setUser] = useRecoilState(recoil_.userState);
   const query = window.location.search.split("=")[1];
   const navigate = useNavigate();
 
