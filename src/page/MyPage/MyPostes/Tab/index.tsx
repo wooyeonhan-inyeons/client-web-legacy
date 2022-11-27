@@ -7,11 +7,13 @@ const StyledTab = styled.div`
   width: 100%;
   height: 3rem;
   cursor: pointer;
+  font-size: 0.75rem;
 
   & > .item {
     display: inline-block;
     width: 50%;
     text-align: center;
+    font-weight: bold;
     color: #ffffff8a;
   }
 `;
