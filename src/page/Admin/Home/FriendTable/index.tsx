@@ -7,18 +7,8 @@ import {
   Table,
   Typography,
 } from "antd";
-import CompoundedSpace from "antd/lib/space";
 import React, { useEffect, useState } from "react";
-import {
-  deleteFriend,
-  deleteUser,
-  getAllFriendList,
-  updateFriend,
-} from "../api";
-
-interface UserInfo {
-  name: string;
-}
+import { deleteFriend, getAllFriendList, updateFriend } from "../api";
 
 interface Item {
   key: string;
@@ -95,7 +85,6 @@ const FriendsTable: React.FC = () => {
           follower: friends.follower.name,
           following: friends.following.name,
         }));
-        console.log(preprocess);
 
         setData(preprocess);
       })
@@ -112,7 +101,7 @@ const FriendsTable: React.FC = () => {
   };
 
   const handleDelete = (key: React.Key) => {
-    const selectedUserId: string = data.find((d) => d.key == key)
+    const selectedUserId: string = data.find((d) => d.key === key)
       ?.friend_id as string;
 
     deleteFriend(selectedUserId)
@@ -136,7 +125,7 @@ const FriendsTable: React.FC = () => {
 
       const newData = [...data];
       const index = newData.findIndex((item) => key === item.key);
-      const selectedFriendId: string = newData.find((d) => d.key == key)
+      const selectedFriendId: string = newData.find((d) => d.key === key)
         ?.friend_id as string;
       const body = {
         friend_id: selectedFriendId,
@@ -148,7 +137,6 @@ const FriendsTable: React.FC = () => {
           ...item,
           ...row,
         });
-        console.log(body);
         updateFriend(body)
           .then((res) => {
             message.success("수정 완료. 😀");
@@ -203,6 +191,7 @@ const FriendsTable: React.FC = () => {
               Save
             </Typography.Link>
             <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
+              {/*eslint-disable-next-line*/}
               <a>Cancel</a>
             </Popconfirm>
           </span>
@@ -225,6 +214,7 @@ const FriendsTable: React.FC = () => {
             title="Sure to delete?"
             onConfirm={() => handleDelete(record.key)}
           >
+            {/*eslint-disable-next-line*/}
             <a>Delete</a>
           </Popconfirm>
         ) : null,

@@ -1,19 +1,8 @@
-import {
-  DatePicker,
-  Col,
-  Row,
-  Button,
-  Dropdown,
-  Space,
-  Typography,
-  Select,
-} from "antd";
-import { DownOutlined } from "@ant-design/icons";
+import { Col, Row, Button, Select } from "antd";
 import React from "react";
-import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import { useResetRecoilState } from "recoil";
 import { recoil_ } from "../../../recoil";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import UserTable from "./UserTable";
 import { useRef } from "react";
 import FriendsTable from "./FriendTable";
