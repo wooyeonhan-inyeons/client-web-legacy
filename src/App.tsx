@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { recoil_User } from "./recoil/index";
+import { recoil_ } from "./recoil/index";
 import { USER_ROLE } from "./constants";
 import {
   createBrowserRouter,
@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 
 import Edit from "./page/FriendsPage/Edit";
-import FriendsPage from "./page/FriendsPage"
+import FriendsPage from "./page/FriendsPage";
 import Admin from "./page/Admin";
 import Home from "./page/Home";
 import AdminLogin from "./page/Admin/Login";
@@ -17,9 +17,10 @@ import NoMatch from "./page/NoMatch";
 import Login from "./page/Login";
 import Mypage from "./page/MyPage";
 import { LoginRedirect } from "./components/api";
+import { MyPostes } from "./page/MyPage/Postes";
 
 function App() {
-  const [user, setUser] = useRecoilState(recoil_User.userState);
+  const [user, setUser] = useRecoilState(recoil_.userState);
 
   const getUser = () => {
     //api로 user 정보 불러오기
@@ -30,6 +31,7 @@ function App() {
       path: "/*",
       element: <Home />,
       errorElement: <NoMatch />,
+      loader: () => user.role === USER_ROLE.GUEST && redirect("/login"),
     },
     {
       path: "admin/*",
@@ -53,24 +55,31 @@ function App() {
       loader: () => user.role !== USER_ROLE.GUEST && redirect("/"),
     },
     {
-      path: "mypage",
-      element: <Mypage />,
+      path: "mypage/*",
+      children: [
+        {
+          path: "postes",
+          element: <MyPostes />,
+        },
+        {
+          path: "friends",
+          element: <FriendsPage />,
+        },
+        {
+          path: "edit",
+          element: <Edit />,
+        },
+        {
+          path: "*",
+          element: <Mypage />,
+        },
+      ],
       loader: () => user.role === USER_ROLE.GUEST && redirect("/"),
     },
     {
       path: "auth/kakao/redirect",
       element: <LoginRedirect />,
       // loader: () => {},
-    },
-    {
-      path: "mypage/friends",
-      element: <FriendsPage />,
-      loader: () => user.role === USER_ROLE.GUEST && redirect("/"),
-    },
-    {
-      path: "mypage/edit",
-      element: <Edit />,
-      loader: () => user.role === USER_ROLE.GUEST && redirect("/"),
     },
   ]);
 

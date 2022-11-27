@@ -11,7 +11,7 @@ interface FormData {
 }
 
 export const GetAdmin = async (data: FormData) => {
-  await fetch(`${BACK_URL}/auth/adminLogin`, {
+  await fetch(`${BACK_URL}/auth/admin`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",
