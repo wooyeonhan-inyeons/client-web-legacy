@@ -7,7 +7,6 @@ import {
   Table,
   Typography,
 } from "antd";
-import CompoundedSpace from "antd/lib/space";
 import React, { useEffect, useState } from "react";
 import { deleteUser, getAllUser, updateUser } from "../api";
 
@@ -82,7 +81,6 @@ const UserTable: React.FC = () => {
   useEffect(() => {
     getAllUser()
       .then((res) => {
-        console.log(res);
         setData(res.map((users: any, i: string) => ({ key: i, ...users })));
       })
       .catch((error) =>
@@ -98,7 +96,7 @@ const UserTable: React.FC = () => {
   };
 
   const handleDelete = (key: React.Key) => {
-    const selectedUserId: string = data.find((d) => d.key == key)
+    const selectedUserId: string = data.find((d) => d.key === key)
       ?.user_id as string;
 
     deleteUser(selectedUserId)
@@ -113,7 +111,6 @@ const UserTable: React.FC = () => {
   };
 
   const cancel = (d: any) => {
-    console.log(d, "change");
     setEditingKey("");
   };
 
@@ -123,7 +120,7 @@ const UserTable: React.FC = () => {
 
       const newData = [...data];
       const index = newData.findIndex((item) => key === item.key);
-      const selectedUserId: string = newData.find((d) => d.key == key)
+      const selectedUserId: string = newData.find((d) => d.key === key)
         ?.user_id as string;
       const body = {
         user_id: selectedUserId,
@@ -192,6 +189,7 @@ const UserTable: React.FC = () => {
       dataIndex: "operation",
       render: (_: any, record: Item) => {
         const editable = isEditing(record);
+
         return editable ? (
           <span>
             <Typography.Link
@@ -201,6 +199,7 @@ const UserTable: React.FC = () => {
               Save
             </Typography.Link>
             <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
+              {/*eslint-disable-next-line*/}
               <a>Cancel</a>
             </Popconfirm>
           </span>
@@ -223,6 +222,7 @@ const UserTable: React.FC = () => {
             title="Sure to delete?"
             onConfirm={() => handleDelete(record.key)}
           >
+            {/*eslint-disable-next-line*/}
             <a>Delete</a>
           </Popconfirm>
         ) : null,
