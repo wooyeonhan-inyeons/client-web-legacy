@@ -1,8 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { SNS, USER_ROLE } from "../../constants";
-import { useRecoilState } from "recoil";
-import { recoil_ } from "../../recoil";
+import { SNS } from "../../constants";
 
 import { SnsButton } from "./Button";
 import { LoginTitle } from "./Title";
@@ -15,7 +13,6 @@ import { BACK_URL } from "../../constants/GlobalConstants";
 import { StyledContainerFull } from "../../components/StyledContainer";
 
 const Login = () => {
-  const [, setUser] = useRecoilState(recoil_.userState);
   const navigate = useNavigate();
 
   return (

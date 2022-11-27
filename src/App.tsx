@@ -20,13 +20,9 @@ import { LoginRedirect } from "./components/api";
 import { MyPostes } from "./page/MyPage/Postes";
 
 function App() {
-  const [user, setUser] = useRecoilState(recoil_.userState);
+  const [user] = useRecoilState(recoil_.userState);
 
-  const getUser = () => {
-    //api로 user 정보 불러오기
-    console.log(user);
-    // setUser({ userId: 0, role: USER_ROLE.USER });
-  };
+  const getUser = () => {};
 
   const router = createBrowserRouter([
     {
