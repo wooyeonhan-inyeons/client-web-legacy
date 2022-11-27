@@ -18,6 +18,11 @@ export enum SNS {
   NONE,
 }
 
+export enum MYPAGE_ {
+  MY_POST,
+  VISITED_POST,
+}
+
 export const COLOR = {
   primary: "#EDF1F7",
   secondary: "#E3B719",

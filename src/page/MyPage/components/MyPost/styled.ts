@@ -1,5 +1,5 @@
 import styled from "styled-components";
-export const MyRecentPostContainer = styled.div`
+export const MyPostContainer_Center = styled.div`
   width: 100vw;
   max-width: 600px;
   position: relative;
