@@ -8,16 +8,19 @@ import {
   redirect,
 } from "react-router-dom";
 
+import Edit from "./page/FriendsPage/Edit";
+import FriendsPage from "./page/FriendsPage";
 import Admin from "./page/Admin";
 import Home from "./page/Home";
 import AdminLogin from "./page/Admin/Login";
 import NoMatch from "./page/NoMatch";
 import Login from "./page/Login";
 import Mypage from "./page/MyPage";
+import { LoginRedirect } from "./components/api";
 import { MyPostes } from "./page/MyPage/MyPostes";
 
 function App() {
-  const [user] = useRecoilState(recoil_.userState);
+  const [user, setUser] = useRecoilState(recoil_.userState);
 
   const getUser = () => {
     //api로 user 정보 불러오기
@@ -58,11 +61,24 @@ function App() {
           element: <MyPostes />,
         },
         {
+          path: "friends",
+          element: <FriendsPage />,
+        },
+        {
+          path: "edit",
+          element: <Edit />,
+        },
+        {
           path: "*",
           element: <Mypage />,
         },
       ],
       loader: () => user.role === USER_ROLE.GUEST && redirect("/"),
+    },
+    {
+      path: "auth/kakao/redirect",
+      element: <LoginRedirect />,
+      // loader: () => {},
     },
   ]);
 

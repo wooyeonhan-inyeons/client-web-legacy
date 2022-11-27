@@ -16,10 +16,10 @@ export const GetImages = async () => {
 };
 
 export const GetUserExperience = () => {
-  const experience: UserInfoProp = {
+  const response: UserInfoProp = {
     userPost: Math.floor(Math.random() * 50),
     userFavorite: Math.floor(Math.random() * 50),
     userFriend: Math.floor(Math.random() * 50),
   };
-  return [experience, experience, experience];
+  return response;
 };

@@ -3,12 +3,12 @@ import { useQuery } from "react-query";
 import { Outlet, useNavigate } from "react-router-dom";
 import { GetImages } from "./api";
 
+import { StyledContainer } from "../../components/StyledContainer";
 import { Header } from "../../components/Header";
 import { MyProfile } from "./MyProfile";
 import { MyPost } from "./MyPost";
 import { LogoutButton } from "./MyProfile/LogoutButton";
 import { LoadingBox } from "../../components/LoadingContainer";
-import { StyledContainer } from "../../components/StyledContainer";
 
 const Mypage = () => {
   const [loading, setLoading] = useState(true);
