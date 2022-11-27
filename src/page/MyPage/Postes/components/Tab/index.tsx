@@ -1,25 +1,32 @@
 import { useRecoilState } from "recoil";
-import { recoil_ } from "../../../../recoil";
+import { recoil_ } from "../../../../../recoil";
 import styled from "styled-components";
-import { MYPAGE_ } from "../../../../constants";
+import { COLOR, MYPAGE_, zIndex } from "../../../../../constants";
 
 const StyledTab = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 3rem;
+  line-height: 3rem;
   cursor: pointer;
   font-size: 0.75rem;
+  background-color: ${COLOR.background};
+
+  position: fixed;
+  top: 3.5rem;
+  left: 0;
+  z-index: ${zIndex.default};
 
   & > .item {
     display: inline-block;
     width: 50%;
     text-align: center;
-    font-weight: bold;
     color: #ffffff8a;
   }
 `;
 
 const ActiveButton = {
   color: "#fff",
+  fontWeight: "bold",
 };
 
 export const Tab = () => {

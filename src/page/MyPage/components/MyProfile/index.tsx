@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { GetUserExperience } from "../api";
-import { AvatarColor } from "../../../constants";
+import { GetUserExperience } from "../../api";
+import { AvatarColor } from "../../../../constants";
 
 import Avatar from "boring-avatars";
 import {
@@ -18,8 +18,8 @@ import {
   ProfileEditButton,
   ProfileLeft,
 } from "./styled";
-import { FriendsButton } from "./FriendsButton";
-import { MyPostButton } from "./MyPostButton";
+import { FriendsButton } from "../FriendsButton";
+import { MyPostButton } from "../MyPostButton";
 
 export const MyProfile = ({ userPost }: any) => {
   const { data } = useQuery("user", GetUserExperience, {

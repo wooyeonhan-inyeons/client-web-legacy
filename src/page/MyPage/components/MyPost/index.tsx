@@ -1,4 +1,4 @@
-import { MyPostContainer } from "./styled";
+import { MyPostContainer_Center } from "./styled";
 import { PostImage } from "../PostImage";
 
 export const MyPost = ({ data }: any) => {
@@ -11,12 +11,12 @@ export const MyPost = ({ data }: any) => {
   });
 
   return (
-    <MyPostContainer>
+    <MyPostContainer_Center>
       <div className="title">👀 나의 우연들</div>
       <div className="ImageContainer">
         {data && PostList}
         <PostImage url={data[maxIndex - 1].urls.thumb} morePost={true} />
       </div>
-    </MyPostContainer>
+    </MyPostContainer_Center>
   );
 };

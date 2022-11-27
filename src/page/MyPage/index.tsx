@@ -5,9 +5,9 @@ import { GetImages } from "./api";
 
 import { StyledContainer } from "../../components/StyledContainer";
 import { Header } from "../../components/Header";
-import { MyProfile } from "./MyProfile";
-import { MyPost } from "./MyPost";
-import { LogoutButton } from "./MyProfile/LogoutButton";
+import { MyProfile } from "./components/MyProfile";
+import { MyPost } from "./components/MyPost";
+import { LogoutButton } from "./components/LogoutButton";
 import { LoadingBox } from "../../components/LoadingContainer";
 
 const Mypage = () => {

@@ -17,7 +17,7 @@ import NoMatch from "./page/NoMatch";
 import Login from "./page/Login";
 import Mypage from "./page/MyPage";
 import { LoginRedirect } from "./components/api";
-import { MyPostes } from "./page/MyPage/MyPostes";
+import { MyPostes } from "./page/MyPage/Postes";
 
 function App() {
   const [user, setUser] = useRecoilState(recoil_.userState);

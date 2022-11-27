@@ -1,11 +1,14 @@
 import styled from "styled-components";
-export const MyPostContainer = styled.div`
+import { zIndex } from "../../../../../constants";
+export const PostImageContainer = styled.div`
   width: 100vw;
+  height: 100%;
   max-width: 600px;
   position: relative;
-  transform: translate(-50%, 0);
-  left: 50%;
-  padding-top: 1rem;
+
+  padding-top: 2.5rem;
+  z-index: ${zIndex.background};
+  overflow-y: scroll;
 
   .title {
     width: 100%;
