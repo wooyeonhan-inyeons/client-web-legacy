@@ -31,6 +31,7 @@ function App() {
       path: "/*",
       element: <Home />,
       errorElement: <NoMatch />,
+      loader: () => user.role === USER_ROLE.GUEST && redirect("/login"),
     },
     {
       path: "admin/*",

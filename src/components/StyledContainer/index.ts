@@ -14,3 +14,15 @@ export const StyledContainer = styled.div`
   background-color: ${COLOR.background};
   color: ${COLOR.content};
 `;
+
+export const StyledContainerFull = styled.div`
+  margin: 0 auto;
+  position: relative;
+
+  min-height: 100vh;
+  max-width: 600px;
+  overflow-x: hidden;
+
+  background-color: ${COLOR.background};
+  color: ${COLOR.content};
+`;

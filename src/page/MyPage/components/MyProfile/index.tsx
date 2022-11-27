@@ -65,8 +65,8 @@ export const MyProfile = ({ userPost }: any) => {
 
         <MyPostButton
           onClick={() => navigate("/")}
-          url1={data && userPost[0]?.urls.thumb}
-          url2={data && userPost[1]?.urls.thumb}
+          url1={data && userPost[0]?.url}
+          url2={data && userPost[1]?.url}
         />
         <FriendsButton onClick={() => navigate("/mypage/friends")} />
       </ProfileContainer>
