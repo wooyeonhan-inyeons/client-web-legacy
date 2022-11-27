@@ -12,14 +12,14 @@ import { DownOutlined } from "@ant-design/icons";
 import React from "react";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import { useResetRecoilState } from "recoil";
-import { recoil_User } from "../../../recoil";
+import { recoil_ } from "../../../recoil";
 import { useState, useEffect } from "react";
 import UserTable from "./UserTable";
 import { useRef } from "react";
 import FriendsTable from "./FriendTable";
 
 const AdminHome: React.FC = () => {
-  const resetUser = useResetRecoilState(recoil_User.userState);
+  const resetUser = useResetRecoilState(recoil_.userState);
   const [menu, setMenu] = useState("user");
 
   const handleChange = (value: string) => {
