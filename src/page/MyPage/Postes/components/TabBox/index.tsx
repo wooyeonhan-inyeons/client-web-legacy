@@ -5,7 +5,7 @@ import { VisitedPost } from "../VistedPostes";
 
 import { TabContainer, ActiveStyle } from "./styled";
 
-export const Carousel = () => {
+export const TabBox = () => {
   const [tab] = useRecoilState(recoil_.tabState);
 
   return (

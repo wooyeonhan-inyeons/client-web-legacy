@@ -5,7 +5,7 @@ import { Header } from "../../../components/Header";
 import { LoadingBox } from "../../../components/LoadingContainer";
 import { StyledContainer } from "../../../components/StyledContainer";
 import { Tab } from "./components/Tab";
-import { Carousel } from "./components/TabBox";
+import { TabBox } from "./components/TabBox";
 
 export const MyPostes = () => {
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,7 @@ export const MyPostes = () => {
       {!loading ? (
         <StyledContainer>
           <Tab />
-          <Carousel />
+          <TabBox />
         </StyledContainer>
       ) : (
         <LoadingBox />
