@@ -3,7 +3,8 @@ import { Outlet } from "react-router-dom";
 import { HEADER_FN } from "../../constants";
 
 import { Header } from "../../components/Header";
-import { StyledContainer } from "../../components/StyledContainer";
+import { MapContainer } from "../../components/StyledContainer";
+import { Map } from "./Map";
 
 const Home = () => {
   return (
@@ -13,7 +14,10 @@ const Home = () => {
         rightButton1={HEADER_FN.ALARM}
         rightButton2={HEADER_FN.MYPAGE}
       />
-      <StyledContainer></StyledContainer>
+      <MapContainer>
+        <Map />
+        {/* <div id="map"></div> */}
+      </MapContainer>
       <Outlet />
     </>
   );

@@ -26,3 +26,13 @@ export const StyledContainerFull = styled.div`
   background-color: ${COLOR.background};
   color: ${COLOR.content};
 `;
+
+export const MapContainer = styled.div`
+  width: 100%;
+  height: 100vh;
+
+  & > * {
+    height: 100%;
+    width: 100%;
+  }
+`;
