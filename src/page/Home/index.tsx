@@ -5,6 +5,8 @@ import { HEADER_FN } from "../../constants";
 import { Header } from "../../components/Header";
 import { MapContainer } from "../../components/StyledContainer";
 import { Map } from "./Map";
+import { Marker } from "./Map/Marker";
+import { LoadingBox } from "../../components/LoadingContainer";
 
 const Home = () => {
   return (
@@ -16,7 +18,7 @@ const Home = () => {
       />
       <MapContainer>
         <Map />
-        {/* <div id="map"></div> */}
+        <Marker />
       </MapContainer>
       <Outlet />
     </>

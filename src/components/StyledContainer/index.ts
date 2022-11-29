@@ -35,4 +35,8 @@ export const MapContainer = styled.div`
     height: 100%;
     width: 100%;
   }
+
+  #map > div {
+    background-color: #242f3e !important;
+  }
 `;

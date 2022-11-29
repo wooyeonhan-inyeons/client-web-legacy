@@ -1,12 +1,9 @@
 import styled from "styled-components";
-import { LoadingOutlined } from "@ant-design/icons";
+import { ReactComponent as Spinner } from "./tail-spin.svg";
 
 const LoadingContainer = styled.div`
   height: 100vh;
   max-width: 600px;
-  padding: 0 1rem;
-  padding-top: 4rem;
-  font-size: 6rem;
 
   display: flex;
   align-items: center;
@@ -18,7 +15,7 @@ const LoadingContainer = styled.div`
 export const LoadingBox = () => {
   return (
     <LoadingContainer>
-      <LoadingOutlined />
+      <Spinner width="6rem" height="6rem" />
     </LoadingContainer>
   );
 };
