@@ -28,6 +28,13 @@ function MyMapComponent({ center, zoom, styles }: MapProps) {
       center,
       zoom,
       styles,
+      zoomControl: false,
+      mapTypeControl: false,
+      scaleControl: false,
+      streetViewControl: false,
+      rotateControl: false,
+      fullscreenControl: false,
+      mapId: "7c08bc77e896521d",
     });
   });
   return <div ref={ref} id="map" />;

@@ -39,4 +39,22 @@ export const MapContainer = styled.div`
   #map > div {
     background-color: #242f3e !important;
   }
+
+  a[href^="http://maps.google.com/maps"]
+  {
+    display: none !important;
+  }
+  a[href^="https://maps.google.com/maps"]
+  {
+    display: none !important;
+  }
+
+  .gmnoprint a,
+  .gmnoprint span,
+  .gm-style-cc {
+    display: none;
+  }
+  .gmnoprint div {
+    background: none !important;
+  }
 `;
