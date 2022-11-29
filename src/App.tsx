@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
+import { useQuery } from "react-query";
 import { useRecoilState } from "recoil";
 import { recoil_ } from "./recoil/index";
 import { USER_ROLE } from "./constants";
+import { GetUser } from "./Hooks";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -16,13 +18,19 @@ import AdminLogin from "./page/Admin/Login";
 import NoMatch from "./page/NoMatch";
 import Login from "./page/Login";
 import Mypage from "./page/MyPage";
-import { LoginRedirect } from "./components/api";
+import { LoginRedirect } from "./Hooks";
 import { MyPostes } from "./page/MyPage/Postes";
 
 function App() {
   const [user] = useRecoilState(recoil_.userState);
 
-  const getUser = () => {};
+  const { data } = useQuery("userInfo", GetUser, {
+    retry: 1,
+    refetchOnReconnect: false,
+    onSuccess: (res) => {
+      // console.log(res);
+    },
+  });
 
   const router = createBrowserRouter([
     {
@@ -56,7 +64,7 @@ function App() {
       path: "mypage/*",
       children: [
         {
-          path: "postes",
+          path: "postes/*",
           element: <MyPostes />,
         },
         {
@@ -82,7 +90,7 @@ function App() {
   ]);
 
   useEffect(() => {
-    getUser();
+    // getUser();
   }, []);
 
   return <RouterProvider router={router} />;

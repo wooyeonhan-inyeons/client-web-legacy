@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useInfiniteQuery } from "react-query";
 import { useInView } from "react-intersection-observer";
+import { useRecoilState } from "recoil";
+import { recoil_ } from "../../../../../recoil";
+import { MYPAGE_ } from "../../../../../constants";
 // import { GetImages } from "../../../api";
 import { GetTest } from "../TabBox/GetTest";
 
@@ -10,7 +13,7 @@ import { PostImageContainer } from "../../components/MyPostes/styled";
 
 export const VisitedPost = () => {
   const [ref, inView] = useInView();
-
+  const [tab] = useRecoilState(recoil_.tabState);
   const { data, isError, error, isFetching, fetchNextPage, hasNextPage } =
     useInfiniteQuery(
       ["image"],
@@ -29,7 +32,7 @@ export const VisitedPost = () => {
     );
 
   useEffect(() => {
-    if (inView) fetchNextPage();
+    if (inView && hasNextPage) fetchNextPage();
   });
   return (
     <PostImageContainer>

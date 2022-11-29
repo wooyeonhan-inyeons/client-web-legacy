@@ -16,7 +16,6 @@ import { GetTest } from "./Postes/components/TabBox/GetTest";
 const Mypage = () => {
   const resetUser = useResetRecoilState(recoil_.userState);
   const [loading, setLoading] = useState(true);
-  const [count, setCount] = useState(0);
   const navigate = useNavigate();
 
   //한 번만 불러오는 query.
@@ -30,7 +29,7 @@ const Mypage = () => {
   // });
 
   const { data, fetchNextPage } = useInfiniteQuery(
-    ["image"],
+    ["images"],
     ({ pageParam = 0 }) => GetTest({ idx: pageParam }),
     {
       retry: 3,
@@ -42,12 +41,12 @@ const Mypage = () => {
       },
       onSuccess: () => {
         setLoading(false);
-        setCount((pre) => pre + 3);
       },
     }
   );
+
   useEffect(() => {
-    if (count < 9) fetchNextPage();
+    if (data?.pages.flat().length! < 9) fetchNextPage();
   });
 
   return (
