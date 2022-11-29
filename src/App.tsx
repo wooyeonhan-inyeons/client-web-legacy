@@ -8,6 +8,8 @@ import {
   redirect,
 } from "react-router-dom";
 
+import Edit from "./page/FriendsPage/Edit";
+import FriendsPage from "./page/FriendsPage"
 import Admin from "./page/Admin";
 import Home from "./page/Home";
 import AdminLogin from "./page/Admin/Login";
@@ -59,6 +61,16 @@ function App() {
       path: "auth/kakao/redirect",
       element: <LoginRedirect />,
       // loader: () => {},
+    },
+    {
+      path: "mypage/friends",
+      element: <FriendsPage />,
+      loader: () => user.role === USER_ROLE.GUEST && redirect("/"),
+    },
+    {
+      path: "mypage/edit",
+      element: <Edit />,
+      loader: () => user.role === USER_ROLE.GUEST && redirect("/"),
     },
   ]);
 

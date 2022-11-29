@@ -1,9 +1,7 @@
 import React from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useRecoilState, useResetRecoilState } from "recoil";
-
 import { Button } from "antd";
-
 import { USER_ROLE } from "../../constants";
 import { recoil_User } from "../../recoil";
 
