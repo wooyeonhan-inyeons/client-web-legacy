@@ -29,6 +29,8 @@ export const StyledContainerFull = styled.div`
 
 export const MapContainer = styled.div`
   width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
   height: 100vh;
 
   & > * {

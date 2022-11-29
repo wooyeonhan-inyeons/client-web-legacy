@@ -11,8 +11,12 @@ const StyledHeader = styled.div`
   justify-content: space-between;
 
   width: 100%;
+  max-width: 600px;
   height: 3.5rem;
   font-size: 1.3rem;
+
+  left: 50%;
+  transform: translate(-50%, 0);
 
   color: ${COLOR.content} !important;
   background-color: ${COLOR.background};
