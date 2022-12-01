@@ -58,4 +58,7 @@ export const MapContainer = styled.div`
   .gm-style-iw-a {
     display: none;
   }
+  .post-pin {
+    width: 1rem;
+  }
 `;
