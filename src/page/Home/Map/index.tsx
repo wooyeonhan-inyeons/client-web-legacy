@@ -1,63 +1,61 @@
-import React, { ReactElement, useEffect, useRef, useState } from "react";
-import { LoadingBox } from "../../../components/LoadingContainer";
-import { DarkStyle } from "./styled";
-import { Status, Wrapper } from "./Wrapper";
+import { useCallback, useEffect, useRef } from "react";
 
-const render = (status: Status): ReactElement => {
-  if (status === Status.LOADING)
-    return (
-      <>
-        <LoadingBox />
-      </>
-    );
-  if (status === Status.FAILURE) return <h3>{status} ...</h3>;
-  return undefined!;
-};
+export const Map = () => {
+  const mapElement = useRef(null);
 
-interface MapProps {
-  center: google.maps.LatLngLiteral;
-  zoom: number;
-  styles: any;
-}
+  // 컴포넌트가 마운트될 때, 수동으로 스크립트를 넣어줍니다.
+  // ﻿이는 script가 실행되기 이전에 window.initMap이 먼저 선언되어야 하기 때문입니다.
+  const loadScript = useCallback((url: string) => {
+    const firstScript = window.document.getElementsByTagName("script")[0];
+    const newScript = window.document.createElement("script");
+    newScript.src = url;
+    newScript.async = true;
+    newScript.defer = true;
+    firstScript?.parentNode?.insertBefore(newScript, firstScript);
+  }, []);
 
-function MyMapComponent({ center, zoom, styles }: MapProps) {
-  const ref = useRef(null);
+  // script에서 google map api를 가져온 후에 실행될 callback 함수
+  const initMap = useCallback(() => {
+    const { google } = window;
+    if (!mapElement.current || !google) return;
 
-  useEffect(() => {
-    new window.google.maps.Map(ref.current!, {
-      center,
-      zoom,
-      styles,
+    const location = { lat: 35.859115, lng: 128.487598 };
+
+    const map = new google.maps.Map(mapElement.current, {
+      zoom: 17,
+      minZoom: 13,
+      maxZoom: 20,
+      center: location,
       zoomControl: false,
       mapTypeControl: false,
       scaleControl: false,
       streetViewControl: false,
       rotateControl: false,
       fullscreenControl: false,
+      clickableIcons: false,
       mapId: "7c08bc77e896521d",
+      backgroundColor: "#242f3e",
     });
-  });
-  return <div ref={ref} id="map" />;
-}
-
-export const Map = () => {
-  const [init, setInit] = useState<MapProps>();
-
-  useEffect(() => {
-    setInit({
-      center: { lat: 35.859115, lng: 128.487598 },
-      zoom: 15,
-      styles: DarkStyle,
+    new google.maps.Marker({
+      position: location,
+      map,
     });
   }, []);
 
-  return (
-    <Wrapper apiKey={process.env.REACT_APP_API_KEY!} render={render}>
-      <MyMapComponent
-        center={init?.center!}
-        zoom={init?.zoom!}
-        styles={DarkStyle}
-      />
-    </Wrapper>
-  );
+  useEffect(() => {
+    const script = window.document.getElementsByTagName("script")[0];
+    const includeCheck = script.src.startsWith(
+      "https://maps.googleapis.com/maps/api"
+    );
+
+    // script 중복 호출 방지
+    if (includeCheck) return initMap();
+
+    window.initMap = initMap;
+    loadScript(
+      `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_KEY}&callback=initMap&language=ko`
+    );
+  }, [initMap, loadScript]);
+
+  return <div id="google_map" ref={mapElement} />;
 };

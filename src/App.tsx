@@ -24,13 +24,13 @@ import { MyPostes } from "./page/MyPage/Postes";
 function App() {
   const [user] = useRecoilState(recoil_.userState);
 
-  const { data } = useQuery("userInfo", GetUser, {
-    retry: 1,
-    refetchOnReconnect: false,
-    onSuccess: (res) => {
-      // console.log(res);
-    },
-  });
+  // const { data } = useQuery("userInfo", GetUser, {
+  //   retry: 1,
+  //   refetchOnReconnect: false,
+  //   onSuccess: (res) => {
+  //     // console.log(res);
+  //   },
+  // });
 
   const router = createBrowserRouter([
     {

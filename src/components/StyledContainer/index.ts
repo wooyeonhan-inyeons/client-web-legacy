@@ -38,10 +38,6 @@ export const MapContainer = styled.div`
     width: 100%;
   }
 
-  #map > div {
-    background-color: #242f3e !important;
-  }
-
   a[href^="http://maps.google.com/maps"]
   {
     display: none !important;
@@ -58,5 +54,8 @@ export const MapContainer = styled.div`
   }
   .gmnoprint div {
     background: none !important;
+  }
+  .gm-style-iw-a {
+    display: none;
   }
 `;

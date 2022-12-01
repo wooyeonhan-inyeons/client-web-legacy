@@ -15,6 +15,7 @@ const Home = () => {
         rightButton2={HEADER_FN.MYPAGE}
       />
       <MapContainer>
+        {/* <Map></Map> */}
         <Map />
       </MapContainer>
       <Outlet />
