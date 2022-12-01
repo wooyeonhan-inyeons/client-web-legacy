@@ -30,8 +30,6 @@ export const Button = styled.button`
     min-height: 55px;
     position: absolute; right: 0px;
     font-size: 20px;
-    border: 0;
-    border-radius: 10px;
     outline: none;
     background-color: white;
     font-family: inherit;
@@ -58,6 +56,7 @@ export const ListBox = styled.ul`
 `
 
 export const List = styled.li`
+    display: flex;
     color: white;
     height: 60px;
     padding: 5px 10px 5px 5px;
@@ -75,6 +74,28 @@ export const IdLabel = styled.p`
     font-weight: bold;
 `
 
-export const ListText = styled.span`
-    padding-left: 0.5em;    
+export const ListItem = styled.span`
+    display: flex;
+    position: absolute;
+    padding-left: 2em;
+    flex-direction: column;
+`
+
+export const FriendName = styled.p`
+    display: inline-block;
+    padding-left: 10px;
+    padding-bottom: 3px;
+    font-family: inherit;
+    font-size: 20px;
+    margin: 0;
+`
+
+export const FriendMessage = styled.p`
+    display: inline-block;
+    padding-left: 10px;
+    position: relative; bottom: 10px;
+    margin: 0;
+    font-family: inherit;
+    font-size: 16px;
+    /* padding-bottom: 30px; */
 `

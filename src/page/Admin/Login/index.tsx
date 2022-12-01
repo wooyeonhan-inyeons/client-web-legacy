@@ -9,13 +9,13 @@ import {
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 
-import { recoil_User } from "../../../recoil";
+import { recoil_ } from "../../../recoil";
 import { USER_ROLE } from "../../../constants";
 import { GetAdmin } from "./api";
 import { useMutation } from "react-query";
 
 const AdminLogin = () => {
-  const [, setUser] = useRecoilState(recoil_User.userState);
+  const [, setUser] = useRecoilState(recoil_.userState);
   const [form, setForm] = useState({
     username: "",
     password: "",

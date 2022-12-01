@@ -8,7 +8,8 @@ import {
   ListBox,
   List,
   IdLabel,
-  ListText,
+  FriendName,
+  FriendMessage
 } from "../styled";
 import { AvatarColor, COLOR } from "../../../constants";
 import Avatar from "boring-avatars";
@@ -24,7 +25,16 @@ function FriendsList() {
 
   useEffect(() => {
     getFriends().then((res) => {
-      console.log(res);
+      const follower = res.follower.map((data: any) => ({
+        friend_id: data.friend_id,
+        user_info: data.follower,
+      }));
+      const following = res.following.map((data: any) => ({
+        friend_id: data.friend_id,
+        user_info: data.following,
+      }));
+      const result: any = [...follower, ...following];
+      setFriends(result);
     });
   }, []);
 
@@ -44,7 +54,7 @@ function FriendsList() {
         <TabMenu></TabMenu>
         <ListDiv>
           <ListBox>
-            {friends.map((item, index) => (
+            {friends.map((item: any, index) => (
               <List key={index}>
                 <Avatar
                   size={37}
@@ -52,7 +62,8 @@ function FriendsList() {
                   name={"cc"}
                   colors={AvatarColor}
                 />
-                <ListText>{item}</ListText>
+                <FriendName>{item.user_info.name}</FriendName>
+                <FriendMessage>{item.user_info.message}</FriendMessage>
                 <EllipsisOutlined
                   style={{ float: "right", paddingTop: "5px" }}
                 />
