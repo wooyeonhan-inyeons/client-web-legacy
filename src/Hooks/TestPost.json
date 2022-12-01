@@ -2,14 +2,14 @@
   {
     "id": 1,
     "content": "Hello",
-    "url": "https://via.placeholder.com/600/92c952",
+    "url": "https://via.placeholder.com/36/92c952",
     "latitude": 35.8557,
     "longitude": 128.4903
   },
   {
     "id": 2,
     "content": "Nice",
-    "url": "https://via.placeholder.com/600/24f355",
+    "url": "https://via.placeholder.com/36/24f355",
     "latitude": 35.8567,
     "longitude": 128.4893
   }

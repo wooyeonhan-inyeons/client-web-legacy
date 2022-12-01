@@ -1,6 +1,7 @@
 // import { MarkerClusterer } from "@googlemaps/markerclusterer";
 // import { useCallback, useEffect, useRef } from "react";
 // import { useQuery } from "react-query";
+// import { LoadingBox } from "../../../components/LoadingContainer";
 // import { GetTestPost } from "../../../Hooks";
 
 // const options = {
@@ -22,8 +23,9 @@
 // export const Map = () => {
 //   const mapElement = useRef(null);
 
-//   const { data } = useQuery("getMerker", GetTestPost, {
+//   const { data, isLoading, isSuccess } = useQuery("getMerker", GetTestPost, {
 //     retry: 3,
+//     onSuccess: () => {},
 //   });
 
 //   // 컴포넌트가 마운트될 때, 수동으로 스크립트를 넣어줍니다.
@@ -48,7 +50,7 @@
 //       const marker = new google.maps.Marker({
 //         position: { lat: item.latitude, lng: item.longitude },
 //         label: item.content,
-//         // icon: item.url,
+//         icon: item.url,
 //       });
 //       return marker;
 //     });
@@ -56,42 +58,48 @@
 //   }, []);
 
 //   useEffect(() => {
-//     const script = window.document.getElementsByTagName("script")[0];
-//     const includeCheck = script.src.startsWith(
-//       "https://maps.googleapis.com/maps/api"
-//     );
-//     // script 중복 호출 방지
-//     if (includeCheck) return initMap();
+//     console.log("data 있냐?");
+//     if (!data) {
+//       const script = window.document.getElementsByTagName("script")[0];
+//       const includeCheck = script.src.startsWith(
+//         "https://maps.googleapis.com/maps/api"
+//       );
+//       // script 중복 호출 방지
+//       if (includeCheck) return initMap();
 
-//     window.initMap = initMap;
-//     loadScript(
-//       `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_KEY}&callback=initMap&language=ko`
-//     );
-//   }, [initMap, loadScript]);
+//       window.initMap = initMap;
+//       loadScript(
+//         `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_KEY}&callback=initMap&language=ko`
+//       );
+//       console.log("start");
+//     }
+//   }, [initMap, loadScript, data]);
 
-//   useEffect(() => {
-//     // initMap();
-//   }, []);
-
-//   return <div id="google_map" ref={mapElement} />;
+//   return !isLoading ? <div id="google_map" ref={mapElement} /> : <LoadingBox />;
 // };
 
 //React 방식이지만 원하는 대로 잘 안됨.
-import React, { useEffect } from "react";
-import { GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
+import React, { useEffect, useMemo, useRef } from "react";
+import {
+  GoogleMap,
+  MarkerClusterer,
+  MarkerClustererF,
+  MarkerF,
+  useJsApiLoader,
+} from "@react-google-maps/api";
 import { useQuery } from "react-query";
 import { GetTestPost } from "../../../Hooks";
+import { useNavigate } from "react-router-dom";
 
 const containerStyle = {
   width: "100%",
   height: "100vh",
 };
-const center = { lat: 35.859115, lng: 128.487598 };
 const options = {
   mapId: "7c08bc77e896521d",
   backgroundColor: "#242f3e",
-  // minZoom: 13,
-  // maxZoom: 17,
+  minZoom: 13,
+  maxZoom: 17,
   zoomControl: false,
   mapTypeControl: false,
   scaleControl: false,
@@ -102,33 +110,47 @@ const options = {
 };
 
 export const Map = () => {
+  const center = useMemo(() => ({ lat: 35.859115, lng: 128.487598 }), []);
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: process.env.REACT_APP_API_KEY!, // 구글에서 키를 받아서 입력해야 한다
   });
 
-  const [map, setMap] = React.useState(null);
-
   const { data } = useQuery("getMerker", GetTestPost, {
     retry: 3,
-    onSuccess: () => {},
+    onSuccess: (res) => {
+      console.log(res);
+    },
   });
+  const optionsMC = {
+    imagePath:
+      "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m", // so you must have m1.png, m2.png, m3.png, m4.png, m5.png and m6.png in that folder
+  };
+  const navigate = useNavigate();
 
   return isLoaded ? (
     <GoogleMap
       mapContainerStyle={containerStyle}
-      center={{ lat: 35.859115, lng: 128.487598 }}
+      center={center}
       zoom={17} //줌
       options={options}
     >
-      {data?.map((item, index) => (
-        <MarkerF
-          key={index}
-          position={{ lat: item.latitude, lng: item.longitude }}
-          icon={{ url: item.url, scale: 5 }}
-          cursor="pointer"
-        />
-      ))}
+      <MarkerClusterer>
+        {(clusterer) => (
+          <>
+            {data?.map((item, index) => (
+              <MarkerF
+                onClick={() => navigate(`/detail/${item.id}`)}
+                key={index}
+                position={{ lat: item.latitude, lng: item.longitude }}
+                icon={{ url: item.url, scale: 5 }}
+                cursor="pointer"
+                clusterer={clusterer}
+              />
+            ))}
+          </>
+        )}
+      </MarkerClusterer>
     </GoogleMap>
   ) : (
     <></>

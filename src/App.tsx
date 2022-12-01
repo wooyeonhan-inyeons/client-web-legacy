@@ -20,7 +20,7 @@ import Login from "./page/Login";
 import Mypage from "./page/MyPage";
 import { LoginRedirect } from "./Hooks";
 import { MyPostes } from "./page/MyPage/Postes";
-import { Detail } from "./page/Home/Detail";
+import Detail from "./page/Home/Detail";
 
 function App() {
   const [user] = useRecoilState(recoil_.userState);
@@ -37,11 +37,15 @@ function App() {
     {
       path: "/*",
       element: <Home />,
-      errorElement: <NoMatch />,
+      // errorElement: <NoMatch />,
       children: [
         {
-          path: "detail",
+          path: "detail/*",
           element: <Detail />,
+        },
+        {
+          path: "*",
+          element: <Home />,
         },
       ],
       loader: () => user.role === USER_ROLE.GUEST && redirect("/login"),
