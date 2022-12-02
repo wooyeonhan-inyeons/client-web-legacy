@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { useQuery } from "react-query";
+import { useEffect } from "react";
+
 import { useRecoilState } from "recoil";
 import { recoil_ } from "./recoil/index";
 import { USER_ROLE } from "./constants";
-import { GetUser } from "./Hooks";
+
 import {
   createBrowserRouter,
   RouterProvider,
@@ -25,27 +25,15 @@ import Detail from "./page/Home/Detail";
 function App() {
   const [user] = useRecoilState(recoil_.userState);
 
-  // const { data } = useQuery("userInfo", GetUser, {
-  //   retry: 1,
-  //   refetchOnReconnect: false,
-  //   onSuccess: (res) => {
-  //     // console.log(res);
-  //   },
-  // });
-
   const router = createBrowserRouter([
     {
       path: "/*",
       element: <Home />,
-      // errorElement: <NoMatch />,
+      errorElement: <NoMatch />,
       children: [
         {
           path: "detail/*",
           element: <Detail />,
-        },
-        {
-          path: "*",
-          element: <Home />,
         },
       ],
       loader: () => user.role === USER_ROLE.GUEST && redirect("/login"),

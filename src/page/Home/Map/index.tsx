@@ -79,17 +79,19 @@
 // };
 
 //React 방식이지만 원하는 대로 잘 안됨.
-import React, { useEffect, useMemo, useRef } from "react";
+import { useMemo } from "react";
 import {
   GoogleMap,
   MarkerClusterer,
-  MarkerClustererF,
   MarkerF,
   useJsApiLoader,
 } from "@react-google-maps/api";
 import { useQuery } from "react-query";
 import { GetTestPost } from "../../../Hooks";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { recoil_ } from "../../../recoil";
+import { HEADER_FN } from "../../../constants";
 
 const containerStyle = {
   width: "100%",
@@ -110,6 +112,8 @@ const options = {
 };
 
 export const Map = () => {
+  const [, setHeader] = useRecoilState(recoil_.headerState);
+
   const center = useMemo(() => ({ lat: 35.859115, lng: 128.487598 }), []);
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -118,14 +122,16 @@ export const Map = () => {
 
   const { data } = useQuery("getMerker", GetTestPost, {
     retry: 3,
-    onSuccess: (res) => {
-      console.log(res);
+    onSuccess: () => {
+      setHeader({
+        title: "",
+        vis_goBack: false,
+        rightButton1: HEADER_FN.ALARM,
+        rightButton2: HEADER_FN.MYPAGE,
+      });
     },
   });
-  const optionsMC = {
-    imagePath:
-      "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m", // so you must have m1.png, m2.png, m3.png, m4.png, m5.png and m6.png in that folder
-  };
+
   const navigate = useNavigate();
 
   return isLoaded ? (

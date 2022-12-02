@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { COLOR } from "../../constants";
+import { COLOR, zIndex } from "../../constants";
 
 export const StyledContainer = styled.div`
   padding: 4rem 1rem;
@@ -32,6 +32,8 @@ export const MapContainer = styled.div`
   max-width: 600px;
   margin: 0 auto;
   height: 100vh;
+  z-index: ${zIndex.background};
+  position: absolute;
 
   & > * {
     height: 100%;
