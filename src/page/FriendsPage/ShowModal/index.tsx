@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { COLOR } from "../../../constants";
+import { getDetail } from './api'
 
 const Modal = styled.div`
     display: flex;
@@ -49,13 +50,13 @@ const BackBtn = styled.button`
     margin: 10px 20px 10px 20px;
     border: none;
     border-radius: 8px;
-    width: 20vw;
-    height: 10vh;
+    width: 30%;
+    height: 60%;
     box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
 
     cursor: pointer;
     &:hover {
-        background-color: #23304a;
+        background-color: #1b253a;
     }
 `
 const SaveBtn = styled.button`
@@ -65,8 +66,8 @@ const SaveBtn = styled.button`
     margin: 10px 20px 10px 20px;
     border: none;
     border-radius: 8px;
-    width: 20vw;
-    height: 10vh;
+    width: 30%;
+    height: 60%;
     box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
 
     cursor: pointer;
@@ -74,17 +75,28 @@ const SaveBtn = styled.button`
         background-color: #e1e1e1;
     }
 `
+export interface IProps {
+    friendId: string,
+    closeModal: ()=> void
+}
 
-function ShowModal() {
+function ShowModal({ friendId, closeModal }: IProps) {
+    useEffect(() => {
+        getDetail({friendId}).then((res: any) => {
+            console.log(res.name, "hello");
+        });
+    }, []);
+
     return (
         <>
         <Modal>
             <Label>친구 요청</Label>
             <DetailBox>
                 응애 나 모달창
+                {friendId}
             </DetailBox>
             <BtnBox>
-                <BackBtn>취소</BackBtn>
+                <BackBtn onClick={closeModal}>취소</BackBtn>
                 <SaveBtn>요청</SaveBtn>
             </BtnBox>
         </Modal>

@@ -18,12 +18,14 @@ import { useQuery } from "react-query";
 import ShowModal from "../ShowModal";
 
 function FriendsList() {
-  const [friendInput, setFriendInput] = useState("");
+  const [friendInput, setFriendInput] = useState<string>("");
   const [friends, setFriends] = useState([]);
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const closeModal = () => setModalOpen(false);
   const onChange = (event: any) => setFriendInput(event.target.value);
   const onSubmit = (event: any) => {event.preventDefault();};
-  const onClickModal = () => { setModalOpen(true); };
+  const onClickModal = () => { setModalOpen(true); 
+  console.log(friendInput)};
   
   useEffect(() => {
     getFriends().then((res: any) => {
@@ -33,7 +35,7 @@ function FriendsList() {
       }));
       const following = res.following.map((data: any) => ({
         friend_id: data.friend_id,
-        user_info: data.following,
+        user_info: data.follower,
       }));
       const result: any = [...follower, ...following];
       setFriends(result);
@@ -52,7 +54,7 @@ function FriendsList() {
           ></Input>
           <Button onClick={onClickModal}>추가</Button>
         </InputDiv>
-          {modalOpen && <ShowModal></ShowModal>}
+          {modalOpen && <ShowModal friendId={friendInput} closeModal={closeModal}></ShowModal>}
         <ListDiv>
           <ListBox>
             {friends.map((item: any, index) => (
@@ -64,7 +66,7 @@ function FriendsList() {
                   colors={AvatarColor}
                 />
                 <FriendName>{item.user_info.name}</FriendName>
-                <FriendMessage>{item.user_info.message}</FriendMessage>
+                {/* <FriendMessage>{item.user_info.message}</FriendMessage> */}
                 <EllipsisOutlined
                   style={{ float: "right", paddingTop: "5px" }}
                 />
