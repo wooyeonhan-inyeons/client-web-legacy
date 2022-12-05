@@ -7,5 +7,8 @@ export const getRequests = () => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("key")}`,
     },
-  }).then((response) => response.json());
+  })
+  .then((response) => response.json())
+  .then((res) => console.log("친구 요청 완료"))
+  .catch((e)=>alert("친구요청 실패"));
 };

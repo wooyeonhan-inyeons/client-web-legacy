@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { AvatarColor, COLOR } from "../../../constants";
 import Avatar from "boring-avatars";
 import { getDetail } from './api'
+import { gerRequestFr } from './Request/api'
 
 
 const Modal = styled.div`
@@ -127,6 +128,10 @@ function ShowModal({ friendId, closeModal }: IProps) {
         });
     }, []);
 
+    const onRequest = () => {
+        gerRequestFr({friendId}).then((res: any) => {});
+    }
+
     return (
         <>
         <Modal>
@@ -146,7 +151,7 @@ function ShowModal({ friendId, closeModal }: IProps) {
                 </DetailBox>
             <BtnBox>
                 <BackBtn onClick={closeModal}>취소</BackBtn>
-                <SaveBtn>요청</SaveBtn>
+                <SaveBtn onClick={onRequest}>요청</SaveBtn>
             </BtnBox>
         </Modal>
         </>
