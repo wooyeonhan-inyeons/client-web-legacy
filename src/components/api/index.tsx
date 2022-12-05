@@ -16,6 +16,7 @@ export const LoginRedirect = () => {
 
   useEffect(() => {
     if (user.role === USER_ROLE.USER) navigate("/");
+    //eslint-disable-next-line
   }, [user]);
 
   return <></>;
