@@ -5,8 +5,7 @@ import Avatar from "boring-avatars";
 import { getRequests } from "./api";
 
 const ListBox = styled.ul`
-    position: absolute;
-    width: 90vw;   
+    width: 100%;
     /* text-align: center;  */
     list-style: none;
     margin: 0px;
@@ -14,12 +13,16 @@ const ListBox = styled.ul`
 `
 
 const ImageDiv = styled.div`
+    display: flex;
+    justify-content: center;
     float: left;
     width: 15%;
     position: relative; top: 4px;
+    padding-right: 10px;
+    padding-bottom: 5px;
 `
 const ListEl = styled.li`
-    width: 92vw;
+    width: 100%;
     height: 76px;
 
     display: flex;
@@ -126,6 +129,42 @@ function RequestFriend() {
                     </BtnBox>
                 </ListEl>
             ))}
+            <ListEl>
+                <ImageDiv>
+                    <Avatar
+                        size={45}
+                        variant="beam"
+                        name={"cc"}
+                        colors={AvatarColor}
+                    />
+                </ImageDiv>
+                <TextBox>
+                    <Time>10분 전</Time>
+                    <Explaination>뜨거운감자님으로부터 친구 요청이 왔습니다.</Explaination>
+                </TextBox>
+                <BtnBox>
+                    <YesBtn>수락</YesBtn>
+                    <NoBtn>거절</NoBtn>
+                </BtnBox>
+            </ListEl>
+            <ListEl>
+                <ImageDiv>
+                    <Avatar
+                        size={45}
+                        variant="beam"
+                        name={"cc"}
+                        colors={AvatarColor}
+                    />
+                </ImageDiv>
+                <TextBox>
+                    <Time>10분 전</Time>
+                    <Explaination>뜨거운감자님으로부터 친구 요청이 왔습니다.</Explaination>
+                </TextBox>
+                <BtnBox>
+                    <YesBtn>수락</YesBtn>
+                    <NoBtn>거절</NoBtn>
+                </BtnBox>
+            </ListEl>
         </ListBox>
         </>
     )

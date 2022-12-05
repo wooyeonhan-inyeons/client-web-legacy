@@ -8,8 +8,8 @@ import { getDetail } from './api'
 const Modal = styled.div`
     display: flex;
     flex-direction: column;
-
     width: 70vw;
+    max-width: 500px;
     height: 50vh;
     min-height: 350px;
     z-index: 999;
@@ -39,7 +39,8 @@ const DetailBox = styled.div`
     height: 75vh;
     text-align: center;
     justify-content: center;
-    gap: 0px;
+    padding: 2em;
+
 `
 
 const BtnBox = styled.div`
@@ -86,6 +87,7 @@ const ImageDiv = styled.div`
     display: flex;
     justify-content: center;
     text-align: center;
+    margin: auto;
 `
 const Mail = styled.p`
     font-size: 15px;
