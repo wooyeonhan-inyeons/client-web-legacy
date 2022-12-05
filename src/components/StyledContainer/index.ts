@@ -30,12 +30,22 @@ export const StyledContainerFull = styled.div`
 export const MapContainer = styled.div`
   width: 100%;
   max-width: 600px;
-  margin: 0 auto;
   height: 100vh;
+
   z-index: ${zIndex.background};
   position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
 
   & > * {
+    height: 100%;
+    width: 100%;
+  }
+  .map {
+    height: 100%;
+    width: 100vh;
+  }
+  .map > .map-container {
     height: 100%;
     width: 100%;
   }

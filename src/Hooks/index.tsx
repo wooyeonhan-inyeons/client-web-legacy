@@ -42,9 +42,23 @@ export interface TestType {
   longitude: number;
 }
 
-export const GetTestPost = async () => {
+export const GetTestPost = async (): Promise<TestType[]> => {
   const response = await [TestPostData[0], TestPostData[1]];
-
-  // console.log(response);
   return response;
+};
+
+export const GetNearPost = async (data: { lat: number; lng: number }) => {
+  await fetch(`${BACK_URL}/posting/near`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      latitude: data.lat,
+      longitude: data.lng,
+    }),
+  }).then((response) => {
+    console.log(response);
+    return response.json();
+  });
 };

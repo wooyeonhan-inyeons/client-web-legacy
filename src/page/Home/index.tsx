@@ -1,16 +1,22 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import { useLoadScript } from "@react-google-maps/api";
 import { HEADER_FN } from "../../constants";
 
 import { Header } from "../../components/Header";
 import { MapContainer } from "../../components/StyledContainer";
-import { Map } from "./Map";
+import Map from "./Map";
 
 import { useRecoilState } from "recoil";
 import { recoil_ } from "../../recoil";
+import { LoadingBox } from "../../components/LoadingContainer";
 
 const Home = () => {
   const [header, setHeader] = useRecoilState(recoil_.headerState);
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_API_KEY!,
+  });
 
   useEffect(() => {
     setHeader({
@@ -21,6 +27,7 @@ const Home = () => {
     });
   }, []);
 
+  if (!isLoaded) return <LoadingBox />;
   return (
     <>
       <Header

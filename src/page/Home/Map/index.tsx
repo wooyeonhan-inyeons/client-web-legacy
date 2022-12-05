@@ -54,111 +54,184 @@
 //       });
 //       return marker;
 //     });
+
 //     new MarkerClusterer({ markers, map });
 //   }, []);
 
 //   useEffect(() => {
 //     console.log("data 있냐?");
-//     if (!data) {
-//       const script = window.document.getElementsByTagName("script")[0];
-//       const includeCheck = script.src.startsWith(
-//         "https://maps.googleapis.com/maps/api"
-//       );
-//       // script 중복 호출 방지
-//       if (includeCheck) return initMap();
 
-//       window.initMap = initMap;
-//       loadScript(
-//         `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_KEY}&callback=initMap&language=ko`
-//       );
-//       console.log("start");
-//     }
-//   }, [initMap, loadScript, data]);
+//     const script = window.document.getElementsByTagName("script")[0];
+//     const includeCheck = script.src.startsWith(
+//       "https://maps.googleapis.com/maps/api"
+//     );
+//     // script 중복 호출 방지
+//     if (includeCheck) return initMap();
+
+//     window.initMap = initMap;
+//     loadScript(
+//       `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_KEY}&callback=initMap&language=ko`
+//     );
+//     console.log("start");
+//   }, [initMap, loadScript]);
 
 //   return !isLoading ? <div id="google_map" ref={mapElement} /> : <LoadingBox />;
 // };
 
 //React 방식이지만 원하는 대로 잘 안됨.
-import { useMemo } from "react";
+// import { useMemo, useState } from "react";
+// import {
+//   GoogleMap,
+//   MarkerClusterer,
+//   MarkerF,
+//   useJsApiLoader,
+// } from "@react-google-maps/api";
+// import { useQuery } from "react-query";
+// import { GetTestPost } from "../../../Hooks";
+// import { useNavigate } from "react-router-dom";
+// import { useRecoilState } from "recoil";
+// import { recoil_ } from "../../../recoil";
+// import { HEADER_FN } from "../../../constants";
+
+// const containerStyle = {
+//   width: "100%",
+//   height: "100vh",
+// };
+// const options = {
+//   mapId: "7c08bc77e896521d",
+//   backgroundColor: "#242f3e",
+//   minZoom: 13,
+//   maxZoom: 17,
+//   zoomControl: false,
+//   mapTypeControl: false,
+//   scaleControl: false,
+//   streetViewControl: false,
+//   rotateControl: false,
+//   fullscreenControl: false,
+//   clickableIcons: false,
+// };
+
+// interface coordinate {
+//   lat: number;
+//   lng: number;
+// }
+
+// export const Map = () => {
+//   const [, setHeader] = useRecoilState(recoil_.headerState);
+//   const location = useState<coordinate>();
+
+//   const center = useMemo(() => ({ lat: 35.859115, lng: 128.487598 }), []);
+//   const { isLoaded } = useJsApiLoader({
+//     id: "google-map-script",
+//     googleMapsApiKey: process.env.REACT_APP_API_KEY!, // 구글에서 키를 받아서 입력해야 한다
+//   });
+
+//   const { data } = useQuery("getMerker", GetTestPost, {
+//     retry: 3,
+//     onSuccess: () => {},
+//   });
+
+//   const navigate = useNavigate();
+
+//   return isLoaded ? (
+//     <GoogleMap
+//       mapContainerStyle={containerStyle}
+//       center={center}
+//       zoom={17} //줌
+//       options={options}
+//     >
+//       <MarkerClusterer>
+//         {(clusterer) => (
+//           <>
+//             {data?.map((item, index) => (
+//               <MarkerF
+//                 onClick={() => navigate(`/detail/${item.id}`)}
+//                 key={index}
+//                 position={{ lat: item.latitude, lng: item.longitude }}
+//                 icon={{ url: item.url, scale: 5 }}
+//                 cursor="pointer"
+//                 clusterer={clusterer}
+//               />
+//             ))}
+//           </>
+//         )}
+//       </MarkerClusterer>
+//     </GoogleMap>
+//   ) : (
+//     <></>
+//   );
+// };
+
+//3번 쨰 방법 ㅋㅋ
+import { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import {
   GoogleMap,
+  Marker,
   MarkerClusterer,
   MarkerF,
-  useJsApiLoader,
 } from "@react-google-maps/api";
 import { useQuery } from "react-query";
-import { GetTestPost } from "../../../Hooks";
+import { GetNearPost, GetTestPost, TestType } from "../../../Hooks";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { recoil_ } from "../../../recoil";
-import { HEADER_FN } from "../../../constants";
 
-const containerStyle = {
-  width: "100%",
-  height: "100vh",
-};
-const options = {
-  mapId: "7c08bc77e896521d",
-  backgroundColor: "#242f3e",
-  minZoom: 13,
-  maxZoom: 17,
-  zoomControl: false,
-  mapTypeControl: false,
-  scaleControl: false,
-  streetViewControl: false,
-  rotateControl: false,
-  fullscreenControl: false,
-  clickableIcons: false,
-};
+type LatLngLiteral = google.maps.LatLngLiteral;
+type MapOptions = google.maps.MapOptions;
 
-export const Map = () => {
-  const [, setHeader] = useRecoilState(recoil_.headerState);
-
-  const center = useMemo(() => ({ lat: 35.859115, lng: 128.487598 }), []);
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: process.env.REACT_APP_API_KEY!, // 구글에서 키를 받아서 입력해야 한다
-  });
-
-  const { data } = useQuery("getMerker", GetTestPost, {
-    retry: 3,
-    onSuccess: () => {
-      setHeader({
-        title: "",
-        vis_goBack: false,
-        rightButton1: HEADER_FN.ALARM,
-        rightButton2: HEADER_FN.MYPAGE,
-      });
-    },
-  });
-
+export default function Map() {
   const navigate = useNavigate();
-
-  return isLoaded ? (
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={center}
-      zoom={17} //줌
-      options={options}
-    >
-      <MarkerClusterer>
-        {(clusterer) => (
-          <>
-            {data?.map((item, index) => (
-              <MarkerF
-                onClick={() => navigate(`/detail/${item.id}`)}
-                key={index}
-                position={{ lat: item.latitude, lng: item.longitude }}
-                icon={{ url: item.url, scale: 5 }}
-                cursor="pointer"
-                clusterer={clusterer}
-              />
-            ))}
-          </>
-        )}
-      </MarkerClusterer>
-    </GoogleMap>
-  ) : (
-    <></>
+  const mapRef = useRef<GoogleMap>();
+  const center = useMemo<LatLngLiteral>(
+    () => ({ lat: 35.859115, lng: 128.487598 }),
+    []
   );
-};
+  const options = useMemo<MapOptions>(
+    () => ({
+      mapId: "7c08bc77e896521d",
+      backgroundColor: "#242f3e",
+      minZoom: 13,
+      maxZoom: 17,
+      zoomControl: false,
+      mapTypeControl: false,
+      scaleControl: false,
+      streetViewControl: false,
+      rotateControl: false,
+      fullscreenControl: false,
+      clickableIcons: false,
+    }),
+    []
+  );
+  const onLoad = useCallback((map: any) => (mapRef.current = map), []);
+
+  const { data } = useQuery({ queryKey: ["test"], queryFn: GetTestPost });
+
+  useEffect(() => {
+    console.log("ㅅㅂ", data);
+  }, [data]);
+
+  return (
+    <GoogleMap
+      zoom={17}
+      center={center}
+      mapContainerClassName="map-container"
+      options={options}
+      onLoad={onLoad}
+    >
+      {/* <MarkerClusterer>
+         {(clusterer) => ( */}
+      <>
+        {data?.map((item) => (
+          <MarkerF
+            key={item.id}
+            onClick={() => navigate(`/detail/${item.id}`)}
+            position={{ lat: item.latitude, lng: item.longitude }}
+            icon={{ url: item.url, scale: 5 }}
+            cursor="pointer"
+            // clusterer={clusterer}
+          />
+        ))}
+      </>
+      {/* )}
+       </MarkerClusterer> */}
+    </GoogleMap>
+  );
+}

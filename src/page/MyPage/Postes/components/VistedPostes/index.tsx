@@ -33,7 +33,8 @@ export const VisitedPost = () => {
 
   useEffect(() => {
     if (inView && hasNextPage) fetchNextPage();
-  });
+  }, [inView]);
+
   return (
     <PostImageContainer>
       <div className="ImageContainer">
