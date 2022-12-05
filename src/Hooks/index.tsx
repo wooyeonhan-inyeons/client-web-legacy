@@ -5,6 +5,7 @@ import { USER_ROLE } from ".././constants";
 import { useNavigate } from "react-router-dom";
 import { BACK_URL } from "../constants/GlobalConstants";
 import TestPostData from "./TestPost.json";
+import Geocode from "react-geocode";
 
 export const GetUser = async () => {
   const response = await fetch(`${BACK_URL}/user`, {
@@ -61,4 +62,27 @@ export const GetNearPost = async (data: { lat: number; lng: number }) => {
     console.log(response);
     return response.json();
   });
+};
+
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAP_API_KEY!);
+Geocode.setLanguage("ko");
+Geocode.setRegion("ko");
+Geocode.enableDebug();
+
+export const GetRevGeocode = async (data: { lat: number; lng: number }) => {
+  const response = await Geocode.fromLatLng(
+    data.lat.toString(),
+    data.lng.toString()
+  ).catch(() => {
+    throw new Error("알 수 없는 오류가 발생하였습니다.");
+  });
+  console.log(response);
+  const address = response.results[3].address_components;
+  return (
+    address[2].short_name +
+    " " +
+    address[1].short_name +
+    " " +
+    address[0].short_name
+  );
 };

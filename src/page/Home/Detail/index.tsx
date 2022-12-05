@@ -1,14 +1,25 @@
-import Avatar from "boring-avatars";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
+
 import { AvatarColor, HEADER_FN } from "../../../constants";
-import { GetTestPost } from "../../../Hooks";
+import { GetRevGeocode, GetTestPost } from "../../../Hooks";
 import { recoil_ } from "../../../recoil";
+
 import { StyledDetail } from "./styled";
+import { CompassOutlined } from "@ant-design/icons";
+import Avatar from "boring-avatars";
 
 const DetailCard = (item: any) => {
+  const { data } = useQuery("getRevGeo", () =>
+    GetRevGeocode({ lat: item.data.latitude, lng: item.data.longitude })
+  );
+
+  useEffect(() => {
+    // console.log("GEO: ", data);
+  }, [data]);
+
   return (
     <div className="postContainer" onClick={(e) => e.stopPropagation()}>
       <div
@@ -26,6 +37,12 @@ const DetailCard = (item: any) => {
           username
         </div>
         {item.data.content}
+        <div className="PostInfo">
+          <div className="date">22.12.05</div>
+          <div className="location">
+            <CompassOutlined /> {data}
+          </div>
+        </div>
       </div>
 
       <div className="actionSpace">

@@ -4,7 +4,7 @@ import { zIndex } from "../../../constants";
 export const StyledDetail = styled.div`
   width: 100%;
   height: 100vh;
-  background-color: #26314594;
+  background-color: #00000094;
   position: fixed;
   z-index: ${zIndex.middle};
   backdrop-filter: blur(3px);
@@ -15,7 +15,8 @@ export const StyledDetail = styled.div`
     width: 90%;
     max-width: 500px;
     min-contentheight: 500px;
-    background-color: #fff;
+    color: #fff;
+    background: #2f3642;
     border-radius: 1rem;
     margin: 0 auto;
     margin-bottom: 3rem;
@@ -44,7 +45,7 @@ export const StyledDetail = styled.div`
   .actionSpace .emotions .divider {
     width: 1px;
     height: 1rem;
-    background-color: #ddd;
+    background-color: #dddddd3d;
   }
 
   .actionSpace .emotions .emotionButton {
@@ -52,10 +53,11 @@ export const StyledDetail = styled.div`
     padding: 0.5rem 2rem;
     border-radius: 0.5rem;
     text-align: center;
+    cursor: pointer;
   }
 
   .actionSpace .emotions .emotionButton:hover {
-    background-color: #f2f2f2;
+    background-color: #ffffff3b;
   }
   .actionSpace .emotions .emotionCount {
     font-size: 0.9rem;
@@ -64,7 +66,7 @@ export const StyledDetail = styled.div`
   .content {
     min-height: 5rem;
     padding: 1rem;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #dddddd3d;
   }
 
   .content .title {
@@ -73,5 +75,17 @@ export const StyledDetail = styled.div`
     align-items: center;
     padding-bottom: 1rem;
     font-size: 1.2rem;
+  }
+
+  .PostInfo {
+    display: flex;
+    gap: 0.5rem;
+    color: #ddd;
+  }
+
+  .PostInfo > div {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding-top: 1rem;
   }
 `;

@@ -70,7 +70,7 @@
 
 //     window.initMap = initMap;
 //     loadScript(
-//       `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_KEY}&callback=initMap&language=ko`
+//       `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}&callback=initMap&language=ko`
 //     );
 //     console.log("start");
 //   }, [initMap, loadScript]);
@@ -123,7 +123,7 @@
 //   const center = useMemo(() => ({ lat: 35.859115, lng: 128.487598 }), []);
 //   const { isLoaded } = useJsApiLoader({
 //     id: "google-map-script",
-//     googleMapsApiKey: process.env.REACT_APP_API_KEY!, // 구글에서 키를 받아서 입력해야 한다
+//     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY!, // 구글에서 키를 받아서 입력해야 한다
 //   });
 
 //   const { data } = useQuery("getMerker", GetTestPost, {
@@ -180,10 +180,8 @@ type MapOptions = google.maps.MapOptions;
 export default function Map() {
   const navigate = useNavigate();
   const mapRef = useRef<GoogleMap>();
-  const center = useMemo<LatLngLiteral>(
-    () => ({ lat: 35.859115, lng: 128.487598 }),
-    []
-  );
+  const [center, setCenter] = useState<LatLngLiteral>();
+
   const options = useMemo<MapOptions>(
     () => ({
       mapId: "7c08bc77e896521d",
@@ -206,6 +204,14 @@ export default function Map() {
 
   useEffect(() => {
     console.log("ㅅㅂ", data);
+
+    navigator.geolocation.getCurrentPosition(function (position) {
+      console.log("Position: ", position.coords);
+      setCenter({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      });
+    });
   }, [data]);
 
   return (

@@ -15,7 +15,7 @@ const Home = () => {
   const [header, setHeader] = useRecoilState(recoil_.headerState);
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_API_KEY!,
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY!,
   });
 
   useEffect(() => {
