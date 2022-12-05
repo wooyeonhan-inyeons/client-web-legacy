@@ -40,6 +40,7 @@ const DetailBox = styled.div`
     text-align: center;
     justify-content: center;
     padding: 2em;
+    padding-top: 10px;
 
 `
 
@@ -91,19 +92,22 @@ const ImageDiv = styled.div`
 `
 const Mail = styled.p`
     font-size: 15px;
-    /* margin: 0px; */
+    margin: auto;
     color: #c2c2c2cb;
 `
 
 const Name = styled.p`
     font-size: 30px;
     font-weight: 600;
-    /* margin: 0px; */
-    /* position: relative; bottom: 20px; */
+    margin: auto;
 `
 
 const Message = styled.p`
     font-size: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: auto;
+
 `
 
 
@@ -136,8 +140,8 @@ function ShowModal({ friendId, closeModal }: IProps) {
                         colors={AvatarColor}
                         />
                     </ImageDiv>
-                    <Mail>{detail[2]}</Mail>
                     <Name>{detail[0]}</Name>
+                    <Mail>{detail[2]}</Mail>
                     <Message>{detail[1]}</Message>
                 </DetailBox>
             <BtnBox>
