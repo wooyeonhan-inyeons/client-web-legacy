@@ -9,8 +9,9 @@ const Modal = styled.div`
     display: flex;
     flex-direction: column;
 
-    width: 500px;
-    height: 400px;
+    width: 70vw;
+    height: 50vh;
+    min-height: 350px;
     z-index: 999;
     position: absolute;
     top: 50%;
@@ -34,16 +35,18 @@ const Label = styled.p`
 
 const DetailBox = styled.div`
     display: grid;
+    grid-template-rows: 40% 20% 20% 20%;
     height: 75vh;
     text-align: center;
     justify-content: center;
+    gap: 0px;
 `
 
 const BtnBox = styled.div`
     display: flex;
     height: 25vh;
     text-align: center;
-    justify-content: center;
+    justify-content: space-evenly;
 `
 
 const BackBtn = styled.button`
@@ -52,8 +55,9 @@ const BackBtn = styled.button`
     margin: 10px 20px 10px 20px;
     border: none;
     border-radius: 8px;
-    width: 30%;
+    width: 35%;
     height: 60%;
+    margin-right: 0px;
     box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
 
     cursor: pointer;
@@ -68,7 +72,8 @@ const SaveBtn = styled.button`
     margin: 10px 20px 10px 20px;
     border: none;
     border-radius: 8px;
-    width: 30%;
+    margin-left: 0px;
+    width: 35%;
     height: 60%;
     box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
 
@@ -78,22 +83,28 @@ const SaveBtn = styled.button`
     }
 `
 const ImageDiv = styled.div`
-    grid-row-start: 1;
-    grid-row-end: 2;
+    display: flex;
+    justify-content: center;
+    text-align: center;
 `
+const Mail = styled.p`
+    font-size: 15px;
+    /* margin: 0px; */
+    color: #c2c2c2cb;
+`
+
 const Name = styled.p`
     font-size: 30px;
     font-weight: 600;
-    margin: 0px;
+    /* margin: 0px; */
+    /* position: relative; bottom: 20px; */
 `
 
 const Message = styled.p`
     font-size: 15px;
 `
 
-const Mail = styled.p`
-    font-size: 15px;
-`
+
 export interface IProps {
     friendId: string,
     closeModal: ()=> void
@@ -117,14 +128,14 @@ function ShowModal({ friendId, closeModal }: IProps) {
                 <DetailBox>
                     <ImageDiv>
                         <Avatar
-                        size={57}
+                        size={60}
                         variant="beam"
                         name={"cc"}
                         colors={AvatarColor}
                         />
                     </ImageDiv>
-                    <Name>{detail[0]}</Name>
                     <Mail>{detail[2]}</Mail>
+                    <Name>{detail[0]}</Name>
                     <Message>{detail[1]}</Message>
                 </DetailBox>
             <BtnBox>

@@ -68,7 +68,7 @@ function FriendsList() {
                 <FriendName>{item.user_info.name}</FriendName>
                 {/* <FriendMessage>{item.user_info.message}</FriendMessage> */}
                 <EllipsisOutlined
-                  style={{ position: "absolute", right: "8%" , paddingTop: "5px" }}
+                  style={{ position: "absolute", right: "10%" , paddingTop: "5px" }}
                 />
               </List>
             ))}

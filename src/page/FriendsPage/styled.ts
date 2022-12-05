@@ -9,7 +9,7 @@ export const InputDiv = styled.div`
 
 export const Input = styled.input`
     position: absolute;
-    width: 85%;
+    width: 77%;
     height: 7.5vh; 
     min-height: 55px;
     font-size: 20px;
@@ -17,6 +17,7 @@ export const Input = styled.input`
     border-radius: 10px;
     outline: none;
     padding-left: 10px;
+    padding-right: 1em;
     background-color: ${COLOR.background};
     font-family: inherit;
     border: solid 2px white; border-radius: 12px 0px 0px 12px; 
