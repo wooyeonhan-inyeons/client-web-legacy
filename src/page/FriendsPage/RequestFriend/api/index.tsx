@@ -1,11 +1,7 @@
 import { BACK_URL } from "../../../../constants/GlobalConstants";
 
-interface Prop {
-    friendId: string
-}
-
-export const getDetail = ({friendId} : Prop) => {
-  return fetch(`${BACK_URL}/user/search?user_id=${friendId}`, {
+export const getFriends = async () => {
+  return fetch(`${BACK_URL}/friends`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

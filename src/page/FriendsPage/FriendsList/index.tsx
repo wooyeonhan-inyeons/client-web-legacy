@@ -57,7 +57,7 @@ function FriendsList() {
           {modalOpen && <ShowModal friendId={friendInput} closeModal={closeModal}></ShowModal>}
         <ListDiv>
           <ListBox>
-            {friends.map((item: any, index) => (
+            {friends.map((item: any, index: number) => (
               <List key={index}>
                 <Avatar
                   size={37}
@@ -68,7 +68,7 @@ function FriendsList() {
                 <FriendName>{item.user_info.name}</FriendName>
                 {/* <FriendMessage>{item.user_info.message}</FriendMessage> */}
                 <EllipsisOutlined
-                  style={{ float: "right", paddingTop: "5px" }}
+                  style={{ position: "absolute", right: "5%" , paddingTop: "5px" }}
                 />
               </List>
             ))}

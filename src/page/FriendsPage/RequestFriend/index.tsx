@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+
+const ListBox = styled.ul`
+    
+`
+
+const ListEl = styled.li`
+    
+`
 
 function RequestFriend() {
+    // const [requests, setRequests] = useState([]);
+
+    // useEffect(() => {
+    //   first
+    
+    //   return () => {
+    //     second
+    //   }
+    // }, [third])
+    
     return (
         <>
-        <span>친구 요청 페이지</span>
+        <ListBox>
+            <ListEl></ListEl>
+        </ListBox>
         </>
     )
 }

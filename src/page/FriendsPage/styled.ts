@@ -59,9 +59,8 @@ export const List = styled.li`
     display: flex;
     color: white;
     height: 60px;
-    padding: 5px 10px 5px 5px;
+    padding: 10px 5px 5px 5px;
     margin-bottom: 5px;
-    padding-bottom: 10px;
     border-bottom: 1px solid #efefef;
     font-size: 25px;
     list-style: none;

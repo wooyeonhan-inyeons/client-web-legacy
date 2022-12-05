@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { COLOR } from "../../../constants";
+import { AvatarColor, COLOR } from "../../../constants";
+import Avatar from "boring-avatars";
 import { getDetail } from './api'
+
 
 const Modal = styled.div`
     display: flex;
@@ -31,7 +33,7 @@ const Label = styled.p`
 `
 
 const DetailBox = styled.div`
-    display: flex;
+    display: grid;
     height: 75vh;
     text-align: center;
     justify-content: center;
@@ -75,15 +77,36 @@ const SaveBtn = styled.button`
         background-color: #e1e1e1;
     }
 `
+const ImageDiv = styled.div`
+    grid-row-start: 1;
+    grid-row-end: 2;
+`
+const Name = styled.p`
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0px;
+`
+
+const Message = styled.p`
+    font-size: 15px;
+`
+
+const Mail = styled.p`
+    font-size: 15px;
+`
 export interface IProps {
     friendId: string,
     closeModal: ()=> void
 }
 
+// 모달 UI 수정
 function ShowModal({ friendId, closeModal }: IProps) {
+    const [detail, setDetail] = useState([]);
+    // 친구정보 useState로 전달하기
     useEffect(() => {
-        getDetail({friendId}).then((res: any) => {
-            console.log(res.name, "hello");
+        getDetail({friendId}).then((res: any ) => {
+            const arr: any = [res.name, res.message, res.email];
+            setDetail(arr);
         });
     }, []);
 
@@ -91,10 +114,19 @@ function ShowModal({ friendId, closeModal }: IProps) {
         <>
         <Modal>
             <Label>친구 요청</Label>
-            <DetailBox>
-                응애 나 모달창
-                {friendId}
-            </DetailBox>
+                <DetailBox>
+                    <ImageDiv>
+                        <Avatar
+                        size={57}
+                        variant="beam"
+                        name={"cc"}
+                        colors={AvatarColor}
+                        />
+                    </ImageDiv>
+                    <Name>{detail[0]}</Name>
+                    <Mail>{detail[2]}</Mail>
+                    <Message>{detail[1]}</Message>
+                </DetailBox>
             <BtnBox>
                 <BackBtn onClick={closeModal}>취소</BackBtn>
                 <SaveBtn>요청</SaveBtn>
@@ -103,4 +135,5 @@ function ShowModal({ friendId, closeModal }: IProps) {
         </>
     );
 }
+
 export default ShowModal;
