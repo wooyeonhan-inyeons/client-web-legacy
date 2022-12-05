@@ -173,6 +173,7 @@ import {
 import { useQuery } from "react-query";
 import { GetNearPost, GetTestPost, TestType } from "../../../Hooks";
 import { useNavigate } from "react-router-dom";
+import { LoadingBox } from "../../../components/LoadingContainer";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
@@ -200,20 +201,20 @@ export default function Map() {
   );
   const onLoad = useCallback((map: any) => (mapRef.current = map), []);
 
-  const { data } = useQuery({ queryKey: ["test"], queryFn: GetTestPost });
+  const { data, isLoading } = useQuery("postNear", () => GetNearPost(center), {
+    retry: 3,
+  });
 
   useEffect(() => {
-    console.log("ㅅㅂ", data);
-
     navigator.geolocation.getCurrentPosition(function (position) {
-      console.log("Position: ", position.coords);
       setCenter({
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       });
     });
-  }, [data]);
+  }, []);
 
+  if (isLoading) return <LoadingBox />;
   return (
     <GoogleMap
       zoom={17}
@@ -222,22 +223,22 @@ export default function Map() {
       options={options}
       onLoad={onLoad}
     >
-      {/* <MarkerClusterer>
-         {(clusterer) => ( */}
-      <>
-        {data?.map((item) => (
-          <MarkerF
-            key={item.id}
-            onClick={() => navigate(`/detail/${item.id}`)}
-            position={{ lat: item.latitude, lng: item.longitude }}
-            icon={{ url: item.url, scale: 5 }}
-            cursor="pointer"
-            // clusterer={clusterer}
-          />
-        ))}
-      </>
-      {/* )}
-       </MarkerClusterer> */}
+      {isLoading ? (
+        <LoadingBox />
+      ) : (
+        <>
+          {data?.map((item: any) => (
+            <Marker
+              key={item.post_id}
+              onClick={() => navigate(`/detail/${item.id}`)}
+              position={{ lat: item.latitude, lng: item.longitude }}
+              // icon={{ url: item.url, scale: 5 }}
+              cursor="pointer"
+              // clusterer={clusterer}
+            />
+          ))}
+        </>
+      )}
     </GoogleMap>
   );
 }

@@ -8,7 +8,7 @@ import { GetRevGeocode, GetTestPost } from "../../../Hooks";
 import { recoil_ } from "../../../recoil";
 
 import { StyledDetail } from "./styled";
-import { CompassOutlined } from "@ant-design/icons";
+import { CompassOutlined, MoreOutlined } from "@ant-design/icons";
 import Avatar from "boring-avatars";
 
 const DetailCard = (item: any) => {
@@ -27,14 +27,19 @@ const DetailCard = (item: any) => {
         style={{ background: `url(${item.data.url})` }}
       ></div>
       <div className="content">
-        <div className="title">
-          <Avatar
-            size={32}
-            variant="beam"
-            name={item.data.content}
-            colors={AvatarColor}
-          />
-          username
+        <div className="header">
+          <div className="title">
+            <Avatar
+              size={32}
+              variant="beam"
+              name={item.data.content}
+              colors={AvatarColor}
+            />
+            username
+          </div>
+          <div className="HederAction">
+            <MoreOutlined />
+          </div>
         </div>
         {item.data.content}
         <div className="PostInfo">

@@ -24,6 +24,14 @@ export const StyledDetail = styled.div`
     overflow: hidden;
   }
 
+  &::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ffffff80; /*스크롤바의 색상*/
+  }
+
   .background {
     width: 100%;
     aspect-ratio: auto 1 / 1;
@@ -60,7 +68,7 @@ export const StyledDetail = styled.div`
     background-color: #ffffff3b;
   }
   .actionSpace .emotions .emotionCount {
-    font-size: 0.9rem;
+    font-size: 0.7rem;
   }
 
   .content {
@@ -68,12 +76,17 @@ export const StyledDetail = styled.div`
     padding: 1rem;
     border-bottom: 1px solid #dddddd3d;
   }
+  .content .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+  }
 
-  .content .title {
+  .content .header .title {
     display: flex;
     gap: 0.5rem;
     align-items: center;
-    padding-bottom: 1rem;
     font-size: 1.2rem;
   }
 

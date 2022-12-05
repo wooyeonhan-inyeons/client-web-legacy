@@ -48,20 +48,25 @@ export const GetTestPost = async (): Promise<TestType[]> => {
   return response;
 };
 
-export const GetNearPost = async (data: { lat: number; lng: number }) => {
-  await fetch(`${BACK_URL}/posting/near`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      latitude: data.lat,
-      longitude: data.lng,
-    }),
-  }).then((response) => {
-    console.log(response);
-    return response.json();
+export const GetNearPost = async (
+  center?: google.maps.LatLng | google.maps.LatLngLiteral
+) => {
+  if (center === undefined) return undefined;
+  const response = await fetch(
+    `${BACK_URL}/posting/near?latitude=${center?.lat}&longitude=${center?.lng}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem("key")}`,
+      },
+    }
+  ).then((res) => {
+    return res.json();
   });
+  return response;
+  // ㅋㅋㅋㅋ 모르겠다 왜 return 이렇게 하는지
 };
 
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAP_API_KEY!);
