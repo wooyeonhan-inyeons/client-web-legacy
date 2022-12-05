@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { AvatarColor, COLOR } from "../../../constants";
 import Avatar from "boring-avatars";
+import { getRequests } from "./api";
 
 const ListBox = styled.ul`
     position: absolute;
@@ -12,6 +13,11 @@ const ListBox = styled.ul`
     padding: 0px;
 `
 
+const ImageDiv = styled.div`
+    float: left;
+    width: 15%;
+    position: relative; top: 4px;
+`
 const ListEl = styled.li`
     width: 92vw;
     height: 76px;
@@ -23,30 +29,43 @@ const ListEl = styled.li`
     border: none;
     border-radius: 16px;
     margin-bottom: 8px;
+    padding: 0px 10px 0px 10px;
 `
 
-const time = styled.p
+const TextBox = styled.div`
+    width: 35%;
+    flex-grow: 4;
+    padding-right: 5px;
+`
+
+const Time = styled.div`
+    font-size: 10px;
+`
 
 const Explaination = styled.p`
-    display: inline-flex;
     color: white;
-    flex-grow: 4;
+    font-size: 13px;
+    margin: auto;
 `
 const BtnBox = styled.div`
+    width: 35%;
     display: flex;
-    flex-grow: 3;
+    align-items: center;
+    /* flex-grow: 3; */
     height: 100%;
+    margin: 0px;
+    padding: 0px;
 `
 
 const YesBtn = styled.button`
-    width: 16%;
+    width: 50%;
     height: 72%;
     background-color: white;
     border: none;
     border-radius: 10px;
     color: black;
     outline: none;
-
+    margin-right: 0.5em;
     font-weight: 900;
 
     cursor: pointer;
@@ -56,7 +75,7 @@ const YesBtn = styled.button`
 `
 
 const NoBtn = styled.button`
-    width: 16%;
+    width: 50%;
     height: 72%;
     background-color: white;
     border: none;
@@ -74,32 +93,39 @@ const NoBtn = styled.button`
 `
 
 function RequestFriend() {
-    // const [requests, setRequests] = useState([]);
+    const [requests, setRequests] = useState([]);
 
-    // useEffect(() => {
-    //   first
-    
-    //   return () => {
-    //     second
-    //   }
-    // }, [third])
+    useEffect(() => {
+        getRequests().then((res: any ) => {
+            const friend_id = res.friend_id;
+            const friend_name = res.follower.name
+              setRequests(friend_name);
+            });
+    }, []);
     
     return (
         <>
         <ListBox>
-            <ListEl>
-                <Avatar
-                    size={37}
-                    variant="beam"
-                    name={"cc"}
-                    colors={AvatarColor}
-                />dd
-                <BtnBox>
-                    <YesBtn>수락</YesBtn>
-                    <NoBtn>거절</NoBtn>
-
-                </BtnBox>
-            </ListEl>
+            {requests.map((item: any, index: number) => (
+                <ListEl key={index}>
+                    <ImageDiv>
+                        <Avatar
+                            size={45}
+                            variant="beam"
+                            name={"cc"}
+                            colors={AvatarColor}
+                        />
+                    </ImageDiv>
+                    <TextBox>
+                        <Time>10분 전</Time>
+                        <Explaination>{item}님으로부터 친구 요청이 왔습니다.</Explaination>
+                    </TextBox>
+                    <BtnBox>
+                        <YesBtn>수락</YesBtn>
+                        <NoBtn>거절</NoBtn>
+                    </BtnBox>
+                </ListEl>
+            ))}
         </ListBox>
         </>
     )

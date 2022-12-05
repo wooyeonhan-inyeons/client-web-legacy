@@ -1,7 +1,7 @@
 import { BACK_URL } from "../../../../constants/GlobalConstants";
 
-export const getFriends = async () => {
-  return fetch(`${BACK_URL}/friends`, {
+export const getRequests = () => {
+  return fetch(`${BACK_URL}/friends/request`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
