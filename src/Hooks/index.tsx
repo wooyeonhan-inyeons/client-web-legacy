@@ -48,50 +48,71 @@ export const GetTestPost = async (): Promise<TestType[]> => {
   return response;
 };
 
-export const GetNearPost = async (
-  center?: google.maps.LatLng | google.maps.LatLngLiteral
-) => {
-  try {
-    const response = await fetch(
-      `${BACK_URL}/posting/near?latitude=${center?.lat}&longitude=${center?.lng}`,
-      // `${BACK_URL}/posting/near?latitude=35.8591&longitude=128.4878`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${localStorage.getItem("key")}`,
-        },
-      }
-    );
-    return response.json();
-  } catch (e) {
-    console.error(e);
-  }
-};
-
 // export const GetNearPost = async (
 //   center?: google.maps.LatLng | google.maps.LatLngLiteral
 // ) => {
-//   if (center === undefined) return undefined;
-//   const response = await fetch(
-//     // `${BACK_URL}/posting/near?latitude=${center?.lat}&longitude=${center?.lng}`,
-//     `${BACK_URL}/posting/near?latitude=35.8591&longitude=128.4878`,
-//     {
-//       method: "GET",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Accept: "application/json",
-//         Authorization: `Bearer ${localStorage.getItem("key")}`,
-//       },
-//     }
-//   ).then((response) => {
-//     if (response.ok) console.log(response.json());
+//   console.log(center);
+//   try {
+//     const response = await fetch(
+//       `${BACK_URL}/posting/near?latitude=${center?.lat}&longitude=${center?.lng}`,
+//       // `${BACK_URL}/posting/near?latitude=35.8591&longitude=128.4878`,
+//       {
+//         method: "GET",
+//         headers: {
+//           "Content-Type": "application/json",
+//           Accept: "application/json",
+//           Authorization: `Bearer ${localStorage.getItem("key")}`,
+//         },
+//       }
+//     );
 //     return response.json();
-//   });
-//   return response;
-//   // ㅋㅋㅋㅋ 모르겠다 왜 return 이렇게 하는지
+//   }
 // };
+
+export const getNearTest = (
+  center?: google.maps.LatLng | google.maps.LatLngLiteral
+) => {
+  if (center === undefined) return undefined;
+  return fetch(
+    `${BACK_URL}/posting/near?latitude=${center?.lat}&longitude=${center?.lng}`,
+    // `${BACK_URL}/posting/near?latitude=35.8591&longitude=128.4878`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem("key")}`,
+      },
+    }
+  ).then((response) => {
+    // if (response.ok) console.log(response.json());
+    return response.json();
+  });
+  // ㅋㅋㅋㅋ 모르겠다 왜 return 이렇게 하는지
+};
+
+export const GetNearPost = async (
+  center?: google.maps.LatLng | google.maps.LatLngLiteral
+) => {
+  if (center === undefined) return undefined;
+  const response = await fetch(
+    `${BACK_URL}/posting/near?latitude=${center?.lat}&longitude=${center?.lng}`,
+    // `${BACK_URL}/posting/near?latitude=35.8591&longitude=128.4878`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem("key")}`,
+      },
+    }
+  ).then((response) => {
+    // if (response.ok) console.log(response.json());
+    return response.json();
+  });
+  return response;
+  // ㅋㅋㅋㅋ 모르겠다 왜 return 이렇게 하는지
+};
 
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAP_API_KEY!);
 Geocode.setLanguage("ko");

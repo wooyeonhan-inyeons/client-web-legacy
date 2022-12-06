@@ -139,6 +139,9 @@
 //       center={center}
 //       zoom={17} //줌
 //       options={options}
+//       onLoad={(map) => {
+//         console.log(map);
+//       }}
 //     >
 //       <MarkerClusterer>
 //         {(clusterer) => (
@@ -171,9 +174,15 @@ import {
   MarkerF,
 } from "@react-google-maps/api";
 import { useQuery } from "react-query";
-import { GetNearPost, GetTestPost, TestType } from "../../../Hooks";
+import {
+  GetNearPost,
+  getNearTest,
+  GetTestPost,
+  TestType,
+} from "../../../Hooks";
 import { useNavigate } from "react-router-dom";
 import { LoadingBox } from "../../../components/LoadingContainer";
+import useGeolocation from "react-hook-geolocation";
 
 import marker0 from "./images/marker/marker0.png";
 import marker1 from "./images/marker/marker1.png";
@@ -207,8 +216,10 @@ const markerImages = [
 
 export default function Map() {
   const navigate = useNavigate();
+  const geolocation = useGeolocation();
   const mapRef = useRef<GoogleMap>();
   const [center, setCenter] = useState<LatLngLiteral>();
+  const [data, setData] = useState([]);
 
   const options = useMemo<MapOptions>(
     () => ({
@@ -226,22 +237,30 @@ export default function Map() {
     }),
     []
   );
-  const onLoad = useCallback((map: any) => (mapRef.current = map), []);
+  // const onLoad = useCallback((map: any) => (mapRef.current = map), []);
 
-  const { data, isLoading } = useQuery("postNear", () => GetNearPost(center), {
-    onSuccess: () => {
-      // console.log(data);
-    },
-  });
+  // const { data, isLoading } = useQuery("postNear", () => GetNearPost(center), {
+  //   onSuccess: () => {
+  //     console.log("useQuery: ", data);
+  //   },
+  // });
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(function (position) {
+    if (geolocation.latitude !== null) {
       setCenter({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
+        lat: geolocation.latitude,
+        lng: geolocation.longitude,
       });
+    }
+  }, [geolocation]);
+
+  useEffect(() => {
+    console.log("exec");
+    getNearTest(center)?.then((res) => {
+      console.log(res);
+      setData(res);
     });
-  }, []);
+  }, [center]);
 
   return (
     <GoogleMap
@@ -249,23 +268,23 @@ export default function Map() {
       center={center}
       mapContainerClassName="map-container"
       options={options}
-      onLoad={onLoad}
+      // onLoad={onLoad}
     >
-      {isLoading ? (
+      {/* {isLoading ? (
         <LoadingBox />
-      ) : (
-        <>
-          {data?.map((item: MarkerProps, index: number) => (
-            <Marker
-              key={item.post_id}
-              onClick={() => navigate(`/detail/${index}`)}
-              position={{ lat: item.latitude, lng: item.longitude }}
-              icon={markerImages[index % 7]}
-              cursor="pointer"
-            />
-          ))}
-        </>
-      )}
+      ) : ( */}
+      <>
+        {data?.map((item: MarkerProps, index: number) => (
+          <Marker
+            key={item.post_id}
+            onClick={() => navigate(`/detail/${index}`)}
+            position={{ lat: item.latitude, lng: item.longitude }}
+            icon={markerImages[index % 7]}
+            cursor="pointer"
+          />
+        ))}
+      </>
+      {/* )} */}
     </GoogleMap>
   );
 }
