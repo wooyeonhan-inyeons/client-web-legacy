@@ -54,7 +54,6 @@ const BtnBox = styled.div`
     width: 35%;
     display: flex;
     align-items: center;
-    /* flex-grow: 3; */
     height: 100%;
     margin: 0px;
     padding: 0px;

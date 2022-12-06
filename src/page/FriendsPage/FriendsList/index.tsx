@@ -16,6 +16,23 @@ import Avatar from "boring-avatars";
 import { getFriends } from "./../api";
 import { useQuery } from "react-query";
 import ShowModal from "../ShowModal";
+import styled from "styled-components";
+
+const ImageDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    float: left;
+    width: 15%;
+    position: relative; top: 4px;
+    padding-bottom: 15px;
+`
+
+const TextBox = styled.div`
+    width: 20%;
+    flex-grow: 4;
+    padding-right: 5px;
+    padding-bottom: 10px;
+`
 
 function FriendsList() {
   const [friendInput, setFriendInput] = useState<string>("");
@@ -59,17 +76,21 @@ function FriendsList() {
           <ListBox>
             {friends.map((item: any, index: number) => (
               <List key={index}>
-                <Avatar
-                  size={37}
-                  variant="beam"
-                  name={"cc"}
-                  colors={AvatarColor}
-                />
-                <FriendName>{item.user_info.name}</FriendName>
-                <FriendMessage>{item.user_info.message}</FriendMessage>
-                <EllipsisOutlined
-                  style={{ position: "absolute", right: "10%" , paddingTop: "5px" }}
-                />
+                <ImageDiv>
+                  <Avatar
+                    size={40}
+                    variant="beam"
+                    name={"cc"}
+                    colors={AvatarColor}
+                  />
+                </ImageDiv>
+                <TextBox>
+                  <FriendName>{item.user_info.name}</FriendName>
+                  <FriendMessage>{item.user_info.message}</FriendMessage>
+                </TextBox>
+                  {/* <EllipsisOutlined
+                    style={{ width: "2em", position: "absolute", right: "10%" , paddingTop: "5px" }}
+                  /> */}
               </List>
             ))}
           </ListBox>
