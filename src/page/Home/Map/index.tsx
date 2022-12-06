@@ -175,8 +175,35 @@ import { GetNearPost, GetTestPost, TestType } from "../../../Hooks";
 import { useNavigate } from "react-router-dom";
 import { LoadingBox } from "../../../components/LoadingContainer";
 
+import marker0 from "./images/marker/marker0.png";
+import marker1 from "./images/marker/marker1.png";
+import marker2 from "./images/marker/marker2.png";
+import marker3 from "./images/marker/marker0.png";
+import marker4 from "./images/marker/marker0.png";
+import marker5 from "./images/marker/marker0.png";
+import marker6 from "./images/marker/marker0.png";
+
 type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
+
+interface MarkerProps {
+  content: string;
+  created_time: string;
+  forFriend: number;
+  latitude: number;
+  longitude: number;
+  post_id: string;
+}
+
+const markerImages = [
+  marker0,
+  marker1,
+  marker2,
+  marker3,
+  marker4,
+  marker5,
+  marker6,
+];
 
 export default function Map() {
   const navigate = useNavigate();
@@ -202,7 +229,9 @@ export default function Map() {
   const onLoad = useCallback((map: any) => (mapRef.current = map), []);
 
   const { data, isLoading } = useQuery("postNear", () => GetNearPost(center), {
-    retry: 3,
+    onSuccess: () => {
+      // console.log(data);
+    },
   });
 
   useEffect(() => {
@@ -214,7 +243,6 @@ export default function Map() {
     });
   }, []);
 
-  if (isLoading) return <LoadingBox />;
   return (
     <GoogleMap
       zoom={17}
@@ -227,14 +255,13 @@ export default function Map() {
         <LoadingBox />
       ) : (
         <>
-          {data?.map((item: any) => (
+          {data?.map((item: MarkerProps, index: number) => (
             <Marker
               key={item.post_id}
-              onClick={() => navigate(`/detail/${item.id}`)}
+              onClick={() => navigate(`/detail/${index}`)}
               position={{ lat: item.latitude, lng: item.longitude }}
-              // icon={{ url: item.url, scale: 5 }}
+              icon={markerImages[index % 7]}
               cursor="pointer"
-              // clusterer={clusterer}
             />
           ))}
         </>

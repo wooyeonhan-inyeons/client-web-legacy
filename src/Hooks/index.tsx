@@ -53,7 +53,8 @@ export const GetNearPost = async (
 ) => {
   if (center === undefined) return undefined;
   const response = await fetch(
-    `${BACK_URL}/posting/near?latitude=${center?.lat}&longitude=${center?.lng}`,
+    // `${BACK_URL}/posting/near?latitude=${center?.lat}&longitude=${center?.lng}`,
+    `${BACK_URL}/posting/near?latitude=35.8591&longitude=128.4878`,
     {
       method: "GET",
       headers: {
@@ -62,8 +63,10 @@ export const GetNearPost = async (
         Authorization: `Bearer ${localStorage.getItem("key")}`,
       },
     }
-  ).then((res) => {
-    return res.json();
+  ).then((response) => {
+    if (response.ok)
+      // console.log(res.json());
+      return response.json();
   });
   return response;
   // ㅋㅋㅋㅋ 모르겠다 왜 return 이렇게 하는지
