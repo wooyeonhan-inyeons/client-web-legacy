@@ -20,7 +20,8 @@ import Login from "./page/Login";
 import Mypage from "./page/MyPage";
 import { LoginRedirect } from "./Hooks";
 import { MyPostes } from "./page/MyPage/Postes";
-import Detail from "./page/Home/Detail";
+import { Detail } from "./page/Home/Detail";
+import { Write } from "./page/Home/Write";
 
 function App() {
   const [user] = useRecoilState(recoil_.userState);
@@ -32,10 +33,15 @@ function App() {
       errorElement: <NoMatch />,
       children: [
         {
-          path: "detail/*",
+          path: "detail/:post_id",
           element: <Detail />,
         },
       ],
+      loader: () => user.role === USER_ROLE.GUEST && redirect("/login"),
+    },
+    {
+      path: "write/",
+      element: <Write />,
       loader: () => user.role === USER_ROLE.GUEST && redirect("/login"),
     },
     {

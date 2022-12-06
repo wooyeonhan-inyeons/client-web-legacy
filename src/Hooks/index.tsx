@@ -35,17 +35,27 @@ export const LoginRedirect = () => {
   return <></>;
 };
 
-export interface TestType {
-  id: number;
-  content: string;
-  url: string;
-  latitude: number;
-  longitude: number;
-}
-
-export const GetTestPost = async (): Promise<TestType[]> => {
-  const response = await [TestPostData[0], TestPostData[1]];
-  return response;
+export const GetPostOne = async (
+  post_id?: string | undefined,
+  lat?: number,
+  lng?: number
+) => {
+  if (lat === undefined) return undefined;
+  return fetch(
+    `${BACK_URL}/posting?post_id=${post_id}&latitude=${lat}&longitude=${lng}`,
+    // `${BACK_URL}/posting/near?latitude=35.8591&longitude=128.4878`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem("key")}`,
+      },
+    }
+  ).then((response) => {
+    // if (response.ok) console.log(response.json());
+    return response.json();
+  });
 };
 
 // export const GetNearPost = async (

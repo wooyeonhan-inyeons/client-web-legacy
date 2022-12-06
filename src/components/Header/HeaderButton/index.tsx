@@ -60,7 +60,6 @@ export const HeaderButton = ({ fn = HEADER_FN.EMPTY }: Props) => {
     [HEADER_FN.EMPTY]: { icon: "", fn: () => undefined },
   };
 
-  useEffect(() => {}, []);
   return (
     <>
       <StyledButton onClick={BUTTON_TYPE[fn].fn}>

@@ -10,6 +10,7 @@ import Map from "./Map";
 import { useRecoilState } from "recoil";
 import { recoil_ } from "../../recoil";
 import { LoadingBox } from "../../components/LoadingContainer";
+import { Fab } from "./Map/components/Fab";
 
 const Home = () => {
   const [header, setHeader] = useRecoilState(recoil_.headerState);
@@ -39,6 +40,7 @@ const Home = () => {
       <MapContainer>
         <Map></Map>
       </MapContainer>
+      <Fab />
       <Outlet />
     </>
   );

@@ -174,12 +174,7 @@ import {
   MarkerF,
 } from "@react-google-maps/api";
 import { useQuery } from "react-query";
-import {
-  GetNearPost,
-  getNearTest,
-  GetTestPost,
-  TestType,
-} from "../../../Hooks";
+import { GetNearPost, getNearTest } from "../../../Hooks";
 import { useNavigate } from "react-router-dom";
 import { LoadingBox } from "../../../components/LoadingContainer";
 import useGeolocation from "react-hook-geolocation";
@@ -255,9 +250,9 @@ export default function Map() {
   }, [geolocation]);
 
   useEffect(() => {
-    console.log("exec");
+    // console.log("exec");
     getNearTest(center)?.then((res) => {
-      console.log(res);
+      // console.log(res);
       setData(res);
     });
   }, [center]);
@@ -270,21 +265,17 @@ export default function Map() {
       options={options}
       // onLoad={onLoad}
     >
-      {/* {isLoading ? (
-        <LoadingBox />
-      ) : ( */}
       <>
         {data?.map((item: MarkerProps, index: number) => (
           <Marker
             key={item.post_id}
-            onClick={() => navigate(`/detail/${index}`)}
+            onClick={() => navigate(`/detail/${item.post_id}`)}
             position={{ lat: item.latitude, lng: item.longitude }}
             icon={markerImages[index % 7]}
             cursor="pointer"
           />
         ))}
       </>
-      {/* )} */}
     </GoogleMap>
   );
 }

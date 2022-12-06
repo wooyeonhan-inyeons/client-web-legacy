@@ -1,30 +1,35 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
+import useGeolocation from "react-hook-geolocation";
 
 import { AvatarColor, HEADER_FN } from "../../../constants";
-import { GetRevGeocode, GetTestPost } from "../../../Hooks";
+import { GetPostOne, GetRevGeocode } from "../../../Hooks";
 import { recoil_ } from "../../../recoil";
 
 import { StyledDetail } from "./styled";
-import { CompassOutlined, MoreOutlined } from "@ant-design/icons";
+import {
+  CompassOutlined,
+  MoreOutlined,
+  EnvironmentOutlined,
+} from "@ant-design/icons";
 import Avatar from "boring-avatars";
 
 const DetailCard = (item: any) => {
   const { data } = useQuery("getRevGeo", () =>
-    GetRevGeocode({ lat: item.data.latitude, lng: item.data.longitude })
+    GetRevGeocode({ lat: item.latitude, lng: item.longitude })
   );
 
   useEffect(() => {
-    // console.log("GEO: ", data);
-  }, [data]);
+    console.log(item.latitude + " " + item.longitude, data);
+  }, []);
 
   return (
     <div className="postContainer" onClick={(e) => e.stopPropagation()}>
       <div
         className="background"
-        style={{ background: `url(${item.data.url})` }}
+        // style={{ background: `url(${item.data.url})` }}
       ></div>
       <div className="content">
         <div className="header">
@@ -32,7 +37,7 @@ const DetailCard = (item: any) => {
             <Avatar
               size={32}
               variant="beam"
-              name={item.data.content}
+              // name={item.data.content}
               colors={AvatarColor}
             />
             username
@@ -41,11 +46,11 @@ const DetailCard = (item: any) => {
             <MoreOutlined />
           </div>
         </div>
-        {item.data.content}
+        {/* {item.data.content} */}
         <div className="PostInfo">
           <div className="date">22.12.05</div>
           <div className="location">
-            <CompassOutlined /> {data}
+            <EnvironmentOutlined /> {data}
           </div>
         </div>
       </div>
@@ -69,14 +74,36 @@ const DetailCard = (item: any) => {
   );
 };
 
-const Detail = () => {
+export const Detail = () => {
   const [, setHeader] = useRecoilState(recoil_.headerState);
 
   const navigate = useNavigate();
-  const { data } = useQuery("userInfo", GetTestPost, {
-    retry: 1,
-    refetchOnReconnect: false,
-  });
+  const geolocation = useGeolocation();
+  let { post_id } = useParams<string>();
+  const [center, setCenter] = useState<{ lat: number; lng: number }>();
+
+  const { data } = useQuery(
+    "userInfo",
+    () => GetPostOne(post_id, center?.lat, center?.lng),
+    {
+      retry: 1,
+      refetchOnReconnect: false,
+      onSuccess: () => {
+        console.log("DATA : ", data);
+      },
+    }
+  );
+
+  useEffect(() => {
+    if (geolocation.latitude !== null) {
+      setCenter({
+        lat: geolocation.latitude,
+        lng: geolocation.longitude,
+      });
+    }
+
+    console.log(post_id, center);
+  }, [geolocation]);
 
   useEffect(() => {
     //모달 상태에서 스크롤 막기
@@ -100,13 +127,11 @@ const Detail = () => {
   return (
     <>
       <StyledDetail onClick={() => navigate("/")}>
-        {data?.map((item) => (
+        {/* {data?.map((item) => (
           <DetailCard data={item} key={item.id} />
-        ))}
+        ))} */}
+        <DetailCard data={data} />
       </StyledDetail>
-      <Outlet />
     </>
   );
 };
-
-export default Detail;
