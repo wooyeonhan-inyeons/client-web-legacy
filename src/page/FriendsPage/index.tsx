@@ -4,7 +4,7 @@ import { Header } from "../../components/Header";
 import { StyledContainer } from "../../components/StyledContainer";
 import { useQuery } from "react-query";
 import FriendsList from "./FriendsList";
-import RequestFriend from "./RequestFriend";
+import RequestFriend from "./RequestedFriend";
 import styled from "styled-components";
 import { COLOR } from "../../constants";
 

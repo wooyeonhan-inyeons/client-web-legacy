@@ -42,7 +42,8 @@ function FriendsList() {
   const onChange = (event: any) => setFriendInput(event.target.value);
   const onSubmit = (event: any) => {event.preventDefault();};
   const onClickModal = () => { setModalOpen(true); 
-  console.log(friendInput)};
+  // console.log(friendInput)
+  };
   
   useEffect(() => {
     getFriends().then((res: any) => {

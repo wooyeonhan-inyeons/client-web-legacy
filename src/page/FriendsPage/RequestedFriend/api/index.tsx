@@ -9,6 +9,5 @@ export const getRequests = () => {
     },
   })
   .then((response) => response.json())
-  .then((res) => console.log("친구 요청 완료"))
-  .catch((e)=>alert("친구요청 실패"));
+  .catch((e)=>alert("실패"));
 };

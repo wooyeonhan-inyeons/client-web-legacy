@@ -99,8 +99,8 @@ function RequestFriend() {
 
     useEffect(() => {
         getRequests().then((res: any ) => {
-            const friend_id : any = res.friend_id;
-            const friend_name : any = res.follower.name
+            const friend_id : any = res[0].friend_id;
+            const friend_name : any = res[0].follower.name
             console.log(friend_name);
             setRequests(friend_name);
             });
@@ -109,8 +109,8 @@ function RequestFriend() {
     return (
         <>
         <ListBox>
-            {requests.map((item: any, index: number) => (
-                <ListEl key={index}>
+            {requests.map((item) => (
+                <ListEl>
                     <ImageDiv>
                         <Avatar
                             size={45}
