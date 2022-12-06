@@ -9,9 +9,11 @@ export const gerRequestFr = ({friendId} : Prop) => {
         method: "POST",
         headers: {
         "Content-type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("key")}`,
         },
         body: JSON.stringify({
         following_id: friendId,
         }),
-    }).then((res) => res.json());
+    })
+    .then((res) => res.json())
 }

@@ -120,6 +120,7 @@ export interface IProps {
 // 모달 UI 수정
 function ShowModal({ friendId, closeModal }: IProps) {
     const [detail, setDetail] = useState([]);
+    const [success, setSuccess] = useState(false);
     // 친구정보 useState로 전달하기
     useEffect(() => {
         getDetail({friendId}).then((res: any ) => {
@@ -129,7 +130,10 @@ function ShowModal({ friendId, closeModal }: IProps) {
     }, []);
 
     const onRequest = () => {
-        gerRequestFr({friendId}).then((res: any) => {});
+        gerRequestFr({friendId})
+        .then((res: any) => {console.log("친구 요청 성공")})
+        .then(()=> setSuccess(true))
+        .catch((e)=>console.log(e));
     }
 
     return (
@@ -146,7 +150,13 @@ function ShowModal({ friendId, closeModal }: IProps) {
                         />
                     </ImageDiv>
                     <Name>{detail[0]}</Name>
-                    <Mail>{detail[2]}</Mail>
+                    <Mail>
+                        { success ?
+                        detail[2]
+                        :
+                        "사용자 정보가 존재하지 않습니다"
+                        }
+                        </Mail>
                     <Message>{detail[1]}</Message>
                 </DetailBox>
             <BtnBox>

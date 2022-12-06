@@ -66,7 +66,7 @@ function FriendsList() {
                   colors={AvatarColor}
                 />
                 <FriendName>{item.user_info.name}</FriendName>
-                {/* <FriendMessage>{item.user_info.message}</FriendMessage> */}
+                <FriendMessage>{item.user_info.message}</FriendMessage>
                 <EllipsisOutlined
                   style={{ position: "absolute", right: "10%" , paddingTop: "5px" }}
                 />

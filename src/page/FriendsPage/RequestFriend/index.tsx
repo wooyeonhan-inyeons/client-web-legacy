@@ -100,9 +100,10 @@ function RequestFriend() {
 
     useEffect(() => {
         getRequests().then((res: any ) => {
-            const friend_id = res.friend_id;
-            const friend_name = res.follower.name
-              setRequests(friend_name);
+            const friend_id : any = res.friend_id;
+            const friend_name : any = res.follower.name
+            console.log(friend_name);
+            setRequests(friend_name);
             });
     }, []);
     
