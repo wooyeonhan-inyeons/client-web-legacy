@@ -6,7 +6,7 @@ export const StyledFab = styled.div`
   height: 3.5rem;
   border-radius: 50%;
   background-color: #e3b719;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   color: #ffffffc9;
 
   position: fixed;
@@ -14,16 +14,10 @@ export const StyledFab = styled.div`
   right: 5%;
   line-height: 3.5rem;
   text-align: center;
+  box-shadow: 0px 6px 10px 0px #00000030;
+  cursor: pointer;
 
   z-index: ${zIndex.background};
-
-  filter: drop-shadow(0px 159px 63px rgba(23, 35, 53, 0.01))
-    drop-shadow(0px 89px 54px rgba(23, 35, 53, 0.5))
-    drop-shadow(0px 40px 40px rgba(23, 35, 53, 0.5))
-    drop-shadow(0px 10px 22px rgba(23, 35, 53, 0.5))
-    drop-shadow(0px 0px 0px rgba(23, 35, 53, 0.5));
-
-  cursor: pointer;
 
   &:hover {
     background-color: #d2ab1c;

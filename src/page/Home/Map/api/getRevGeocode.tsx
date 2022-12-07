@@ -6,6 +6,7 @@ Geocode.setRegion("ko");
 Geocode.enableDebug();
 
 export const GetRevGeocode = async (data: { lat: number; lng: number }) => {
+  if (data.lat === undefined) return undefined;
   const response = await Geocode.fromLatLng(
     data.lat.toString(),
     data.lng.toString()
