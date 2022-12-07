@@ -104,6 +104,7 @@ function RequestFriend() {
       const requestedFr: any = res.map((data: any) => ({
         friend_id: data.friend_id,
         friend_name: data.follower.name,
+        at_Time: data.create_at,
       }));
       console.log(res);
       const result: any = [...requestedFr];

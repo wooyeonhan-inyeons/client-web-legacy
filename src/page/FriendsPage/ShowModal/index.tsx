@@ -133,6 +133,7 @@ function ShowModal({ friendId, closeModal }: IProps) {
         gerRequestFr({friendId})
         .then((res: any) => {console.log("친구 요청 성공")})
         .then(()=> setSuccess(true))
+        .then(()=> closeModal())
         .catch((e)=>console.log(e));
     }
 
