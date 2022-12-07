@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { COLOR, zIndex } from "../../../constants";
+import { COLOR, zIndex } from "../../constants";
 
 export const StyledWriteContainer = styled.div`
   width: 100%;
@@ -12,6 +12,11 @@ export const StyledWriteContainer = styled.div`
   .inputSection {
     margin-bottom: 1.5rem;
   }
+  .inputSection.options {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
   .inputSection .subHead {
     font-weight: bolder;
     font-size: 2rem;
@@ -21,25 +26,25 @@ export const StyledWriteContainer = styled.div`
 
   .inputSection textarea {
     width: 100%;
-    background: none;
+    background-color: ${COLOR.background};
     outline: none !important;
     padding: 1rem;
     resize: none;
     height: 10rem;
 
     border: 1px solid #fff;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
   }
 
-  .inputSection label {
-    width: 100%;
+  .inputSection .attach {
+    width: 90%;
     max-width: 400px;
     height: 3rem;
     line-height: 3rem;
     text-align: center;
     display: block;
-    margin: 2rem auto;
-    border-radius: 1rem;
+    margin: 0 auto;
+    border-radius: 0.5rem;
 
     cursor: pointer;
 
@@ -47,10 +52,27 @@ export const StyledWriteContainer = styled.div`
     background-color: ${COLOR.secondary};
     box-shadow: 0px 6px 10px 0px #00000030;
   }
-  .inputSection label:hover {
+  .inputSection .attach:hover {
     background-color: #d2ab1c;
   }
-  .inputSection input {
+  .inputSection .friend {
+    width: 3.5rem;
+    height: 2rem;
+    border-radius: 1.5rem;
+    // background-color: #e3b719;
+    cursor: pointer;
+  }
+  .inputSection .friend .toggle {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: 5px 0px 6px #0000001a;
+    transform: translate(-100%, 0%);
+    position: relative;
+    transition: 0.3s cubic-bezier(0.86, 0.29, 0.24, 0.94);
+  }
+  input[type=file], input[type=text]{
     display: none;
   }
   .previewContainer {
@@ -87,15 +109,19 @@ export const StyledWriteContainer = styled.div`
     display: flex;
     justify-content: space-around;
   }
-  .inputSection .button {
+  .inputSection button {
     height: 3rem;
     line-height: 3rem;
+    padding: 0 1.5rem;
     text-align: center;
     display: inline-block;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
+    border: none;
+
+    background: none;
   }
-  .inputSection .button.submit {
-    width: 80%;
+  .inputSection button.submit {
+    width: 70%;
     max-width: 400px;
 
     cursor: pointer;
@@ -103,5 +129,26 @@ export const StyledWriteContainer = styled.div`
     color: #222;
     background-color: #fff;
     box-shadow: 0px 6px 10px 0px #00000030;
+  }
+
+  .inputSection button.submit:disabled,
+  .inputSection button.submit[disabled] {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+  }
+
+  .inputSection.err {
+    height: 3rem;
+    line-height: 3rem;
+    text-align: center;
+    color: #222;
+  }
+
+  .inputSection .errMsg {
+    background-color: #cccccc;
+    border-radius 0.5rem;
+    font-family: emoji;
   }
 `;
