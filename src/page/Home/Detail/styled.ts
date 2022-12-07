@@ -90,6 +90,18 @@ export const StyledDetail = styled.div`
     font-size: 1.2rem;
   }
 
+  .content .header .HederAction {
+    cursor: pointer;
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    text-align: center;
+  }
+  .content .header .HederAction:hover {
+    background-color: #ffffff24;
+    border-radius: 50%;
+  }
+
   .PostInfo {
     display: flex;
     gap: 0.5rem;

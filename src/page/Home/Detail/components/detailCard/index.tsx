@@ -1,4 +1,7 @@
 import { useQuery } from "react-query";
+import { useRecoilState } from "recoil";
+import { recoil_ } from "../../../../../recoil";
+
 import { getFormattedDate } from "../../../../../components/api/getFormattedDate";
 import { AvatarColor } from "../../../../../constants";
 import { GetRevGeocode } from "../../../Map/api/getRevGeocode";
@@ -19,6 +22,7 @@ export const DetailCard = (item: any) => {
     }
   );
   const time = getFormattedDate(new Date(item.data.created_time));
+  const [dialogOpen, setDialogOpen] = useRecoilState(recoil_.detailDialogState);
 
   return (
     <>
@@ -40,7 +44,10 @@ export const DetailCard = (item: any) => {
                   />
                   username
                 </div>
-                <div className="HederAction">
+                <div
+                  className="HederAction"
+                  onClick={() => setDialogOpen(true)}
+                >
                   <MoreOutlined />
                 </div>
               </div>
@@ -69,7 +76,7 @@ export const DetailCard = (item: any) => {
               </div>
             </div>
           </div>
-          <Dialog />
+          {dialogOpen && <Dialog />}
         </>
       ) : (
         <LoadingBox2 />
