@@ -186,8 +186,9 @@ import marker3 from "./images/marker/marker0.png";
 import marker4 from "./images/marker/marker0.png";
 import marker5 from "./images/marker/marker0.png";
 import marker6 from "./images/marker/marker0.png";
+import { useRecoilState } from "recoil";
+import { recoil_ } from "../../../recoil";
 
-type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
 
 interface MarkerProps {
@@ -213,15 +214,18 @@ export default function Map() {
   const navigate = useNavigate();
   const geolocation = useGeolocation();
   const mapRef = useRef<GoogleMap>();
-  const [center, setCenter] = useState<LatLngLiteral>();
+  // const [center, setCenter] = useState<LatLngLiteral>();
   const [data, setData] = useState([]);
+  const [coordinate, setCoordinate] = useRecoilState<google.maps.LatLngLiteral>(
+    recoil_.geoState
+  );
 
   const options = useMemo<MapOptions>(
     () => ({
       mapId: "7c08bc77e896521d",
       backgroundColor: "#242f3e",
       minZoom: 13,
-      maxZoom: 17,
+      maxZoom: 20,
       zoomControl: false,
       mapTypeControl: false,
       scaleControl: false,
@@ -242,7 +246,7 @@ export default function Map() {
 
   useEffect(() => {
     if (geolocation.latitude !== null) {
-      setCenter({
+      setCoordinate({
         lat: geolocation.latitude,
         lng: geolocation.longitude,
       });
@@ -251,16 +255,16 @@ export default function Map() {
 
   useEffect(() => {
     // console.log("exec");
-    getNearTest(center)?.then((res) => {
+    getNearTest(coordinate)?.then((res) => {
       // console.log(res);
       setData(res);
     });
-  }, [center]);
+  }, [coordinate]);
 
   return (
     <GoogleMap
       zoom={17}
-      center={center}
+      center={coordinate}
       mapContainerClassName="map-container"
       options={options}
       // onLoad={onLoad}

@@ -40,7 +40,7 @@ export const GetPostOne = async (
   lat?: number,
   lng?: number
 ) => {
-  if (lat === undefined) return undefined;
+  if (lat === undefined) throw new Error("알 수 없는 오류가 발생하였습니다.");
   return fetch(
     `${BACK_URL}/posting?post_id=${post_id}&latitude=${lat}&longitude=${lng}`,
     // `${BACK_URL}/posting/near?latitude=35.8591&longitude=128.4878`,
@@ -82,7 +82,8 @@ export const GetPostOne = async (
 export const getNearTest = (
   center?: google.maps.LatLng | google.maps.LatLngLiteral
 ) => {
-  if (center === undefined) return undefined;
+  if (center === undefined)
+    throw new Error("알 수 없는 오류가 발생하였습니다.");
   return fetch(
     `${BACK_URL}/posting/near?latitude=${center?.lat}&longitude=${center?.lng}`,
     // `${BACK_URL}/posting/near?latitude=35.8591&longitude=128.4878`,
@@ -104,7 +105,8 @@ export const getNearTest = (
 export const GetNearPost = async (
   center?: google.maps.LatLng | google.maps.LatLngLiteral
 ) => {
-  if (center === undefined) return undefined;
+  if (center === undefined)
+    throw new Error("알 수 없는 오류가 발생하였습니다.");
   const response = await fetch(
     `${BACK_URL}/posting/near?latitude=${center?.lat}&longitude=${center?.lng}`,
     // `${BACK_URL}/posting/near?latitude=35.8591&longitude=128.4878`,
