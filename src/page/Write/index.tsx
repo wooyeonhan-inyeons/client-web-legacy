@@ -5,10 +5,8 @@ import { CameraOutlined, PictureOutlined } from "@ant-design/icons";
 import { Post } from "./Hooks";
 import useGeolocation from "react-hook-geolocation";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "react-query";
 
-const errStyle = {
-  border: "1px solid #f00",
-};
 export const Write = () => {
   const navigate = useNavigate();
   const geolocation = useGeolocation();
@@ -18,10 +16,12 @@ export const Write = () => {
     lat: 0,
     lng: 0,
   });
+  const [submitLoding, setSubmitLoding] = useState(false);
 
   const [detailImages, setDetailImages] = useState<any>([]); // 프리뷰 보여줄 이미지 데이터
 
   const uploadFile = (event: any) => {
+    setError("");
     let fileArr = event.target.files; //  사용자가 선택한 파일들
     let fileURLs: any[] = [];
     let filesLength = fileArr.length > 10 ? 10 : fileArr.length; // 최대 10개
@@ -37,16 +37,6 @@ export const Write = () => {
       reader.readAsDataURL(file);
     }
   };
-
-  const Validata = (e: any) => {
-    e.preventDefault();
-
-    if (!e.target.imageFile.files.length)
-      return setError("⚠️ 우연에는 사진이 포함되어야 합니다.");
-    if (!e.target.content.value)
-      return setError("⚠️ 우연에는 내용이 없습니다.");
-  };
-
   useEffect(() => {
     if (geolocation.latitude !== null) {
       setPosition({
@@ -55,6 +45,32 @@ export const Write = () => {
       });
     }
   }, [geolocation]);
+
+  const Validata = (e: any) => {
+    e.preventDefault();
+
+    if (!e.target.imageFile.files.length)
+      return setError("⚠️  사진이 포함되어야 합니다.");
+    if (!e.target.content.value) return setError("⚠️  내용이 없습니다.");
+    return mutate(e);
+  };
+
+  const { mutate } = useMutation(Post, {
+    onMutate: (data) => {
+      //시작
+      console.log(data);
+      setSubmitLoding(true);
+    },
+    onError: (error: Error) => {
+      setError(error.message);
+    },
+    onSuccess: () => {},
+    onSettled: () => {
+      //종료
+      setSubmitLoding(false);
+      navigate("/");
+    },
+  });
 
   return (
     <>
@@ -70,21 +86,23 @@ export const Write = () => {
               <div>사진을 터치하여 삭제</div>
             </div>
           </div>
-          {detailImages.length === 0 ? (
-            <div className="inputSection options">
-              <label className="attach" htmlFor="imageFile">
-                <CameraOutlined /> 사진 선택하기
-                <input
-                  type="file"
-                  id="imageFile"
-                  name="imageFile"
-                  accept="image/*"
-                  multiple
-                  onChange={uploadFile}
-                />
-              </label>
-            </div>
-          ) : (
+          <div
+            className="inputSection options"
+            style={{ display: detailImages.length ? "none" : "block" }}
+          >
+            <label className="attach" htmlFor="imageFile">
+              <CameraOutlined /> 사진 선택하기
+              <input
+                type="file"
+                id="imageFile"
+                name="imageFile"
+                accept="image/*"
+                multiple
+                onChange={uploadFile}
+              />
+            </label>
+          </div>
+          {detailImages.length !== 0 && (
             <div className="previewContainer">
               {detailImages.map((url: string, index: number) => {
                 return (
@@ -145,7 +163,11 @@ export const Write = () => {
 
           <div className="inputSection submit">
             <button onClick={() => navigate("/")}>취소</button>
-            <button type="submit" className="submit">
+            <button
+              type="submit"
+              className="submit"
+              disabled={submitLoding ? true : false}
+            >
               작성하기
             </button>
           </div>

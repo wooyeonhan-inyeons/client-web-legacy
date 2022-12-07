@@ -72,7 +72,7 @@ export const StyledWriteContainer = styled.div`
     position: relative;
     transition: 0.3s cubic-bezier(0.86, 0.29, 0.24, 0.94);
   }
-  .inputSection input {
+  input[type=file], input[type=text]{
     display: none;
   }
   .previewContainer {
