@@ -146,7 +146,7 @@ function RequestFriend() {
             <TextBox>
               <Time>10분 전</Time>
               <Explaination>
-                <span style={{fontWeight: "bold"}}>{item.friend_name}</span>님으로부터 친구 요청이 왔습니다.
+                <span style={{fontWeight: "900"}}>{item.friend_name}</span>님으로부터 친구 요청이 왔습니다.
               </Explaination>
             </TextBox>
             <BtnBox>
