@@ -1,10 +1,10 @@
-import React from "react";
-// import { useHistory } from "react-router-dom";
+import React, { useEffect, useState }from "react";
+import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import { Header } from "../../../components/Header";
 import { StyledContainer } from "../../../components/StyledContainer";
 import { COLOR } from "../../../constants";
-
+import { getInfo } from "./api";
 const InputDiv = styled.div`
   width: 100%;
   height: 7vh;
@@ -33,7 +33,8 @@ const Input = styled.input`
 const InputLabel = styled.p`
   color: white;
   margin: 0;
-  font-weight: bold;
+  padding-bottom: 5px;
+  padding-left: 5px;
 `;
 
 const StatusMessage = styled.textarea`
@@ -80,11 +81,22 @@ const SaveBtn = styled.button`
 
   cursor: pointer;
   &:hover {
-    background-color: whitesmoke;
+    background-color: #e0e0e0;
   }
 `;
 const Edit = () => {
-  // let history = useHistory();
+  const navigate = useNavigate();
+  const [nickname, setnickName] = useState("");
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    getInfo().then((res: any ) => {
+      console.log(res);
+        setnickName(res.name);
+        setMessage(res.message);
+        // console.log(name, message);
+    });
+}, []);
 
   return (
     <>
@@ -92,17 +104,15 @@ const Edit = () => {
       <StyledContainer>
         <InputDiv>
           <InputLabel>닉네임</InputLabel>
-          <Input />
+          <Input placeholder={nickname}/>
         </InputDiv>
         <InputDiv>
           <InputLabel>상태메세지</InputLabel>
-          <StatusMessage></StatusMessage>
+          <StatusMessage placeholder={message}></StatusMessage>
         </InputDiv>
         <ButtonDiv>
           <CancelBtn
-            onClick={() => {
-              // history.goBack();
-            }}
+            onClick={() => navigate(-1)}
           >
             취소
           </CancelBtn>
