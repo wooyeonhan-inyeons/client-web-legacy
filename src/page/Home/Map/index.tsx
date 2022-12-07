@@ -166,17 +166,15 @@
 // };
 
 //3번 쨰 방법 ㅋㅋ
-import { useState, useMemo, useCallback, useRef, useEffect } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import {
   GoogleMap,
   Marker,
   MarkerClusterer,
+  MarkerClustererF,
   MarkerF,
 } from "@react-google-maps/api";
-import { useQuery } from "react-query";
-import { GetNearPost, getNearTest } from "../../../Hooks";
 import { useNavigate } from "react-router-dom";
-import { LoadingBox } from "../../../components/LoadingContainer";
 import useGeolocation from "react-hook-geolocation";
 
 import marker0 from "./images/marker/marker0.png";
@@ -188,6 +186,7 @@ import marker5 from "./images/marker/marker0.png";
 import marker6 from "./images/marker/marker0.png";
 import { useRecoilState } from "recoil";
 import { recoil_ } from "../../../recoil";
+import { getNearTest } from "./api/getPost";
 
 type MapOptions = google.maps.MapOptions;
 
@@ -213,7 +212,7 @@ const markerImages = [
 export default function Map() {
   const navigate = useNavigate();
   const geolocation = useGeolocation();
-  const mapRef = useRef<GoogleMap>();
+  // const mapRef = useRef<GoogleMap>();
   // const [center, setCenter] = useState<LatLngLiteral>();
   const [data, setData] = useState([]);
   const [coordinate, setCoordinate] = useRecoilState<google.maps.LatLngLiteral>(
@@ -269,6 +268,8 @@ export default function Map() {
       options={options}
       // onLoad={onLoad}
     >
+      {/* <MarkerClustererF>
+        {(clusterer) => ( */}
       <>
         {data?.map((item: MarkerProps, index: number) => (
           <Marker
@@ -277,9 +278,12 @@ export default function Map() {
             position={{ lat: item.latitude, lng: item.longitude }}
             icon={markerImages[index % 7]}
             cursor="pointer"
+            // clusterer={clusterer}
           />
         ))}
       </>
+      {/* )}
+      </MarkerClustererF> */}
     </GoogleMap>
   );
 }

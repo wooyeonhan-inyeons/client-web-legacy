@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useInfiniteQuery, useQuery } from "react-query";
+import { useInfiniteQuery } from "react-query";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useResetRecoilState } from "recoil";
 import { recoil_ } from "../../recoil";
-import { GetImages } from "./api";
 
 import { StyledContainer } from "../../components/StyledContainer";
 import { Header } from "../../components/Header";

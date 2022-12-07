@@ -4,40 +4,35 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 import { AvatarColor, HEADER_FN } from "../../../constants";
-import { GetPostOne, GetRevGeocode } from "../../../Hooks";
 import { recoil_ } from "../../../recoil";
 
 import { StyledDetail } from "./styled";
-import {
-  CompassOutlined,
-  MoreOutlined,
-  EnvironmentOutlined,
-} from "@ant-design/icons";
+import { MoreOutlined, EnvironmentOutlined } from "@ant-design/icons";
 import Avatar from "boring-avatars";
-import { LoadingBox } from "../../../components/LoadingContainer";
+import { LoadingBox2 } from "../../../components/LoadingContainer";
+import { getFormattedDate } from "../../../components/api/getFormattedDate";
+import { GetPostOne } from "../Map/api/getPost";
+import { GetRevGeocode } from "../Map/api/getRevGeocode";
 
 const DetailCard = (item: any) => {
-  const { data, isLoading } = useQuery(
+  const { data: geoData, isSuccess: geoSuccess } = useQuery(
     "getRevGeo",
-    () => GetRevGeocode({ lat: item.latitude, lng: item.longitude }),
+    () =>
+      item &&
+      GetRevGeocode({ lat: item.data.latitude, lng: item.data.longitude }),
     {
       retry: 1,
-      onSuccess: () => {
-        console.log("geoRev", data);
-      },
     }
   );
-  useEffect(() => {
-    console.log("prapm Item: ", item);
-  }, []);
+  const time = getFormattedDate(new Date(item.data.created_time));
 
   return (
     <>
-      {!isLoading ? (
+      {geoSuccess ? (
         <div className="postContainer" onClick={(e) => e.stopPropagation()}>
           <div
             className="background"
-            style={{ background: `url(${item?.data.image[0].img_url})` }}
+            style={{ background: `url(${item.data.image[0].img_url})` }}
           ></div>
           <div className="content">
             <div className="header">
@@ -45,7 +40,7 @@ const DetailCard = (item: any) => {
                 <Avatar
                   size={32}
                   variant="beam"
-                  name={item?.data.post_id}
+                  name={item.data.post_id}
                   colors={AvatarColor}
                 />
                 username
@@ -54,11 +49,11 @@ const DetailCard = (item: any) => {
                 <MoreOutlined />
               </div>
             </div>
-            {item?.data.content}
+            {item.data.content}
             <div className="PostInfo">
-              <div className="date"></div>
+              <div className="date">{time}</div>
               <div className="location">
-                <EnvironmentOutlined /> {data}
+                <EnvironmentOutlined /> {geoData}
               </div>
             </div>
           </div>
@@ -80,7 +75,7 @@ const DetailCard = (item: any) => {
           </div>
         </div>
       ) : (
-        "asd"
+        <LoadingBox2 />
       )}
     </>
   );
@@ -94,20 +89,17 @@ export const Detail = () => {
   const navigate = useNavigate();
   let { post_id } = useParams<string>();
 
-  const { data, isLoading } = useQuery(
+  const { data: detailData, isSuccess: detailSuccess } = useQuery(
     "userInfo",
     () => GetPostOne(post_id, coordinate.lat, coordinate.lng),
     {
       retry: 1,
       refetchOnReconnect: false,
-      onSuccess: (res) => {
-        console.log("DATA : ", res);
-      },
+      onSuccess: (res) => {},
     }
   );
 
   useEffect(() => {
-    console.log(data);
     //모달 상태에서 스크롤 막기
     document.body.style.overflow = "hidden";
     setHeader({
@@ -124,7 +116,7 @@ export const Detail = () => {
         rightButton2: HEADER_FN.MYPAGE,
       });
     };
-  }, [data]);
+  }, [detailData]);
 
   return (
     <>
@@ -132,7 +124,7 @@ export const Detail = () => {
         {/* {data?.map((item) => (
           <DetailCard data={item} key={item.id} />
         ))} */}
-        <DetailCard data={data} />
+        {detailSuccess ? <DetailCard data={detailData} /> : <LoadingBox2 />}
       </StyledDetail>
     </>
   );

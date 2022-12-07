@@ -1,10 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { useInfiniteQuery } from "react-query";
 import { useInView } from "react-intersection-observer";
 import { useRecoilState } from "recoil";
 import { recoil_ } from "../../../../../recoil";
-import { MYPAGE_ } from "../../../../../constants";
-// import { GetImages } from "../../../api";
 import { GetTest } from "../TabBox/GetTest";
 
 import { LoadingOutlined } from "@ant-design/icons";

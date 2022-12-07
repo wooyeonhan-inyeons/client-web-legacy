@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Header } from "../../components/Header";
 import { StyledWriteContainer } from "./styled";
 import { CameraOutlined, PictureOutlined } from "@ant-design/icons";
-import { Post } from "./Hooks";
+import { Post } from "./api";
 import useGeolocation from "react-hook-geolocation";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
