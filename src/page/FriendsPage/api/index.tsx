@@ -7,6 +7,5 @@ export const getFriends = () => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("key")}`,
     },
-  }).then((response) => response.json())
-  
+  }).then((response) => response.json());
 };

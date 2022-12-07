@@ -2,171 +2,150 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { AvatarColor, COLOR } from "../../../constants";
 import Avatar from "boring-avatars";
-import { getRequests } from "./api";
+import { getRequests, getOk } from "./api";
 
 const ListBox = styled.ul`
-    width: 100%;
-    /* text-align: center;  */
-    list-style: none;
-    margin: 0px;
-    padding: 0px;
-`
+  width: 100%;
+  /* text-align: center;  */
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+`;
 
 const ImageDiv = styled.div`
-    display: flex;
-    justify-content: center;
-    float: left;
-    width: 15%;
-    position: relative; top: 4px;
-    padding-right: 10px;
-    padding-bottom: 5px;
-`
+  display: flex;
+  justify-content: center;
+  float: left;
+  width: 15%;
+  position: relative;
+  top: 4px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+`;
 const ListEl = styled.li`
-    width: 100%;
-    height: 76px;
+  width: 100%;
+  height: 76px;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #61708A;
-    border: none;
-    border-radius: 16px;
-    margin-bottom: 8px;
-    padding: 0px 10px 0px 10px;
-`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #61708a;
+  border: none;
+  border-radius: 16px;
+  margin-bottom: 8px;
+  padding: 0px 10px 0px 10px;
+`;
 
 const TextBox = styled.div`
-    width: 35%;
-    flex-grow: 4;
-    padding-right: 5px;
-`
+  width: 35%;
+  flex-grow: 4;
+  padding-right: 5px;
+`;
 
 const Time = styled.div`
-    font-size: 10px;
-`
+  font-size: 10px;
+`;
 
 const Explaination = styled.p`
-    color: white;
-    font-size: 13px;
-    margin: auto;
-`
+  color: white;
+  font-size: 13px;
+  margin: auto;
+`;
 const BtnBox = styled.div`
-    width: 35%;
-    display: flex;
-    align-items: center;
-    height: 100%;
-    margin: 0px;
-    padding: 0px;
-`
+  width: 35%;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+`;
 
 const YesBtn = styled.button`
-    width: 50%;
-    height: 72%;
-    background-color: white;
-    border: none;
-    border-radius: 10px;
-    color: black;
-    outline: none;
-    margin-right: 0.5em;
-    font-weight: 900;
+  width: 50%;
+  height: 72%;
+  background-color: white;
+  border: none;
+  border-radius: 10px;
+  color: black;
+  outline: none;
+  margin-right: 0.5em;
+  font-weight: 900;
 
-    cursor: pointer;
-    &:hover {
-        background-color: whitesmoke;
-    }
-`
+  cursor: pointer;
+  &:hover {
+    background-color: whitesmoke;
+  }
+`;
 
 const NoBtn = styled.button`
-    width: 50%;
-    height: 72%;
-    background-color: white;
-    border: none;
-    border-radius: 10px;
-    background-color: ${COLOR.background};
-    color: white;
-    outline: none;
+  width: 50%;
+  height: 72%;
+  background-color: white;
+  border: none;
+  border-radius: 10px;
+  background-color: ${COLOR.background};
+  color: white;
+  outline: none;
 
-    font-weight: 900;
+  font-weight: 900;
 
-    cursor: pointer;
-    &:hover {
-        background-color: whitesmoke;
-    }
-`
-
+  cursor: pointer;
+  &:hover {
+    background-color: whitesmoke;
+  }
+`;
+export interface IProps {
+  friend_id: string;
+}
 function RequestFriend() {
-    const [requests, setRequests] = useState([]);
+  const [requested, setRequested] = useState<any>([]);
 
-    useEffect(() => {
-        getRequests().then((res: any ) => {
-            const friend_id : any = res[0].friend_id;
-            const friend_name : any = res[0].follower.name
-            console.log(friend_name);
-            setRequests(friend_name);
-            });
-    }, []);
-    
-    return (
-        <>
-        <ListBox>
-            {requests.map((item) => (
-                <ListEl>
-                    <ImageDiv>
-                        <Avatar
-                            size={45}
-                            variant="beam"
-                            name={"cc"}
-                            colors={AvatarColor}
-                        />
-                    </ImageDiv>
-                    <TextBox>
-                        <Time>10분 전</Time>
-                        <Explaination>{item}님으로부터 친구 요청이 왔습니다.</Explaination>
-                    </TextBox>
-                    <BtnBox>
-                        <YesBtn>수락</YesBtn>
-                        <NoBtn>거절</NoBtn>
-                    </BtnBox>
-                </ListEl>
-            ))}
-            <ListEl>
-                <ImageDiv>
-                    <Avatar
-                        size={45}
-                        variant="beam"
-                        name={"cc"}
-                        colors={AvatarColor}
-                    />
-                </ImageDiv>
-                <TextBox>
-                    <Time>10분 전</Time>
-                    <Explaination>뜨거운감자님으로부터 친구 요청이 왔습니다.</Explaination>
-                </TextBox>
-                <BtnBox>
-                    <YesBtn>수락</YesBtn>
-                    <NoBtn>거절</NoBtn>
-                </BtnBox>
-            </ListEl>
-            <ListEl>
-                <ImageDiv>
-                    <Avatar
-                        size={45}
-                        variant="beam"
-                        name={"cc"}
-                        colors={AvatarColor}
-                    />
-                </ImageDiv>
-                <TextBox>
-                    <Time>10분 전</Time>
-                    <Explaination>뜨거운감자님으로부터 친구 요청이 왔습니다.</Explaination>
-                </TextBox>
-                <BtnBox>
-                    <YesBtn>수락</YesBtn>
-                    <NoBtn>거절</NoBtn>
-                </BtnBox>
-            </ListEl>
-        </ListBox>
-        </>
-    )
+  useEffect(() => {
+    getRequests().then((res: any) => {
+      const requestedFr: any = res.map((data: any) => ({
+        friend_id: data.friend_id,
+        friend_name: data.follower.name,
+      }));
+      console.log(res);
+      const result: any = [...requestedFr];
+      setRequested(result);
+    });
+  }, []);
+
+  const onClickOk = (friend_id: string) => {
+    getOk(friend_id)
+      .then((res) => console.log(res))
+      // .then(()=> setSuccess(true))
+      .catch((e) => console.log(e));
+  };
+
+  return (
+    <>
+      <ListBox>
+        {requested.map((item: any, index: number) => (
+          <ListEl key={index}>
+            <ImageDiv>
+              <Avatar
+                size={45}
+                variant="beam"
+                name={"cc"}
+                colors={AvatarColor}
+              />
+            </ImageDiv>
+            <TextBox>
+              <Time>10분 전</Time>
+              <Explaination>
+                {item.friend_name}님으로부터 친구 요청이 왔습니다.
+              </Explaination>
+            </TextBox>
+            <BtnBox>
+              <YesBtn onClick={() => onClickOk(item.friend_id)}>수락</YesBtn>
+              <NoBtn>거절</NoBtn>
+            </BtnBox>
+          </ListEl>
+        ))}
+      </ListBox>
+    </>
+  );
 }
 export default RequestFriend;

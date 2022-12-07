@@ -150,13 +150,7 @@ function ShowModal({ friendId, closeModal }: IProps) {
                         />
                     </ImageDiv>
                     <Name>{detail[0]}</Name>
-                    <Mail>
-                        { success ?
-                        detail[2]
-                        :
-                        "사용자 정보가 존재하지 않습니다"
-                        }
-                        </Mail>
+                    <Mail>{detail[2]}</Mail>
                     <Message>{detail[1]}</Message>
                 </DetailBox>
             <BtnBox>

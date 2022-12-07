@@ -8,6 +8,19 @@ export const getRequests = () => {
       Authorization: `Bearer ${localStorage.getItem("key")}`,
     },
   })
-  .then((response) => response.json())
-  .catch((e)=>alert("실패"));
+    .then((response) => response.json())
+    .catch((e) => alert("실패"));
+};
+
+export const getOk = (friend_id: string) => {
+  return fetch(`${BACK_URL}/friends/accept`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("key")}`,
+    },
+    body: JSON.stringify({
+      friend_id,
+    }),
+  }).then((res) => res.json());
 };
