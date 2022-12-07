@@ -22,10 +22,13 @@ export const Detail = () => {
 
   const { data: detailData, isSuccess: detailSuccess } = useQuery(
     "userInfo",
-    () => GetPostOne(post_id, coordinate.lat, coordinate.lng),
+    () => coordinate && GetPostOne(post_id, coordinate.lat, coordinate.lng),
     {
       retry: 1,
       refetchOnReconnect: false,
+      onSuccess: (res) => {
+        console.log(res);
+      },
     }
   );
 

@@ -6,12 +6,16 @@ import { getFormattedDate } from "../../../../../components/api/getFormattedDate
 import { AvatarColor } from "../../../../../constants";
 import { GetRevGeocode } from "../../../Map/api/getRevGeocode";
 
-import { MoreOutlined, EnvironmentOutlined } from "@ant-design/icons";
+import {
+  MoreOutlined,
+  EnvironmentOutlined,
+  StarOutlined,
+} from "@ant-design/icons";
 import { LoadingBox2 } from "../../../../../components/LoadingContainer";
 import Avatar from "boring-avatars";
 import { Dialog } from "../dialog";
 
-export const DetailCard = (item: any) => {
+export const DetailCard = (item?: any | undefined) => {
   const { data: geoData, isSuccess: geoSuccess } = useQuery(
     "getRevGeo",
     () =>
@@ -32,7 +36,17 @@ export const DetailCard = (item: any) => {
             <div
               className="background"
               style={{ background: `url(${item.data.image[0].img_url})` }}
-            ></div>
+            >
+              {!item.data.forFriend && (
+                <>
+                  {/* <div className="friendStateLight"></div> */}
+                  <div className="friendStateTag">
+                    <StarOutlined />
+                    친구의 우연
+                  </div>
+                </>
+              )}
+            </div>
             <div className="content">
               <div className="header">
                 <div className="title">
@@ -66,7 +80,7 @@ export const DetailCard = (item: any) => {
                   🥰<div className="emotionCount">{item.data.like_count}</div>
                 </div>
                 <div className="divider"></div>
-                <div className="emotionButton">
+                <div className="emotionButton" style={emotionStyle}>
                   😎<div className="emotionCount">{item.data.cool_count}</div>
                 </div>
                 <div className="divider"></div>
@@ -83,4 +97,9 @@ export const DetailCard = (item: any) => {
       )}
     </>
   );
+};
+
+const emotionStyle = {
+  backgroundColor: "#ffffffd4",
+  color: "#222",
 };

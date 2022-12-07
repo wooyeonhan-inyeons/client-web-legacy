@@ -113,4 +113,38 @@ export const StyledDetail = styled.div`
     font-size: 0.7rem;
     padding-top: 1rem;
   }
+  .postContainer .background {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column-reverse;
+    align-content: flex-end;
+    align-items: flex-end;
+  }
+  .postContainer .background .friendStateLight {
+    width: 2rem;
+    height: 2rem;
+    background-color: #62ce60;
+    box-shadow: 0 0 10px #70ff70c4;
+    border-radius: 50%;
+
+    position: relative;
+    float: right;
+    margin: 1rem;
+  }
+  .postContainer .background .friendStateTag {
+    height: 2rem;
+    line-height: 2rem;
+    padding: 0 1rem;
+    background-color: #62ce60;
+    display: inline-block;
+    font-size: 0.75rem;
+
+    position: relative;
+    float: right;
+    margin: 1rem;
+  }
+
+  .postContainer .background .friendStateTag > * {
+    margin-right: 0.75rem;
+  }
 `;
