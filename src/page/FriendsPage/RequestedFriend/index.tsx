@@ -64,7 +64,7 @@ const YesBtn = styled.button`
   width: 50%;
   height: 72%;
   background-color: white;
-  border: none;
+  border: solid 2px white;
   border-radius: 10px;
   color: black;
   outline: none;
@@ -80,8 +80,7 @@ const YesBtn = styled.button`
 const NoBtn = styled.button`
   width: 50%;
   height: 72%;
-  background-color: white;
-  border: none;
+  border: solid 2px ${COLOR.background};
   border-radius: 10px;
   background-color: ${COLOR.background};
   color: white;
