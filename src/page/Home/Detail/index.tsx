@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import useGeolocation from "react-hook-geolocation";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 import { AvatarColor, HEADER_FN } from "../../../constants";
 import { GetPostOne, GetRevGeocode } from "../../../Hooks";
@@ -15,97 +14,100 @@ import {
   EnvironmentOutlined,
 } from "@ant-design/icons";
 import Avatar from "boring-avatars";
+import { LoadingBox } from "../../../components/LoadingContainer";
 
 const DetailCard = (item: any) => {
-  const { data } = useQuery("getRevGeo", () =>
-    GetRevGeocode({ lat: item.latitude, lng: item.longitude })
+  const { data, isLoading } = useQuery(
+    "getRevGeo",
+    () => GetRevGeocode({ lat: item.latitude, lng: item.longitude }),
+    {
+      retry: 1,
+      onSuccess: () => {
+        console.log("geoRev", data);
+      },
+    }
   );
-
   useEffect(() => {
-    console.log(item.latitude + " " + item.longitude, data);
+    console.log("prapm Item: ", item);
   }, []);
 
   return (
-    <div className="postContainer" onClick={(e) => e.stopPropagation()}>
-      <div
-        className="background"
-        // style={{ background: `url(${item.data.url})` }}
-      ></div>
-      <div className="content">
-        <div className="header">
-          <div className="title">
-            <Avatar
-              size={32}
-              variant="beam"
-              // name={item.data.content}
-              colors={AvatarColor}
-            />
-            username
+    <>
+      {!isLoading ? (
+        <div className="postContainer" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="background"
+            style={{ background: `url(${item?.data.image[0].img_url})` }}
+          ></div>
+          <div className="content">
+            <div className="header">
+              <div className="title">
+                <Avatar
+                  size={32}
+                  variant="beam"
+                  name={item?.data.post_id}
+                  colors={AvatarColor}
+                />
+                username
+              </div>
+              <div className="HederAction">
+                <MoreOutlined />
+              </div>
+            </div>
+            {item?.data.content}
+            <div className="PostInfo">
+              <div className="date"></div>
+              <div className="location">
+                <EnvironmentOutlined /> {data}
+              </div>
+            </div>
           </div>
-          <div className="HederAction">
-            <MoreOutlined />
-          </div>
-        </div>
-        {/* {item.data.content} */}
-        <div className="PostInfo">
-          <div className="date">22.12.05</div>
-          <div className="location">
-            <EnvironmentOutlined /> {data}
-          </div>
-        </div>
-      </div>
 
-      <div className="actionSpace">
-        <div className="emotions">
-          <div className="emotionButton">
-            🥰<div className="emotionCount">9</div>
-          </div>
-          <div className="divider"></div>
-          <div className="emotionButton">
-            😎<div className="emotionCount">10</div>
-          </div>
-          <div className="divider"></div>
-          <div className="emotionButton">
-            😢<div className="emotionCount">5</div>
+          <div className="actionSpace">
+            <div className="emotions">
+              <div className="emotionButton">
+                🥰<div className="emotionCount">9</div>
+              </div>
+              <div className="divider"></div>
+              <div className="emotionButton">
+                😎<div className="emotionCount">10</div>
+              </div>
+              <div className="divider"></div>
+              <div className="emotionButton">
+                😢<div className="emotionCount">5</div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        "asd"
+      )}
+    </>
   );
 };
 
 export const Detail = () => {
+  const [dataLoading, setDataLoading] = useState(false);
   const [, setHeader] = useRecoilState(recoil_.headerState);
+  const coordinate = useRecoilValue(recoil_.geoState);
 
   const navigate = useNavigate();
-  const geolocation = useGeolocation();
   let { post_id } = useParams<string>();
-  const [center, setCenter] = useState<{ lat: number; lng: number }>();
 
-  const { data } = useQuery(
+  const { data, isLoading } = useQuery(
     "userInfo",
-    () => GetPostOne(post_id, center?.lat, center?.lng),
+    () => GetPostOne(post_id, coordinate.lat, coordinate.lng),
     {
       retry: 1,
       refetchOnReconnect: false,
-      onSuccess: () => {
-        console.log("DATA : ", data);
+      onSuccess: (res) => {
+        console.log("DATA : ", res);
       },
     }
   );
 
   useEffect(() => {
-    if (geolocation.latitude !== null) {
-      setCenter({
-        lat: geolocation.latitude,
-        lng: geolocation.longitude,
-      });
-    }
-
-    console.log(post_id, center);
-  }, [geolocation]);
-
-  useEffect(() => {
+    console.log(data);
     //모달 상태에서 스크롤 막기
     document.body.style.overflow = "hidden";
     setHeader({
