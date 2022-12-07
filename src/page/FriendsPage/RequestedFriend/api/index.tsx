@@ -24,3 +24,16 @@ export const getOk = (friend_id: string) => {
     }),
   }).then((res) => res.json());
 };
+
+export const getNo = (friend_id: string) => {
+  return fetch(`${BACK_URL}/friends/decline`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("key")}`,
+    },
+    body: JSON.stringify({
+      friend_id,
+    }),
+  }).then((res) => res.json());
+};

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { AvatarColor, COLOR } from "../../../constants";
 import Avatar from "boring-avatars";
-import { getRequests, getOk } from "./api";
+import { getRequests, getOk, getNo } from "./api";
 
 const ListBox = styled.ul`
   width: 100%;
@@ -73,7 +73,7 @@ const YesBtn = styled.button`
 
   cursor: pointer;
   &:hover {
-    background-color: whitesmoke;
+    background-color: #e9e9e9;
   }
 `;
 
@@ -91,7 +91,7 @@ const NoBtn = styled.button`
 
   cursor: pointer;
   &:hover {
-    background-color: whitesmoke;
+    background-color: #242a37;  
   }
 `;
 export interface IProps {
@@ -115,8 +115,19 @@ function RequestFriend() {
   const onClickOk = (friend_id: string) => {
     getOk(friend_id)
       .then((res) => console.log(res))
-      // .then(()=> setSuccess(true))
+      .then(() => onRemove(friend_id))
       .catch((e) => console.log(e));
+  };
+
+  const onClickNo = (friend_id: string) => {
+    getNo(friend_id)
+      .then((res) => console.log(res))
+      .then(() => onRemove(friend_id))
+      .catch((e) => console.log(e));
+  };
+
+  const onRemove = (id : string) => {
+     setRequested(requested.filter((user : any) => user.friend_id !== id));
   };
 
   return (
@@ -135,12 +146,12 @@ function RequestFriend() {
             <TextBox>
               <Time>10분 전</Time>
               <Explaination>
-                {item.friend_name}님으로부터 친구 요청이 왔습니다.
+                <span style={{fontWeight: "bold"}}>{item.friend_name}</span>님으로부터 친구 요청이 왔습니다.
               </Explaination>
             </TextBox>
             <BtnBox>
               <YesBtn onClick={() => onClickOk(item.friend_id)}>수락</YesBtn>
-              <NoBtn>거절</NoBtn>
+              <NoBtn onClick={() => onClickNo(item.friend_id)}>거절</NoBtn>
             </BtnBox>
           </ListEl>
         ))}
