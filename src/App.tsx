@@ -21,7 +21,7 @@ import Mypage from "./page/MyPage";
 import { LoginRedirect } from "./Hooks";
 import { MyPostes } from "./page/MyPage/Postes";
 import { Detail } from "./page/Home/Detail";
-import { Write } from "./page/Home/Write";
+import { Write } from "./page/Write";
 
 function App() {
   const [user] = useRecoilState(recoil_.userState);
