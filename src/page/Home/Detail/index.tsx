@@ -12,23 +12,47 @@ import { LoadingBox2 } from "../../../components/LoadingContainer";
 import { GetPostOne } from "../Map/api/getPost";
 import { DetailCard } from "./components/detailCard";
 
+export interface postType {
+  post_id: string;
+  content: string;
+  created_time: string;
+  forFriend: number;
+  latitude: number;
+  longitude: number;
+  like_count: number;
+  cool_count: number;
+  sad_count: number;
+  emotion: {
+    emotion_id: string;
+    emotion_type: number;
+  };
+  image: [
+    {
+      img_id: string;
+      img_url: string;
+    }
+  ];
+  distance: number;
+  owner: boolean;
+}
+
 export const Detail = () => {
-  const [dataLoading, setDataLoading] = useState(false);
   const [, setHeader] = useRecoilState(recoil_.headerState);
   const coordinate = useRecoilValue(recoil_.geoState);
 
   const navigate = useNavigate();
   let { post_id } = useParams<string>();
 
-  const { data: detailData, isSuccess: detailSuccess } = useQuery(
+  const {
+    data: detailData,
+    isSuccess: detailSuccess,
+    isError: detailError,
+  } = useQuery<postType, { statusCode: number; message: string }>(
     "userInfo",
     () => coordinate && GetPostOne(post_id, coordinate.lat, coordinate.lng),
     {
       retry: 1,
       refetchOnReconnect: false,
-      onSuccess: (res) => {
-        console.log(res);
-      },
     }
   );
 
@@ -54,10 +78,7 @@ export const Detail = () => {
   return (
     <>
       <StyledDetail onClick={() => navigate("/")}>
-        {/* {data?.map((item) => (
-          <DetailCard data={item} key={item.id} />
-        ))} */}
-        {detailSuccess ? <DetailCard data={detailData} /> : <LoadingBox2 />}
+        {detailSuccess ? <DetailCard item={detailData} /> : <LoadingBox2 />}
       </StyledDetail>
     </>
   );

@@ -186,7 +186,8 @@ import marker5 from "./images/marker/marker0.png";
 import marker6 from "./images/marker/marker0.png";
 import { useRecoilState } from "recoil";
 import { recoil_ } from "../../../recoil";
-import { getNearTest } from "./api/getPost";
+import { GetNearPost, getNearTest } from "./api/getPost";
+import { useQuery } from "react-query";
 
 type MapOptions = google.maps.MapOptions;
 
@@ -237,11 +238,24 @@ export default function Map() {
   );
   // const onLoad = useCallback((map: any) => (mapRef.current = map), []);
 
-  // const { data, isLoading } = useQuery("postNear", () => GetNearPost(center), {
-  //   onSuccess: () => {
-  //     console.log("useQuery: ", data);
-  //   },
-  // });
+  // const { data, isLoading, refetch } = useQuery(
+  //   "postNear",
+  //   () => GetNearPost(coordinate),
+  //   {
+  //     refetchOnMount: "always",
+  //     retryDelay: 0,
+  //     refetchInterval: 0,
+  //     retry: 2,
+  //     staleTime: 0,
+  //     cacheTime: Infinity,
+  //     onError: () => {
+  //       console.log("ERROR");
+  //     },
+  //     onSuccess: () => {
+  //       console.log("useQuery: ", data);
+  //     },
+  //   }
+  // );
 
   useEffect(() => {
     if (geolocation.latitude !== null) {
@@ -253,9 +267,7 @@ export default function Map() {
   }, [geolocation]);
 
   useEffect(() => {
-    // console.log("exec");
     getNearTest(coordinate)?.then((res) => {
-      // console.log(res);
       setData(res);
     });
   }, [coordinate]);

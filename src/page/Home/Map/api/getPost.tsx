@@ -70,11 +70,9 @@ export const getNearTest = (
 export const GetNearPost = async (
   center?: google.maps.LatLng | google.maps.LatLngLiteral
 ) => {
-  if (center === undefined)
-    throw new Error("알 수 없는 오류가 발생하였습니다.");
+  if (!center === false) throw new Error("알 수 없는 오류가 발생하였습니다.");
   const response = await fetch(
     `${BACK_URL}/posting/near?latitude=${center?.lat}&longitude=${center?.lng}`,
-    // `${BACK_URL}/posting/near?latitude=35.8591&longitude=128.4878`,
     {
       method: "GET",
       headers: {
