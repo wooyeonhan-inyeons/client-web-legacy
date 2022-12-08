@@ -92,9 +92,14 @@ export const FriendName = styled.p`
 `
 
 export const FriendMessage = styled.p`
+    width: 80%;
     padding-left: 10px;
     margin: auto;
+    margin-left: 0.7em;
+    padding-left: 0px;
     font-family: inherit;
     font-size: 16px;
-    margin: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `

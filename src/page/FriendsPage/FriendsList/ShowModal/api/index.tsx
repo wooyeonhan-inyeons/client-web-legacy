@@ -1,4 +1,4 @@
-import { BACK_URL } from "../../../../constants/GlobalConstants";
+import { BACK_URL } from "../../../../../constants/GlobalConstants";
 
 interface Prop {
     friendId: string

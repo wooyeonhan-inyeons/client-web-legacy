@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { AvatarColor, COLOR } from "../../../constants";
+import { AvatarColor, COLOR } from "../../../../constants";
 import Avatar from "boring-avatars";
 import { getDetail } from './api'
 import { gerRequestFr } from './Request/api'

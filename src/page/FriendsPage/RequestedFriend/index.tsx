@@ -96,9 +96,13 @@ const NoBtn = styled.button`
 export interface IProps {
   friend_id: string;
 }
-function RequestFriend() {
-  const [requested, setRequested] = useState<any>([]);
 
+function RequestFriend({getNumber}:any) {
+  const [requested, setRequested] = useState<any>([]);
+  //
+  const [numRe, setNumRe] = useState(0);
+  getNumber(numRe);
+  
   useEffect(() => {
     getRequests().then((res: any) => {
       const requestedFr: any = res.map((data: any) => ({
@@ -106,11 +110,12 @@ function RequestFriend() {
         friend_name: data.follower.name,
         at_Time: data.create_at,
       }));
-      console.log(res);
       const result: any = [...requestedFr];
+      //
+      setNumRe(result.length);
       setRequested(result);
     });
-  }, []);
+  }, [numRe, requested]);
 
   const onClickOk = (friend_id: string) => {
     getOk(friend_id)

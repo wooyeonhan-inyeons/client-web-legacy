@@ -14,37 +14,37 @@ import {
 import { AvatarColor, COLOR } from "../../../constants";
 import Avatar from "boring-avatars";
 import { getFriends } from "./../api";
-import { useQuery } from "react-query";
-import ShowModal from "../ShowModal";
+import ShowModal from "./ShowModal";
 import styled from "styled-components";
 
 const ImageDiv = styled.div`
-    display: flex;
-    justify-content: center;
-    float: left;
-    width: 15%;
-    position: relative; top: 4px;
-    padding-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  float: left;
+  width: 15%;
+  position: relative; top: 4px;
+  padding-bottom: 15px;
 `
 
 const TextBox = styled.div`
-    width: 20%;
-    flex-grow: 4;
-    padding-right: 5px;
-    padding-bottom: 10px;
+  width: 20%;
+  flex-grow: 4;
+  padding-right: 5px;
+  padding-bottom: 10px;
 `
 
-function FriendsList() {
+function FriendsList({getNumber}:any) {
   const [friendInput, setFriendInput] = useState<string>("");
   const [friends, setFriends] = useState([]);
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const closeModal = () => setModalOpen(false);
   const onChange = (event: any) => setFriendInput(event.target.value);
   const onSubmit = (event: any) => {event.preventDefault();};
-  const onClickModal = () => { setModalOpen(true); 
-  // console.log(friendInput)
-  };
-  
+  const onClickModal = () => { setModalOpen(true);};
+  //
+  const [numFr, setNumFr] = useState(0);
+  getNumber(numFr);
+
   useEffect(() => {
     getFriends().then((res: any) => {
       const follower = res.follower.map((data: any) => ({
@@ -56,9 +56,12 @@ function FriendsList() {
         user_info: data.follower,
       }));
       const result: any = [...follower, ...following];
+      //
+      setNumFr(result.length);
       setFriends(result);
     });
-  }, []);
+  }, [numFr, friends]);
+
   return (
     <>
       <form onSubmit={onSubmit}>
@@ -89,9 +92,9 @@ function FriendsList() {
                   <FriendName>{item.user_info.name}</FriendName>
                   <FriendMessage>{item.user_info.message}</FriendMessage>
                 </TextBox>
-                  {/* <EllipsisOutlined
+                  <EllipsisOutlined
                     style={{ width: "2em", position: "absolute", right: "10%" , paddingTop: "5px" }}
-                  /> */}
+                  />
               </List>
             ))}
           </ListBox>
