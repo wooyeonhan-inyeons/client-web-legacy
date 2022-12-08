@@ -16,6 +16,7 @@ import Avatar from "boring-avatars";
 import { getFriends } from "./../api";
 import ShowModal from "./ShowModal";
 import styled from "styled-components";
+import More from './More';
 
 const ImageDiv = styled.div`
   display: flex;
@@ -26,7 +27,7 @@ const ImageDiv = styled.div`
   padding-bottom: 15px;
 `
 
-const TextBox = styled.div`
+export const TextBox = styled.div`
   width: 20%;
   flex-grow: 4;
   padding-right: 5px;
@@ -37,13 +38,19 @@ function FriendsList({getNumber}:any) {
   const [friendInput, setFriendInput] = useState<string>("");
   const [friends, setFriends] = useState([]);
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [more, setMore] = useState<boolean>(false);
+  const [numFr, setNumFr] = useState(0);
+  getNumber(numFr);
+
   const closeModal = () => setModalOpen(false);
   const onChange = (event: any) => setFriendInput(event.target.value);
   const onSubmit = (event: any) => {event.preventDefault();};
   const onClickModal = () => { setModalOpen(true);};
-  //
-  const [numFr, setNumFr] = useState(0);
-  getNumber(numFr);
+  const onMore = () => {
+    setMore(true);
+    console.log("clicked!")
+  }
+  const closeMore = () => setMore(false);
 
   useEffect(() => {
     getFriends().then((res: any) => {
@@ -93,8 +100,10 @@ function FriendsList({getNumber}:any) {
                   <FriendMessage>{item.user_info.message}</FriendMessage>
                 </TextBox>
                   <EllipsisOutlined
-                    style={{ width: "2em", position: "absolute", right: "10%" , paddingTop: "5px" }}
+                    style={{ width: "2em", position: "absolute", right: "10%" , paddingBottom: "3px" }}
+                    onClick={onMore}
                   />
+                  { more && <More friendId={item.friend_id} closeMore={closeMore}></More>}
               </List>
             ))}
           </ListBox>

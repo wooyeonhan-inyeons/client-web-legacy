@@ -6,7 +6,7 @@ import { getDetail } from './api'
 import { gerRequestFr } from './Request/api'
 
 
-const Modal = styled.div`
+export const Modal = styled.div`
     display: flex;
     flex-direction: column;
     width: 70vw;
@@ -45,14 +45,14 @@ const DetailBox = styled.div`
 
 `
 
-const BtnBox = styled.div`
+export const BtnBox = styled.div`
     display: flex;
     height: 25vh;
     text-align: center;
     justify-content: space-evenly;
 `
 
-const BackBtn = styled.button`
+export const BackBtn = styled.button`
     background-color: #1a212e;
     font-family: inherit;
     margin: 10px 20px 10px 20px;
@@ -68,7 +68,7 @@ const BackBtn = styled.button`
         background-color: #1b253a;
     }
 `
-const SaveBtn = styled.button`
+export const SaveBtn = styled.button`
     background-color: white;
     color: black;
     font-family: inherit;
@@ -85,25 +85,25 @@ const SaveBtn = styled.button`
         background-color: #e1e1e1;
     }
 `
-const ImageDiv = styled.div`
+export const ImageDiv = styled.div`
     display: flex;
     justify-content: center;
     text-align: center;
     margin: auto;
 `
-const Mail = styled.p`
+export const Mail = styled.p`
     font-size: 15px;
     margin: auto;
     color: #c2c2c2cb;
 `
 
-const Name = styled.p`
+export const Name = styled.p`
     font-size: 30px;
     font-weight: 600;
     margin: auto;
 `
 
-const Message = styled.p`
+export const Message = styled.p`
     font-size: 15px;
     padding-left: 10px;
     padding-right: 10px;
