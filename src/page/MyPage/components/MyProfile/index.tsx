@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { GetUserExperience } from "../../api";
 import { AvatarColor } from "../../../../constants";
-
+import React, {useState} from 'react';
 import Avatar from "boring-avatars";
 import {
   EditOutlined,
@@ -22,6 +22,9 @@ import { FriendsButton } from "../FriendsButton";
 import { MyPostButton } from "../MyPostButton";
 
 export const MyProfile = ({ userPost }: any) => {
+  const [openEdit, setOpenEdit] = useState(false);
+  const onOpenEdit = () => setOpenEdit(true);
+
   const { data } = useQuery("user", GetUserExperience, {
     retry: 1,
     refetchOnReconnect: false,
@@ -59,6 +62,7 @@ export const MyProfile = ({ userPost }: any) => {
             </MyProfileTextBox>
           </ProfileLeft>
           <ProfileEditButton onClick={() => navigate("/mypage/edit")}>
+            {}
             <EditOutlined />
           </ProfileEditButton>
         </ProfileInfoContainer>

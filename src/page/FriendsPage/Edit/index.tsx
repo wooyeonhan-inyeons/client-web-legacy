@@ -1,10 +1,12 @@
-import React, { useEffect, useState }from "react";
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Header } from "../../../components/Header";
 import { StyledContainer } from "../../../components/StyledContainer";
 import { COLOR } from "../../../constants";
 import { getInfo } from "./api";
+import { getEdit } from "./api";
+
 const InputDiv = styled.div`
   width: 100%;
   height: 7vh;
@@ -84,39 +86,47 @@ const SaveBtn = styled.button`
     background-color: #e0e0e0;
   }
 `;
+
 const Edit = () => {
   const navigate = useNavigate();
-  const [nickname, setnickName] = useState("");
-  const [message, setMessage] = useState("");
+  const [nickname, setNickName] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
+
+  const onChange = (e: any) => {
+    setMessage(e.currentTarget.value);
+  };
+
+  const onEdit = () => {
+    getEdit(nickname, message).then((res) => console.log(res));
+  };
 
   useEffect(() => {
-    getInfo().then((res: any ) => {
+    getInfo().then((res: any) => {
       console.log(res);
-        setnickName(res.name);
-        setMessage(res.message);
-        // console.log(name, message);
+      setNickName(res.name);
+      setMessage(res.message);
     });
-}, []);
+  }, []);
 
   return (
     <>
       <Header title="프로필 수정" />
       <StyledContainer>
         <InputDiv>
-          <InputLabel>닉네임</InputLabel>
-          <Input placeholder={nickname}/>
+          <InputLabel>이름</InputLabel>
+          <Input placeholder={nickname} value={nickname} />
         </InputDiv>
         <InputDiv>
           <InputLabel>상태메세지</InputLabel>
-          <StatusMessage placeholder={message}></StatusMessage>
+          <StatusMessage
+            onChange={onChange}
+            value={message}
+            placeholder={message}
+          ></StatusMessage>
         </InputDiv>
         <ButtonDiv>
-          <CancelBtn
-            onClick={() => navigate(-1)}
-          >
-            취소
-          </CancelBtn>
-          <SaveBtn>수정하기</SaveBtn>
+          <CancelBtn onClick={() => navigate(-1)}>취소</CancelBtn>
+          <SaveBtn onClick={onEdit}>수정하기</SaveBtn>
         </ButtonDiv>
       </StyledContainer>
     </>

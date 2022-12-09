@@ -38,7 +38,7 @@ const TextBox = styled.div`
 function FriendsList({ getNumber }: any) {
   const [friendInput, setFriendInput] = useState<string>("");
   const [friends, setFriends] = useState([]);
-  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [more, setMore] = useState<boolean>(false);
   const [id, setId] = useState("");
   const [numFr, setNumFr] = useState(0);
