@@ -2,9 +2,13 @@ import { useQuery } from "react-query";
 import { useRecoilState } from "recoil";
 import { recoil_ } from "../../../../../recoil";
 
-import { getFormattedDate } from "../../../../../components/api/getFormattedDate";
+// import { getFormattedDate } from "../../../../../components/api/getFormattedDate";
 import { AvatarColor } from "../../../../../constants";
 import { GetRevGeocode } from "../../../Map/api/getRevGeocode";
+import TimeAgo from "timeago-react";
+import * as timeago from "timeago.js";
+import ko from "timeago.js/lib/lang/ko";
+import { message } from "antd";
 
 import {
   MoreOutlined,
@@ -13,16 +17,15 @@ import {
 } from "@ant-design/icons";
 import { Carousel } from "antd";
 
-import {
-  LoadingBox,
-  LoadingBox2,
-} from "../../../../../components/LoadingContainer";
+import { LoadingBox } from "../../../../../components/LoadingContainer";
 import Avatar from "boring-avatars";
 import { Dialog } from "../dialog";
 import { useEffect } from "react";
 import { postType } from "../..";
+import { useNavigate } from "react-router-dom";
+// import { Data } from "@react-google-maps/api";
 
-const ErrProps: postType = {
+const initProps: postType = {
   // data: {
   post_id: "",
   content: "",
@@ -52,7 +55,10 @@ const emotionStyle = {
   color: "#222",
 };
 
-export const DetailCard = ({ item = ErrProps }) => {
+export const DetailCard = ({ item = initProps }) => {
+  const [dialogOpen, setDialogOpen] = useRecoilState(recoil_.detailDialogState);
+  const navigate = useNavigate();
+
   const { data: geoData, isSuccess: geoSuccess } = useQuery(
     "getRevGeo",
     () => item && GetRevGeocode({ lat: item.latitude, lng: item.longitude }),
@@ -60,49 +66,55 @@ export const DetailCard = ({ item = ErrProps }) => {
       retry: 1,
     }
   );
-  const time = getFormattedDate(new Date(item.created_time));
-  const [dialogOpen, setDialogOpen] = useRecoilState(recoil_.detailDialogState);
-
+  //timeago 한글 변환
+  const time = timeago.format(item.created_time, "ko");
+  timeago.register("ko", ko);
   const onChange = (currentSlide: number) => {
     // console.log(currentSlide);
   };
 
   useEffect(() => {
-    setDialogOpen(false);
     console.log(item);
-  }, []);
+    setDialogOpen(false);
+  }, [setDialogOpen, item]);
 
-  if (!geoSuccess || !item) return <LoadingBox />;
+  if (item.statusCode === 500)
+    return (
+      <div
+        className="postContainer errCont"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="header">확인할 수 없는 게시물입니다.</div>
+        <div className="divider"></div>
+        <div className="button" onClick={() => navigate("/")}>
+          돌아가기
+        </div>
+      </div>
+    );
+  if (!geoSuccess || !item.image) return <LoadingBox />;
   return (
     <>
       <div className="postContainer" onClick={(e) => e.stopPropagation()}>
-        {item.forFriend ? (
-          <>
+        <div className="background">
+          {item.forFriend === 1 && (
             <div className="friendStateTag">
               <StarOutlined />
               친구의 우연
             </div>
-          </>
-        ) : (
-          ""
-        )}
-        <Carousel afterChange={onChange}>
-          {item.image?.map((image: any, index: number) => (
-            <div className="img_container" key={index}>
-              {/* <div
+          )}
+          <Carousel afterChange={onChange}>
+            {item.image?.map((image: any, index: number) => (
+              <div className="img_container" key={index}>
+                {/* <div
                 className="background"
                 style={{ background:  `url(${image.img_url}) !important` }}
                 key={index}
               ></div> */}
-              <img
-                className="post_img"
-                // style={{ background: `url(${image.img_url}) !important` }}
-                src={image.img_url}
-                alt="img"
-              />
-            </div>
-          ))}
-        </Carousel>
+                <img className="post_img" src={image.img_url} alt="img" />
+              </div>
+            ))}
+          </Carousel>
+        </div>
         <div className="content">
           <div className="header">
             <div className="title">
@@ -112,7 +124,7 @@ export const DetailCard = ({ item = ErrProps }) => {
                 name={item.post_id}
                 colors={AvatarColor}
               />
-              username
+              익명의 누군가
             </div>
             <div className="HederAction" onClick={() => setDialogOpen(true)}>
               <MoreOutlined />
@@ -120,7 +132,14 @@ export const DetailCard = ({ item = ErrProps }) => {
           </div>
           {item.content}
           <div className="PostInfo">
-            <div className="date">{time}</div>
+            <div className="date">
+              <TimeAgo
+                datetime={Date.now()}
+                opts={{ relativeDate: item.created_time }}
+                locale="ko"
+              />
+            </div>
+
             <div className="location">
               <EnvironmentOutlined /> {geoData}
             </div>
@@ -129,15 +148,24 @@ export const DetailCard = ({ item = ErrProps }) => {
 
         <div className="actionSpace">
           <div className="emotions">
-            <div className="emotionButton">
+            <div
+              className="emotionButton"
+              style={item.emotion?.emotion_type === 0 ? emotionStyle : {}}
+            >
               🥰<div className="emotionCount">{item.like_count}</div>
             </div>
             <div className="divider"></div>
-            <div className="emotionButton" style={emotionStyle}>
+            <div
+              className="emotionButton"
+              style={item.emotion?.emotion_type === 1 ? emotionStyle : {}}
+            >
               😎<div className="emotionCount">{item.cool_count}</div>
             </div>
             <div className="divider"></div>
-            <div className="emotionButton">
+            <div
+              className="emotionButton"
+              style={item.emotion?.emotion_type === 2 ? emotionStyle : {}}
+            >
               😢<div className="emotionCount">{item.sad_count}</div>
             </div>
           </div>

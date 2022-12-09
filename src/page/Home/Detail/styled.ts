@@ -8,8 +8,12 @@ export const StyledDetail = styled.div`
   position: fixed;
   z-index: ${zIndex.middle};
   backdrop-filter: blur(3px);
-  padding-top: 7rem;
+  // padding-top: 7rem;
   overflow-y: scroll;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   .postContainer {
     width: 90%;
@@ -18,8 +22,7 @@ export const StyledDetail = styled.div`
     color: #fff;
     background: #2f3642;
     border-radius: 1rem;
-    margin: 0 auto;
-    margin-bottom: 3rem;
+    // margin: 0 auto;
 
     overflow: hidden;
   }
@@ -36,9 +39,9 @@ export const StyledDetail = styled.div`
     width: 100%;
     aspect-ratio: auto 1 / 1;
 
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    background-size: cover !important;
+    // background-position: center !important;
+    // background-repeat: no-repeat !important;
+    // background-size: cover !important;
   }
   .img_container {
     position: relative;
@@ -49,6 +52,8 @@ export const StyledDetail = styled.div`
   .post_img {
     position: absolute;
     width: 100%;
+    height: 100%;
+    object-fit: cover;
     top: 50%;
     transform: translate(0, -50%);
     position: absolute;
@@ -126,24 +131,22 @@ export const StyledDetail = styled.div`
     padding-top: 1rem;
   }
   .postContainer .background {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column-reverse;
-    align-content: flex-end;
-    align-items: flex-end;
+    // display: flex;
+    // flex-direction: column-reverse;
+    // align-items: flex-end;
   }
-  .postContainer .background .friendStateLight {
+  .postContainer .friendStateLight {
     width: 2rem;
     height: 2rem;
     background-color: #62ce60;
     box-shadow: 0 0 10px #70ff70c4;
     border-radius: 50%;
 
-    position: relative;
+    position: absolute;
     float: right;
     margin: 1rem;
   }
-  .postContainer .background .friendStateTag {
+  .postContainer .friendStateTag {
     height: 2rem;
     line-height: 2rem;
     padding: 0 1rem;
@@ -151,12 +154,40 @@ export const StyledDetail = styled.div`
     display: inline-block;
     font-size: 0.75rem;
 
-    position: relative;
+    position: absolute;
+    z-index: 1;
     float: right;
     margin: 1rem;
   }
 
-  .postContainer .background .friendStateTag > * {
+  .postContainer .friendStateTag > * {
     margin-right: 0.75rem;
+  }
+
+  .postContainer.errCont {
+    // min-height: 10rem;
+    border: none;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  .postContainer.errCont .divider {
+    width: 80%;
+    height: 1px;
+    background-color: #dddddd3d;
+  }
+  .postContainer.errCont .header {
+    padding: 2rem;
+  }
+  .postContainer.errCont .button {
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+  }
+  .postContainer.errCont .button:hover {
+    background-color: #ffffff24;
   }
 `;

@@ -8,7 +8,7 @@ import { recoil_ } from "../../../recoil";
 
 import { StyledDetail } from "./styled";
 
-import { LoadingBox2 } from "../../../components/LoadingContainer";
+import { LoadingBox } from "../../../components/LoadingContainer";
 import { GetPostOne } from "../Map/api/getPost";
 import { DetailCard } from "./components/detailCard";
 
@@ -34,6 +34,7 @@ export interface postType {
   ];
   distance: number;
   owner: boolean;
+  statusCode?: number;
 }
 
 export const Detail = () => {
@@ -51,8 +52,9 @@ export const Detail = () => {
     "userInfo",
     () => coordinate && GetPostOne(post_id, coordinate.lat, coordinate.lng),
     {
-      retry: 1,
+      retry: false,
       refetchOnReconnect: false,
+      cacheTime: 0,
     }
   );
 
@@ -78,7 +80,7 @@ export const Detail = () => {
   return (
     <>
       <StyledDetail onClick={() => navigate("/")}>
-        {detailSuccess ? <DetailCard item={detailData} /> : <LoadingBox2 />}
+        {detailSuccess ? <DetailCard item={detailData} /> : <LoadingBox />}
       </StyledDetail>
     </>
   );

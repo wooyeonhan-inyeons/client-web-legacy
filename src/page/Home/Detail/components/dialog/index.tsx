@@ -20,10 +20,10 @@ export const Dialog = ({ isOwner, post_id }: DialogPropType) => {
       }}
     >
       <div className="dialogContainer" onClick={(e) => e.stopPropagation()}>
-        <div>이 우연을</div>
+        <div className="head">이 우연을</div>
         {isOwner && (
           <div
-            className="button"
+            className="button delete"
             onClick={() => deletePost(post_id).then(() => navigate("/"))}
           >
             삭제합니다.

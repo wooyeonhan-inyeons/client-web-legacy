@@ -27,9 +27,16 @@ export const StyledDialog = styled.div`
     height: 3.5rem;
     line-height: 3.5rem;
     text-align: center;
+    padding: 0 2rem;
   }
   .dialogContainer div.button {
     cursor: pointer;
+  }
+  .dialogContainer div.head {
+    // font-size: 1.1rem;
+  }
+  .dialogContainer div.button.delete {
+    color: #ff7979;
   }
   .dialogContainer div.button:hover {
     background-color: #ffffff1f;
