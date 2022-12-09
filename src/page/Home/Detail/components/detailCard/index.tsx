@@ -11,6 +11,8 @@ import {
   EnvironmentOutlined,
   StarOutlined,
 } from "@ant-design/icons";
+import { Carousel } from "antd";
+
 import {
   LoadingBox,
   LoadingBox2,
@@ -20,9 +22,6 @@ import { Dialog } from "../dialog";
 import { useEffect } from "react";
 import { postType } from "../..";
 
-interface itemType {
-  data: postType;
-}
 const ErrProps: postType = {
   // data: {
   post_id: "",
@@ -64,27 +63,46 @@ export const DetailCard = ({ item = ErrProps }) => {
   const time = getFormattedDate(new Date(item.created_time));
   const [dialogOpen, setDialogOpen] = useRecoilState(recoil_.detailDialogState);
 
-  if (!geoSuccess || !item) return <LoadingBox />;
+  const onChange = (currentSlide: number) => {
+    // console.log(currentSlide);
+  };
 
+  useEffect(() => {
+    setDialogOpen(false);
+    console.log(item);
+  }, []);
+
+  if (!geoSuccess || !item) return <LoadingBox />;
   return (
     <>
       <div className="postContainer" onClick={(e) => e.stopPropagation()}>
-        <div
-          className="background"
-          style={{ background: `url(${item.image[0].img_url})` }}
-        >
-          {item.forFriend ? (
-            <>
-              {/* <div className="friendStateLight"></div> */}
-              <div className="friendStateTag">
-                <StarOutlined />
-                친구의 우연
-              </div>
-            </>
-          ) : (
-            ""
-          )}
-        </div>
+        {item.forFriend ? (
+          <>
+            <div className="friendStateTag">
+              <StarOutlined />
+              친구의 우연
+            </div>
+          </>
+        ) : (
+          ""
+        )}
+        <Carousel afterChange={onChange}>
+          {item.image?.map((image: any, index: number) => (
+            <div className="img_container" key={index}>
+              {/* <div
+                className="background"
+                style={{ background:  `url(${image.img_url}) !important` }}
+                key={index}
+              ></div> */}
+              <img
+                className="post_img"
+                // style={{ background: `url(${image.img_url}) !important` }}
+                src={image.img_url}
+                alt="img"
+              />
+            </div>
+          ))}
+        </Carousel>
         <div className="content">
           <div className="header">
             <div className="title">
@@ -125,7 +143,7 @@ export const DetailCard = ({ item = ErrProps }) => {
           </div>
         </div>
       </div>
-      {dialogOpen && <Dialog />}
+      {dialogOpen && <Dialog isOwner={item.owner} post_id={item.post_id} />}
     </>
   );
 };

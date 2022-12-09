@@ -104,20 +104,23 @@ export const Write = () => {
           </div>
           {detailImages.length !== 0 && (
             <div className="previewContainer">
-              {detailImages.map((url: string, index: number) => {
-                return (
-                  <img
-                    alt="미리보기"
-                    key={index}
-                    src={url}
-                    onClick={() =>
-                      setDetailImages(
-                        detailImages.filter((item: any) => item !== url)
-                      )
-                    }
-                  />
-                );
-              })}
+              {detailImages
+                .slice(0)
+                .reverse()
+                .map((url: string, index: number) => {
+                  return (
+                    <img
+                      alt="미리보기"
+                      key={index}
+                      src={url}
+                      onClick={() =>
+                        setDetailImages(
+                          detailImages.filter((item: any) => item !== url)
+                        )
+                      }
+                    />
+                  );
+                })}
             </div>
           )}
           {detailImages.length !== 0 && (

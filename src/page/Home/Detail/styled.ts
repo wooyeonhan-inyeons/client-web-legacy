@@ -36,10 +36,22 @@ export const StyledDetail = styled.div`
     width: 100%;
     aspect-ratio: auto 1 / 1;
 
-    background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZAPDCyOFVU4oDRqkpRAenVtkz_sJJb42oK7UcW_FyFHTB3u1x5R-euRLaj7YjPi8c_OI&usqp=CAU");
     background-position: center !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
+  }
+  .img_container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    overflow: hidden;
+  }
+  .post_img {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translate(0, -50%);
+    position: absolute;
   }
   .actionSpace {
     width: 100%;
