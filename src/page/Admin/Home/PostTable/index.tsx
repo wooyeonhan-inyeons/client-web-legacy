@@ -8,16 +8,16 @@ import {
   Typography,
 } from "antd";
 import React, { useEffect, useState } from "react";
-import { deleteUser, getAllUser, updateUser } from "../api";
+import { deletePost, getAllPost, updatePost } from "../api";
 
 interface Item {
   key: string;
-  user_id: string;
+  post_id: string;
+  content: string;
+  latitude: number;
+  longitude: number;
+  forFriend: number;
   name: string;
-  age: number;
-  follower_count: number;
-  following_count: number;
-  created_at: Date;
 }
 
 // const originData: Item[] = [];
@@ -73,15 +73,20 @@ const EditableCell: React.FC<EditableCellProps> = ({
   );
 };
 
-const UserTable: React.FC = () => {
+const PostTable: React.FC = () => {
   const [form] = Form.useForm();
   const [data, setData] = useState<Item[]>([]);
   const [editingKey, setEditingKey] = useState("");
 
   useEffect(() => {
-    getAllUser()
+    getAllPost()
       .then((res) => {
-        setData(res.map((users: any, i: string) => ({ key: i, ...users })));
+        const preprocess = res.map((post: any, i: string) => ({
+          ...post,
+          key: i,
+        }));
+
+        setData(preprocess);
       })
       .catch((error) =>
         message.error(`불러오는 도중 문제가 발생했습니다. 😕 ${error}`)
@@ -91,19 +96,25 @@ const UserTable: React.FC = () => {
   const isEditing = (record: Item) => record.key === editingKey;
 
   const edit = (record: Partial<Item> & { key: React.Key }) => {
-    form.setFieldsValue({ name: "", message: "", ...record });
+    form.setFieldsValue({
+      content: "",
+      latitude: "",
+      longitude: "",
+      forFriend: "",
+      ...record,
+    });
     setEditingKey(record.key);
   };
 
   const handleDelete = (key: React.Key) => {
-    const selectedUserId: string = data.find((d) => d.key === key)
-      ?.user_id as string;
+    const selectedPostId: string = data.find((d) => d.key === key)
+      ?.post_id as string;
 
-    deleteUser(selectedUserId)
+    deletePost(selectedPostId)
       .then((res) => {
         const newData = data.filter((item) => item.key !== key);
-        message.success("삭제 완료. 😀");
         setData(newData);
+        message.success("삭제 완료. 😀");
       })
       .catch((error) =>
         message.error(`불러오는 도중 문제가 발생했습니다. 😕 ${error}`)
@@ -120,10 +131,10 @@ const UserTable: React.FC = () => {
 
       const newData = [...data];
       const index = newData.findIndex((item) => key === item.key);
-      const selectedUserId: string = newData.find((d) => d.key === key)
-        ?.user_id as string;
+      const selectedPostId: string = newData.find((d) => d.key === key)
+        ?.post_id as string;
       const body = {
-        user_id: selectedUserId,
+        post_id: selectedPostId,
         ...row,
       };
       if (index > -1) {
@@ -132,15 +143,14 @@ const UserTable: React.FC = () => {
           ...item,
           ...row,
         });
-        updateUser(body)
+        updatePost(body)
           .then((res) => {
-            setData(newData);
             message.success("수정 완료. 😀");
+            setData(newData);
           })
           .catch((error) =>
             message.error(`불러오는 도중 문제가 발생했습니다. 😕 ${error}`)
           );
-        // setData(newData);
 
         setEditingKey("");
       } else {
@@ -155,47 +165,47 @@ const UserTable: React.FC = () => {
 
   const columns = [
     {
-      title: "user_id",
-      dataIndex: "user_id",
-      width: "46%",
-      editable: true,
+      title: "post_id",
+      dataIndex: "post_id",
+      width: "40%",
+      editable: false,
     },
     {
       title: "name",
       dataIndex: "name",
       width: "10%",
+      editable: false,
+    },
+    {
+      title: "content",
+      dataIndex: "content",
+      width: "25%",
       editable: true,
     },
     {
-      title: "email",
-      dataIndex: "email",
-      width: "20%",
-      editable: false,
-    },
-    {
-      title: "message",
-      dataIndex: "message",
-      width: "20%",
+      title: "latitude",
+      dataIndex: "latitude",
+      width: "10%",
       editable: true,
     },
     {
-      title: "follower",
-      dataIndex: "follower_count",
-      width: "2%",
-      editable: false,
+      title: "longitude",
+      dataIndex: "longitude",
+      width: "10%",
+      editable: true,
     },
     {
-      title: "following",
-      dataIndex: "following_count",
-      width: "2%",
-      editable: false,
+      title: "forFriend",
+      dataIndex: "forFriend",
+      width: "5%",
+      editable: true,
     },
+
     {
       title: "operation",
       dataIndex: "operation",
       render: (_: any, record: Item) => {
         const editable = isEditing(record);
-
         return editable ? (
           <span>
             <Typography.Link
@@ -243,7 +253,7 @@ const UserTable: React.FC = () => {
       ...col,
       onCell: (record: Item) => ({
         record,
-        // inputType: col.dataIndex === "age" ? "number" : "text",
+        inputType: col.dataIndex === "forFriend" ? "number" : "text",
         dataIndex: col.dataIndex,
         title: col.title,
         editing: isEditing(record),
@@ -271,4 +281,4 @@ const UserTable: React.FC = () => {
   );
 };
 
-export default UserTable;
+export default PostTable;

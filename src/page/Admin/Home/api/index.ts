@@ -14,6 +14,45 @@ export const getAllUser = () => {
   }).then((res) => res.json());
 };
 
+/**
+ * @function 어드민 유저 삭제
+ * @param {string} user_id
+ */
+export const deleteUser = (user_id: string) => {
+  return fetch(`${BACK_URL}/admin/user`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("key")}`,
+    },
+    body: JSON.stringify({
+      user_id,
+    }),
+  });
+};
+
+/**
+ * @function 어드민 유저 수정
+ * @queries {string} user_id
+ * @param {updateFormData} user_info
+ */
+
+export interface updateUserFormData {
+  name: string;
+  email: string;
+  message: string;
+}
+export const updateUser = (user_info: updateUserFormData) => {
+  return fetch(`${BACK_URL}/admin/user`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("key")}`,
+    },
+    body: JSON.stringify(user_info),
+  });
+};
+
 export const getAllFriendList = () => {
   return fetch(`${BACK_URL}/admin/friends/all`, {
     method: "GET",
@@ -63,40 +102,56 @@ export const updateFriend = (friend_info: updateFriendFormData) => {
 };
 
 /**
- * @function 어드민 유저 삭제
- * @param {string} user_id
+ * @function 어드민 게시물 리스트 조회
  */
-export const deleteUser = (user_id: string) => {
-  return fetch(`${BACK_URL}/admin/user`, {
+
+export const getAllPost = () => {
+  return fetch(`${BACK_URL}/admin/post/all`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("key")}`,
+    },
+  }).then((res) => res.json());
+};
+
+/**
+ * @function 어드민 게시물 삭제
+ * @param {string} post_id
+ */
+export const deletePost = (post_id: string) => {
+  return fetch(`${BACK_URL}/admin/post`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("key")}`,
     },
     body: JSON.stringify({
-      user_id,
+      post_id,
     }),
   });
 };
 
 /**
- * @function 어드민 유저 수정
+ * @function 어드민 게시물 수정
  * @queries {string} user_id
- * @param {updateFormData} user_info
+ * @param {updateFormData} post_info
  */
 
-export interface updateUserFormData {
-  name: string;
-  email: string;
-  message: string;
+export interface updatePostFormData {
+  post_id: string;
+  content: string;
+  latitude: number;
+  longitude: number;
+  forFriend: number;
 }
-export const updateUser = (user_info: updateUserFormData) => {
-  return fetch(`${BACK_URL}/admin/user`, {
+export const updatePost = (post_info: updateUserFormData) => {
+  return fetch(`${BACK_URL}/admin/post`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("key")}`,
     },
-    body: JSON.stringify(user_info),
+    body: JSON.stringify(post_info),
   });
 };
