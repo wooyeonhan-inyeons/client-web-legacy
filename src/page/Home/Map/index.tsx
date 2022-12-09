@@ -426,33 +426,20 @@ function initMap(
     });
     return marker;
   });
-
-  var mcOptions = {
-    //imagePath: 'https://googlemaps.github.io/js-marker-clusterer/images/m',
-    styles: [
-      {
-        url: "https://googlemaps.github.io/js-marker-clusterer/images/m1.png",
-        width: 53,
-        height: 53,
-        fontFamily: "comic sans ms",
-        textSize: 15,
-        textColor: "red",
-        //color: #00FF00,
-      },
-    ],
+  const renderer = {
+    render: ({ count, position }: Cluster) =>
+      new google.maps.Marker({
+        icon: MarkerClusterIcon,
+        label: { text: String(count), color: "white", fontSize: "10px" },
+        position,
+        // adjust zIndex to be above other markers
+        zIndex: Number(google.maps.Marker.MAX_ZINDEX) + count,
+      }),
   };
+
   new MarkerClusterer({
     map,
     markers,
-    renderer: {
-      render: ({ count, position }: Cluster) =>
-        new google.maps.Marker({
-          icon: MarkerClusterIcon,
-          label: { text: String(count), color: "white", fontSize: "10px" },
-          position,
-          // adjust zIndex to be above other markers
-          zIndex: Number(google.maps.Marker.MAX_ZINDEX) + count,
-        }),
-    },
+    renderer,
   });
 }
