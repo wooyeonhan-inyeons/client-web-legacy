@@ -1,32 +1,36 @@
+// import { useCallback, useEffect, useRef, useState } from "react";
 // import { MarkerClusterer } from "@googlemaps/markerclusterer";
-// import { useCallback, useEffect, useRef } from "react";
+// import { useRecoilState } from "recoil";
+// import { recoil_ } from "../../../recoil";
+// // import { useRecoilState } from "recoil";
+// import useGeolocation from "react-hook-geolocation";
 // import { useQuery } from "react-query";
 // import { LoadingBox } from "../../../components/LoadingContainer";
-// import { GetTestPost } from "../../../Hooks";
+// import { getNearTest } from "./api/getPost";
 
-// const options = {
-//   zoom: 17,
-//   minZoom: 13,
-//   maxZoom: 20,
-//   center: { lat: 35.859115, lng: 128.487598 },
-//   zoomControl: false,
-//   mapTypeControl: false,
-//   scaleControl: false,
-//   streetViewControl: false,
-//   rotateControl: false,
-//   fullscreenControl: false,
-//   clickableIcons: false,
-//   mapId: "7c08bc77e896521d",
-//   backgroundColor: "#242f3e",
-// };
-
-// export const Map = () => {
+// export default function Map() {
+//   const [data, setData] = useState<any[]>([]);
+//   const [coordinate, setCoordinate] = useRecoilState<google.maps.LatLngLiteral>(
+//     recoil_.geoState
+//   );
 //   const mapElement = useRef(null);
+//   const geolocation = useGeolocation();
 
-//   const { data, isLoading, isSuccess } = useQuery("getMerker", GetTestPost, {
-//     retry: 3,
-//     onSuccess: () => {},
-//   });
+//   const options = {
+//     zoom: 17,
+//     minZoom: 13,
+//     maxZoom: 20,
+//     center: { lat: 35.8507222, lng: 128.4914339 },
+//     zoomControl: false,
+//     mapTypeControl: false,
+//     scaleControl: false,
+//     streetViewControl: false,
+//     rotateControl: false,
+//     fullscreenControl: false,
+//     clickableIcons: false,
+//     mapId: "7c08bc77e896521d",
+//     backgroundColor: "#242f3e",
+//   };
 
 //   // 컴포넌트가 마운트될 때, 수동으로 스크립트를 넣어줍니다.
 //   // 이는 script가 실행되기 이전에 window.initMap이 먼저 선언되어야 하기 때문입니다.
@@ -46,37 +50,50 @@
 
 //     const map = new google.maps.Map(mapElement.current, options);
 
-//     const markers = data?.map((item, i) => {
+//     const markers = data.map((item, i) => {
+//       console.log(item);
 //       const marker = new google.maps.Marker({
 //         position: { lat: item.latitude, lng: item.longitude },
-//         label: item.content,
-//         icon: item.url,
+//         // icon: item.url,
 //       });
 //       return marker;
 //     });
-
 //     new MarkerClusterer({ markers, map });
 //   }, []);
 
 //   useEffect(() => {
-//     console.log("data 있냐?");
-
 //     const script = window.document.getElementsByTagName("script")[0];
 //     const includeCheck = script.src.startsWith(
 //       "https://maps.googleapis.com/maps/api"
 //     );
 //     // script 중복 호출 방지
 //     if (includeCheck) return initMap();
-
 //     window.initMap = initMap;
 //     loadScript(
 //       `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}&callback=initMap&language=ko`
 //     );
-//     console.log("start");
 //   }, [initMap, loadScript]);
 
-//   return !isLoading ? <div id="google_map" ref={mapElement} /> : <LoadingBox />;
-// };
+//   useEffect(() => {
+//     console.log("위치정보 불러오기");
+//     if (geolocation.latitude !== null)
+//       setCoordinate({
+//         lat: geolocation.latitude,
+//         lng: geolocation.longitude,
+//       });
+//   }, [geolocation]);
+
+//   useEffect(() => {
+//     getNearTest(coordinate)?.then((res) => {
+//       console.log("불러오기 완료완료", res);
+//       setData(res);
+//     });
+//     initMap();
+//     // console.log(coordinate);
+//   }, [coordinate]);
+
+//   return <div id="google_map" ref={mapElement} />;
+// }
 
 //React 방식이지만 원하는 대로 잘 안됨.
 // import { useMemo, useState } from "react";
@@ -177,17 +194,12 @@ import {
 import { useNavigate } from "react-router-dom";
 import useGeolocation from "react-hook-geolocation";
 
-import marker0 from "./images/marker/marker0.png";
-import marker1 from "./images/marker/marker1.png";
-import marker2 from "./images/marker/marker2.png";
-import marker3 from "./images/marker/marker0.png";
-import marker4 from "./images/marker/marker0.png";
-import marker5 from "./images/marker/marker0.png";
-import marker6 from "./images/marker/marker0.png";
 import { useRecoilState } from "recoil";
 import { recoil_ } from "../../../recoil";
 import { GetNearPost, getNearTest } from "./api/getPost";
 import { useQuery } from "react-query";
+import { MarkerImages } from "./components/Mark";
+// import {markImage} from "./images/marker/defaultMark/"
 
 type MapOptions = google.maps.MapOptions;
 
@@ -199,16 +211,6 @@ interface MarkerProps {
   longitude: number;
   post_id: string;
 }
-
-const markerImages = [
-  marker0,
-  marker1,
-  marker2,
-  marker3,
-  marker4,
-  marker5,
-  marker6,
-];
 
 export default function Map() {
   const navigate = useNavigate();
@@ -225,7 +227,7 @@ export default function Map() {
       mapId: "7c08bc77e896521d",
       backgroundColor: "#242f3e",
       minZoom: 13,
-      maxZoom: 20,
+      // maxZoom: 20,
       zoomControl: false,
       mapTypeControl: false,
       scaleControl: false,
@@ -236,7 +238,7 @@ export default function Map() {
     }),
     []
   );
-  // const onLoad = useCallback((map: any) => (mapRef.current = map), []);
+  // const onLoad = useCallback((map: any) => (mapRef.current = map));
 
   // const { data, isLoading, refetch } = useQuery(
   //   "postNear",
@@ -288,7 +290,11 @@ export default function Map() {
             key={item.post_id}
             onClick={() => navigate(`/detail/${item.post_id}`)}
             position={{ lat: item.latitude, lng: item.longitude }}
-            icon={markerImages[index % 7]}
+            icon={
+              item.forFriend
+                ? MarkerImages.friend[index % 7]
+                : MarkerImages.default[index % 7]
+            }
             cursor="pointer"
             // clusterer={clusterer}
           />
