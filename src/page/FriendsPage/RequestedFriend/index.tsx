@@ -132,7 +132,7 @@ function RequestFriend({getNumber}:any) {
   };
 
   const onRemove = (id : string) => {
-     setRequested(requested.filter((user : any) => user.friend_id !== id));
+    setRequested(requested.filter((user : any) => user.friend_id !== id));
   };
 
   return (

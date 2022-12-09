@@ -6,7 +6,7 @@ import { getDetail } from './api'
 import { gerRequestFr } from './Request/api'
 
 
-export const Modal = styled.div`
+const Modal = styled.div`
     display: flex;
     flex-direction: column;
     width: 70vw;
@@ -91,6 +91,7 @@ export const ImageDiv = styled.div`
     text-align: center;
     margin: auto;
 `
+
 export const Mail = styled.p`
     font-size: 15px;
     margin: auto;
@@ -110,8 +111,6 @@ export const Message = styled.p`
     margin: auto;
 
 `
-
-
 export interface IProps {
     friendId: string,
     closeModal: ()=> void
@@ -123,7 +122,7 @@ function ShowModal({ friendId, closeModal }: IProps) {
     const [success, setSuccess] = useState(false);
     // 친구정보 useState로 전달하기
     useEffect(() => {
-        getDetail({friendId}).then((res: any ) => {
+        getDetail(friendId).then((res: any ) => {
             const arr: any = [res.name, res.message, res.email];
             setDetail(arr);
         });

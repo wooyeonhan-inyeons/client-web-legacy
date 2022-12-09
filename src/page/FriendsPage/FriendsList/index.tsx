@@ -16,41 +16,57 @@ import Avatar from "boring-avatars";
 import { getFriends } from "./../api";
 import ShowModal from "./ShowModal";
 import styled from "styled-components";
-import More from './More';
+import More from "./More";
 
 const ImageDiv = styled.div`
   display: flex;
   justify-content: center;
   float: left;
   width: 15%;
-  position: relative; top: 4px;
+  position: relative;
+  top: 4px;
   padding-bottom: 15px;
-`
+`;
 
-export const TextBox = styled.div`
+const TextBox = styled.div`
   width: 20%;
   flex-grow: 4;
   padding-right: 5px;
   padding-bottom: 10px;
-`
+`;
 
-function FriendsList({getNumber}:any) {
+function FriendsList({ getNumber }: any) {
   const [friendInput, setFriendInput] = useState<string>("");
   const [friends, setFriends] = useState([]);
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [more, setMore] = useState<boolean>(false);
+  const [id, setId] = useState("");
   const [numFr, setNumFr] = useState(0);
   getNumber(numFr);
 
   const closeModal = () => setModalOpen(false);
   const onChange = (event: any) => setFriendInput(event.target.value);
-  const onSubmit = (event: any) => {event.preventDefault();};
-  const onClickModal = () => { setModalOpen(true);};
-  const onMore = () => {
+  const onSubmit = (event: any) => {
+    event.preventDefault();
+  };
+  const onClickModal = () => {
+    setModalOpen(true);
+  };
+  const [currentInfo, setCurrentInfo] = useState({});
+  const onMore = (e: any) => {
+    console.log(e.target);
+    const index = e.currentTarget.dataset.index;
+    console.log(friends[index]);
+    setCurrentInfo(friends[index]);
     setMore(true);
-    console.log("clicked!")
-  }
-  const closeMore = () => setMore(false);
+  };
+  const closeMore = () => {
+    setMore(false);
+  };
+  const getId = (e: any) => setId(e);
+  const onRemove = (id: string) => {
+    setFriends(friends.filter((user: any) => user.friend_id !== id));
+  };
 
   useEffect(() => {
     getFriends().then((res: any) => {
@@ -82,7 +98,9 @@ function FriendsList({getNumber}:any) {
           ></Input>
           <Button onClick={onClickModal}>추가</Button>
         </InputDiv>
-          {modalOpen && <ShowModal friendId={friendInput} closeModal={closeModal}></ShowModal>}
+        {modalOpen && (
+          <ShowModal friendId={friendInput} closeModal={closeModal}></ShowModal>
+        )}
         <ListDiv>
           <ListBox>
             {friends.map((item: any, index: number) => (
@@ -99,11 +117,23 @@ function FriendsList({getNumber}:any) {
                   <FriendName>{item.user_info.name}</FriendName>
                   <FriendMessage>{item.user_info.message}</FriendMessage>
                 </TextBox>
-                  <EllipsisOutlined
-                    style={{ width: "2em", position: "absolute", right: "10%" , paddingBottom: "3px" }}
-                    onClick={onMore}
-                  />
-                  { more && <More friendId={item.friend_id} closeMore={closeMore}></More>}
+                <EllipsisOutlined
+                  data-index={index}
+                  style={{
+                    width: "2em",
+                    position: "absolute",
+                    right: "10%",
+                    paddingBottom: "3px",
+                  }}
+                  onClick={onMore}
+                />
+                {more && (
+                  <More
+                    item={currentInfo}
+                    friendId={item.friend_id}
+                    closeMore={closeMore}
+                  ></More>
+                )}
               </List>
             ))}
           </ListBox>
