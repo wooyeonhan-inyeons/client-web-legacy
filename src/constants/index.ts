@@ -33,6 +33,7 @@ export const COLOR = {
 
 export const zIndex = {
   default: 999,
+  middle: 99,
   background: 0,
 };
 

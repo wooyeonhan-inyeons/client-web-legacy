@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { recoil_ } from "../.././recoil/index";
-import { USER_ROLE } from "../.././constants";
 import { useNavigate } from "react-router-dom";
+import { USER_ROLE } from "../../constants";
+import { recoil_ } from "../../recoil";
 
 export const LoginRedirect = () => {
   const [user, setUser] = useRecoilState(recoil_.userState);
@@ -11,7 +11,7 @@ export const LoginRedirect = () => {
 
   useEffect(() => {
     localStorage.setItem("key", query);
-    setUser({ userId: 0, role: USER_ROLE.USER });
+    setUser({ userId: 0, role: USER_ROLE.ADMIN });
   });
 
   useEffect(() => {
