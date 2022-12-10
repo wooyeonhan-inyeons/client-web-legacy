@@ -22,9 +22,18 @@ import { MyPostes } from "./page/MyPage/Postes";
 import { Detail } from "./page/Home/Detail";
 import { Write } from "./page/Write";
 import { LoginRedirect } from "./components/api/loginRedirect";
+import { GetUser } from "./components/api/getUser";
+import { useQuery } from "react-query";
 
 function App() {
   const [user] = useRecoilState(recoil_.userState);
+
+  const { data } = useQuery("getUser", GetUser, {
+    retry: 1,
+    onSuccess: (res) => {
+      console.log(res);
+    },
+  });
 
   const router = createBrowserRouter([
     {
@@ -93,10 +102,6 @@ function App() {
       loader: () => user.role !== USER_ROLE.GUEST && redirect("/login"),
     },
   ]);
-
-  useEffect(() => {
-    // getUser();
-  }, []);
 
   return <RouterProvider router={router} />;
 }

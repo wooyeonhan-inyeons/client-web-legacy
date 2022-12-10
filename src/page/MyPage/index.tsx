@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useInfiniteQuery } from "react-query";
+import { useInfiniteQuery, useQuery } from "react-query";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useResetRecoilState } from "recoil";
 import { recoil_ } from "../../recoil";
@@ -17,7 +17,6 @@ const Mypage = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  //한 번만 불러오는 query.
   // const { data } = useQuery("images", () => GetTest({ idx: 0 }), {
   //   retry: 1,
   //   refetchOnReconnect: false,
@@ -27,7 +26,7 @@ const Mypage = () => {
   //   },
   // });
 
-  const { data, fetchNextPage } = useInfiniteQuery(
+  const { data: tempData, fetchNextPage } = useInfiniteQuery(
     ["images"],
     ({ pageParam = 0 }) => GetTest({ idx: pageParam }),
     {
@@ -45,7 +44,7 @@ const Mypage = () => {
   );
 
   useEffect(() => {
-    if (data?.pages.flat().length! < 9) fetchNextPage();
+    if (tempData?.pages.flat().length! < 9) fetchNextPage();
   });
 
   return (
@@ -53,8 +52,8 @@ const Mypage = () => {
       <Header title="마이페이지" />
       {!loading ? (
         <StyledContainer>
-          <MyProfile userPost={data?.pages.flat()} />
-          <MyPost data={data?.pages.flat()} />
+          <MyProfile userPost={tempData?.pages.flat()} />
+          <MyPost data={tempData?.pages.flat()} />
           <LogoutButton
             onClick={() => {
               localStorage.removeItem("key");
