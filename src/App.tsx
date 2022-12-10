@@ -28,12 +28,12 @@ import { useQuery } from "react-query";
 function App() {
   const [user] = useRecoilState(recoil_.userState);
 
-  const { data } = useQuery("getUser", GetUser, {
-    retry: 1,
-    onSuccess: (res) => {
-      console.log(res);
-    },
-  });
+  // const { data } = useQuery("getUser", GetUser, {
+  //   retry: 1,
+  //   onSuccess: (res) => {
+  //     console.log(res);
+  //   },
+  // });
 
   const router = createBrowserRouter([
     {
