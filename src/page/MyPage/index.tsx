@@ -18,10 +18,6 @@ const Mypage = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const obj = {
-    img_url: "",
-    post_id: ""
-  };
   //15장 불러오면 9장이 최대인 여기에선 불필요해서 useQuery로 변경
   const { data: postData, isSuccess: postSuccess } = useQuery(
     ["mypage"],
@@ -47,6 +43,7 @@ const Mypage = () => {
         <StyledContainer>
           <MyProfile userPost={postData} />
           <MyPost data={postData} />
+
           <LogoutButton
             onClick={() => {
               localStorage.removeItem("key");
