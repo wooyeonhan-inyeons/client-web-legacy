@@ -69,11 +69,11 @@ export const MyProfile = ({ userPost }: any) => {
 
         <MyPostButton
           onClick={() => {
-            navigate("/mypage/postes");
             setTab(MYPAGE_.VISITED_POST);
+            navigate("/mypage/postes");
           }}
-          url1={data && userPost[0]?.url}
-          url2={data && userPost[1]?.url}
+          url1={data && userPost[0]?.img_url}
+          url2={data && userPost[1]?.img_url}
         />
         <FriendsButton onClick={() => navigate("/mypage/friends")} />
       </ProfileContainer>

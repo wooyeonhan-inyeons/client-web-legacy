@@ -1,48 +1,56 @@
 import { useEffect } from "react";
 import { useInfiniteQuery } from "react-query";
 import { useInView } from "react-intersection-observer";
-import { useRecoilState } from "recoil";
-import { recoil_ } from "../../../../../recoil";
-import { GetTest } from "../TabBox/GetTest";
 
 import { LoadingOutlined } from "@ant-design/icons";
 import { PostImage } from "../../../components/PostImage";
 import { PostImageContainer } from "../../components/MyPostes/styled";
+import { GetViewedPost } from "../../../api/GetViewedPost";
+import { LoadingBox } from "../../../../../components/LoadingContainer";
 
 export const VisitedPost = () => {
   const [ref, inView] = useInView();
-  const [tab] = useRecoilState(recoil_.tabState);
-  const { data, isError, error, isFetching, fetchNextPage, hasNextPage } =
-    useInfiniteQuery(
-      ["image"],
-      ({ pageParam = 0 }) => GetTest({ idx: pageParam }),
-      {
-        retry: 3,
-        getNextPageParam: (lastPage) => {
-          // lastPage: 콜백함수에서 리턴한 값을 의미한다!!
-          // 직전에 받은 배열의 다음 index를 요청함
-          if (lastPage[lastPage.length - 1] === undefined)
-            console.log("마지막!");
-          return lastPage[lastPage.length - 1].id;
-          // 마지막 id 요소 관련 이벤트 처리 추가해야함
-        },
-      }
-    );
+
+  const {
+    data: viewedData,
+    isFetching: viewIsFetching,
+    isSuccess: viewIsSuccess,
+    fetchNextPage: viewFetchNextPage,
+    hasNextPage: viewHasNextPage,
+  } = useInfiniteQuery(
+    ["mypage/viewed"],
+    ({ pageParam = 0 }) => GetViewedPost({ idx: pageParam }),
+    {
+      retry: 3,
+      getNextPageParam: (lastPage, allPages) => {
+        if (
+          lastPage[lastPage.length - 1]?.statusCode === 500 ||
+          allPages.flat().length !== 15
+        )
+          return null;
+        return Math.floor((1 + allPages.flat().length) / 15);
+      },
+      onSuccess(data) {
+        console.log(data);
+      },
+    }
+  );
 
   useEffect(() => {
-    if (inView && hasNextPage) fetchNextPage();
-  }, [inView]);
+    if (inView && viewHasNextPage) viewFetchNextPage();
+  });
 
+  if (!viewedData || !viewIsSuccess) return <LoadingBox />;
   return (
     <PostImageContainer>
       <div className="ImageContainer">
         <>
-          {data?.pages.flat().map((item, index) => (
-            <PostImage url={item.url} key={index} />
+          {viewedData.pages.flat().map((item: any, index: number) => (
+            <PostImage url={item.img_url} key={index} />
           ))}
         </>
 
-        {isFetching && (
+        {viewIsFetching && (
           <div
             style={{
               width: "100%",
