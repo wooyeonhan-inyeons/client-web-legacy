@@ -12,7 +12,7 @@ import useGeolocation from "react-hook-geolocation";
 import { useRecoilState } from "recoil";
 import { recoil_ } from "../../../recoil";
 import { getNearTest } from "./api/getPost";
-import { MarkerImages } from "./components/Mark";
+import { MarkerImages, MarkerImages2 } from "./components/Mark";
 import { useNavigate } from "react-router-dom";
 
 import MarkerClusterIcon from "./images/MarkerCluster.png";
@@ -70,13 +70,26 @@ function initMap(
   );
 
   const markers = data.map((item: MarkerProps, index: number) => {
+    const priceTag = document.createElement("div");
+    priceTag.className = "price-tag";
+    priceTag.textContent = "$2.5M";
+
     const marker = new google.maps.Marker({
       position: { lat: item.latitude, lng: item.longitude },
       icon: item.viewed
-        ? MarkerImages.viewed[index % 7]
+        ? {
+            url: MarkerImages2.viewed[index % 8],
+            scaledSize: new google.maps.Size(56, 56),
+          }
         : item.forFriend
-        ? MarkerImages.friend[index % 7]
-        : MarkerImages.default[index % 7],
+        ? {
+            url: MarkerImages2.friend[index % 8],
+            scaledSize: new google.maps.Size(56, 56),
+          }
+        : {
+            url: MarkerImages2.default[index % 8],
+            scaledSize: new google.maps.Size(56, 56),
+          },
     });
     marker.addListener("click", () => {
       navigate(`detail/${item.post_id}`);
