@@ -3,9 +3,12 @@ import { ExclamationCircleFilled } from "@ant-design/icons";
 import styled from "styled-components";
 import { COLOR } from "../../constants";
 import { useNavigate } from "react-router-dom";
+import { useResetRecoilState } from "recoil";
+import { recoil_ } from "../../recoil";
 
 const NoMatch = () => {
   const navigate = useNavigate();
+  const resetUser = useResetRecoilState(recoil_.userState);
 
   return (
     <>
@@ -17,7 +20,14 @@ const NoMatch = () => {
         <div className="content">
           잠시 후 다시 시도해 주세요. 지속적인 오류가 발생한다면 연락 바랍니다.
           <div className="buttons">
-            <div className="button" onClick={() => navigate("/")}>
+            <div
+              className="button"
+              onClick={() => {
+                navigate("/");
+                localStorage.removeItem("key");
+                resetUser();
+              }}
+            >
               홈으로 돌아가기
             </div>
           </div>

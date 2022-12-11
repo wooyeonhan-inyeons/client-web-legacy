@@ -1,5 +1,6 @@
 //4번째 방법
 import react, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import {
   Cluster,
@@ -7,13 +8,12 @@ import {
   MarkerClusterer,
   Renderer,
 } from "@googlemaps/markerclusterer";
-import React from "react";
+
 import useGeolocation from "react-hook-geolocation";
 import { useRecoilState } from "recoil";
 import { recoil_ } from "../../../recoil";
 import { getNearTest } from "./api/getPost";
 import { MarkerImages, MarkerImages2 } from "./components/Mark";
-import { useNavigate } from "react-router-dom";
 
 import MarkerClusterIcon from "./images/MarkerCluster.png";
 import MarkerClusterIcon2 from "./images/MarkerCluster2.png";
@@ -69,11 +69,7 @@ function initMap(
     { center: coordinate, ...options }
   );
 
-  const markers = data.map((item: MarkerProps, index: number) => {
-    const priceTag = document.createElement("div");
-    priceTag.className = "price-tag";
-    priceTag.textContent = "$2.5M";
-
+  const markers = data?.map((item: MarkerProps, index: number) => {
     const marker = new google.maps.Marker({
       position: { lat: item.latitude, lng: item.longitude },
       icon: item.viewed
