@@ -13,6 +13,7 @@ import {
   MoreOutlined,
   EnvironmentOutlined,
   StarOutlined,
+  EyeOutlined,
 } from "@ant-design/icons";
 import { Carousel } from "antd";
 import { setEmotion } from "../../Home/Detail/api/setEmotion";
@@ -115,6 +116,7 @@ export const MyDetail = () => {
               </div>
               <div className="location">
                 <EnvironmentOutlined /> {geoData}
+          
               </div>
             </div>
           </div>
