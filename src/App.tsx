@@ -50,7 +50,7 @@ function App() {
     },
     {
       path: "write/",
-      element: <NoMatch />,
+      element: <Write />,
       loader: () => user.role === USER_ROLE.GUEST && redirect("/login"),
     },
     {
