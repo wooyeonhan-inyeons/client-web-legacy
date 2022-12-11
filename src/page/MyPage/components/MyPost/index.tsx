@@ -35,7 +35,7 @@ export const MyPost = ({ data }: any) => {
         <PostImage
           url={data[maxIndex - 1]?.img_url}
           post_id={data.post_id}
-          morePost={true}
+          morePost={more}
         />
       </div>
     </MyPostContainer_Center>
