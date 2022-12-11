@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../components/Header";
 import { StyledContainer } from "../../components/StyledContainer";
 import { useQuery } from "react-query";
 import FriendsList from "./FriendsList";
-import RequestFriend from "./RequestFriend";
+import RequestFriend from "./RequestedFriend";
 import styled from "styled-components";
 import { COLOR } from "../../constants";
+import { getSum } from "./api";
 
 const TabBtn = styled.button< { toggle : boolean } >`
   width: 50%;
@@ -19,13 +20,32 @@ const TabBtn = styled.button< { toggle : boolean } >`
   color: ${(props) => (props.toggle ? 'white' : '#A2A2A2')};
 `
 
+const Num = styled.span`
+  font-family: inherit;
+  color: inherit;
+  font-size: inherit;
+`
+
 const FriendsPage = () => {
   const [tabList, setTabList] = useState(true);
   const [tabRequest, setTabRequest] = useState(false);
+  const [numFr, setNumFr] = useState(0);
+  const [numRe, setNumRe] = useState(0);
+
   const onClick = () => {
     setTabList(prev => !prev);
     setTabRequest(prev => !prev);
   }
+
+  useEffect(() => {
+    getSum().then((res: any) => {
+      setNumFr(res.friend_count);
+      setNumRe(res.request_count);
+      console.log(res);
+    })
+  }, [])
+  
+
   return (
     <>
       <Header title="친구" />
@@ -33,14 +53,20 @@ const FriendsPage = () => {
         <TabBtn 
         toggle={tabList}
         onClick={onClick}
-        >나의 친구 목록</TabBtn>
+        >나의 친구 목록 
+        <Num> ({numFr})</Num></TabBtn>
         <TabBtn 
         toggle={tabRequest}
         onClick={onClick}
-        >친구 요청</TabBtn>
+        >친구 요청
+        <Num> ({numRe})</Num></TabBtn>
         { tabList ?
-        <FriendsList></FriendsList> : 
-        <RequestFriend></RequestFriend>}
+        <FriendsList
+        // getNumber={getNumFr}
+        ></FriendsList> : 
+        <RequestFriend
+        // getNumber={getNumRe}
+        ></RequestFriend>}
       </StyledContainer>
     </>
     );

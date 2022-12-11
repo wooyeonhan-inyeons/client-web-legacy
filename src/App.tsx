@@ -114,6 +114,16 @@ function App() {
       element: <LoginRedirect />,
       loader: () => user.role !== USER_ROLE.GUEST && redirect("/login"),
     },
+    {
+      path: "mypage/friends",
+      element: <FriendsPage />,
+      loader: () => user.role === USER_ROLE.GUEST && redirect("/"),
+    },
+    {
+      path: "mypage/edit",
+      element: <Edit />,
+      loader: () => user.role === USER_ROLE.GUEST && redirect("/"),
+    },
   ]);
 
   return <RouterProvider router={router} />;

@@ -45,7 +45,7 @@ const Login = () => {
                 sns={SNS.NONE}
                 onClick={() =>
                   navigate(
-                    "/auth/kakao/redirect?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYTdlYmExNmEtYTUyYi00NzdhLTkwYWEtNzRhNmVkODk0NTE1IiwibmFtZSI6IuydtOuPhOqyvSIsImVtYWlsIjoiZG85OEBrYWthby5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY3MDI0OTQ3NywiZXhwIjoxNjcwMzM1ODc3fQ.hYY6VtPejt5eUuNYSgQPRd8UtmV5_CQv69v5GvzyrGs"
+                    "/auth/kakao/redirect?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNmRmZDhmZjEtOWMzMC00ZjFlLTg3OTQtMmVkMmJmZGNlMmUwIiwibmFtZSI6IuydtOybkOyjvCIsImVtYWlsIjoidHVydGxlNDI2NUBrYWthby5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY3MDc0MzA0MSwiZXhwIjoxNjcwODI5NDQxfQ.WZbAVo3JTEAyJKvBJKioq6z9neDLf7V0GtAMB-C0iEw"
                   )
                 }
               >

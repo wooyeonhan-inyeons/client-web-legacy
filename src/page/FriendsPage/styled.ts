@@ -9,17 +9,18 @@ export const InputDiv = styled.div`
 
 export const Input = styled.input`
     position: absolute;
-    width: 85%;
+    width: 79%;
     height: 7.5vh; 
     min-height: 55px;
     font-size: 20px;
     border: 0;
-    border-radius: 10px;
+    border-radius: 16px;
     outline: none;
     padding-left: 10px;
+    padding-right: 1em;
     background-color: ${COLOR.background};
     font-family: inherit;
-    border: solid 2px white; border-radius: 12px 0px 0px 12px; 
+    border: solid 2px white; border-radius: 16px 0px 0px 16px; 
     color: white;
     flex-grow: 1;
 `
@@ -30,14 +31,17 @@ export const Button = styled.button`
     min-height: 55px;
     position: absolute; right: 0px;
     font-size: 20px;
-    border: 0;
-    border-radius: 10px;
     outline: none;
     background-color: white;
     font-family: inherit;
-    border: solid 2px white; border-radius: 8px;
+    border: solid 2px white; border-radius: 16px;
     color: #18283d;
     font-weight: bold;
+
+    cursor: pointer;
+    &:hover {
+        background-color: whitesmoke;
+    }
 `
 export const ListDiv = styled.div`
     width: 100%;
@@ -48,28 +52,56 @@ export const ListBox = styled.ul`
     width: 100%;
     background-color: #626F88;
     font-family: inherit;
-    border-radius: 20px;
+    border-radius: 16px;
     padding: 15px;
 `
 
 export const List = styled.li`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: white;
     height: 60px;
-    padding: 5px 10px 5px 5px;
-    margin-bottom: 5px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #efefef;
+    padding: 1em 0em;
+    margin-bottom: 1rem;
+    border-bottom: 0.1px solid white;
     font-size: 25px;
     list-style: none;
-
+    /* border-radius: 16px; */
 `
 
 export const IdLabel = styled.p`
     color:white;
     margin: 0;
     font-weight: bold;
+    padding-bottom: 0.5rem;
+    padding-left: 0.2rem;
 `
 
-export const ListText = styled.span`
-    padding-left: 0.5em;    
+export const ListItem = styled.p`
+    display: flex;
+    position: absolute;
+    padding-left: 2em;
+    flex-direction: column;
+`
+
+export const FriendName = styled.p`
+    padding-left: 10px;
+    font-family: inherit;
+    font-size: 20px;
+    font-weight: bold;
+    margin: auto;
+`
+
+export const FriendMessage = styled.p`
+    width: 80%;
+    padding-left: 10px;
+    margin: auto;
+    margin-left: 0.7em;
+    padding-left: 0px;
+    font-family: inherit;
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `
