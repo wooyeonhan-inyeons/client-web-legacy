@@ -65,6 +65,7 @@ export const MyProfile = ({ userPost }: any) => {
             </MyProfileTextBox>
           </ProfileLeft>
           <ProfileEditButton onClick={() => navigate("/mypage/edit")}>
+            {}
             <EditOutlined />
           </ProfileEditButton>
         </ProfileInfoContainer>

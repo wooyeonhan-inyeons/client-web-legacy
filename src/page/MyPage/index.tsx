@@ -33,7 +33,7 @@ const Mypage = () => {
 
   useEffect(() => {
     // if (postData?.pages.flat().length! < 9) fetchNextPage();
-    console.log(postData);
+    // console.log("배열길이: ", postData);
   }, [postSuccess, postData]);
 
   return (
@@ -43,6 +43,7 @@ const Mypage = () => {
         <StyledContainer>
           <MyProfile userPost={postData} />
           <MyPost data={postData} />
+
           <LogoutButton
             onClick={() => {
               localStorage.removeItem("key");

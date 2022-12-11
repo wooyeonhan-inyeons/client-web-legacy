@@ -5,12 +5,12 @@ import { USER_ROLE } from "../constants";
 const { persistAtom } = recoilPersist();
 
 export interface CommonState {
-  userId: number;
+  userId: string;
   role: USER_ROLE;
 }
 
 const initialState: CommonState = {
-  userId: 0,
+  userId: "",
   role: USER_ROLE.GUEST,
 };
 
