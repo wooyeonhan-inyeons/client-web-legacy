@@ -22,31 +22,13 @@ import { MyPostes } from "./page/MyPage/Postes";
 import { Detail } from "./page/Home/Detail";
 import { Write } from "./page/Write";
 import { LoginRedirect } from "./components/api/loginRedirect";
-import { useQuery } from "react-query";
 import { GetVaildToken } from "./components/api/getVaildToken";
+import { MyDetail } from "./page/MyPage/Detail";
+// import { useQuery } from "react-query";
 
 function App() {
   const [user] = useRecoilState(recoil_.userState);
   const resetUser = useResetRecoilState(recoil_.userState);
-
-  // const { data: get } = useQuery("getUser", GetVaildToken, {
-  //   retry: 1,
-  //   onSuccess: (res) => {
-  //     console.log(res);
-  //     if (!res) {
-  //       // localStorage.removeItem("key");
-  //       // resetUser();
-  //     }
-  //   },
-  // });
-
-  // useEffect(() => {
-  //   if (GetVaildToken()) {
-  //     console.log("good");
-  //   } else {
-  //     console.log("bad");
-  //   }
-  // }, []);
 
   const router = createBrowserRouter([
     {
@@ -103,6 +85,10 @@ function App() {
           element: <Edit />,
         },
         {
+          path: "detail/:post_id",
+          element: <MyDetail />,
+        },
+        {
           path: "*",
           element: <Mypage />,
         },
@@ -113,16 +99,6 @@ function App() {
       path: "auth/kakao/redirect",
       element: <LoginRedirect />,
       loader: () => user.role !== USER_ROLE.GUEST && redirect("/login"),
-    },
-    {
-      path: "mypage/friends",
-      element: <FriendsPage />,
-      loader: () => user.role === USER_ROLE.GUEST && redirect("/"),
-    },
-    {
-      path: "mypage/edit",
-      element: <Edit />,
-      loader: () => user.role === USER_ROLE.GUEST && redirect("/"),
     },
   ]);
 

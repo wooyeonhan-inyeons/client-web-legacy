@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 interface PostProps {
   url?: string;
   morePost?: boolean;
+  post_id: string;
 }
 
-export const PostImage = ({ url, morePost }: PostProps) => {
+export const PostImage = ({ url, morePost, post_id }: PostProps) => {
   const navigate = useNavigate();
   if (morePost) {
     return (
@@ -20,7 +21,7 @@ export const PostImage = ({ url, morePost }: PostProps) => {
       <div
         className="postThumb"
         style={{ background: `url(${url})` }}
-        onClick={() => navigate("/")}
+        onClick={() => navigate(`/mypage/detail/${post_id}`)}
       ></div>
     );
   }
