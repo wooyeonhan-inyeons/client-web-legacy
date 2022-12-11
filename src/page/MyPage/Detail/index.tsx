@@ -1,35 +1,30 @@
-import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { useRecoilState, useRecoilValue } from "recoil";
-
-import { AvatarColor, HEADER_FN } from "../../../constants";
+import { Header } from "../../../components/Header";
+import { LoadingBox } from "../../../components/LoadingContainer";
+import { StyledContainer } from "../../../components/StyledContainer";
 import { recoil_ } from "../../../recoil";
-
-import { GetPostOne } from "../Map/api/getPost";
-import { GetRevGeocode } from "../Map/api/getRevGeocode";
-import { setEmotion } from "./api/setEmotion";
-
-import { StyledDetail } from "./styled";
-import { Carousel } from "antd";
+import { postType } from "../../Home/Detail";
+import { ErrPost } from "../../Home/Detail/components/errPost";
+import { StyledDetail2 } from "../../Home/Detail/styled";
+import { GetPostOne } from "../../Home/Map/api/getPost";
 import {
   MoreOutlined,
   EnvironmentOutlined,
   StarOutlined,
 } from "@ant-design/icons";
-
-import { LoadingBox } from "../../../components/LoadingContainer";
-import Avatar from "boring-avatars";
-import { Dialog } from "./components/dialog";
-import { ErrPost } from "./components/errPost";
+import { Carousel } from "antd";
+import { setEmotion } from "../../Home/Detail/api/setEmotion";
 import { getFormattedDate } from "../../../components/api/getFormattedDate";
+import Avatar from "boring-avatars";
+import { AvatarColor } from "../../../constants";
+import { GetRevGeocode } from "../../Home/Map/api/getRevGeocode";
+import { Dialog } from "../../Home/Detail/components/dialog";
 
-export const Detail = () => {
-  const [, setHeader] = useRecoilState(recoil_.headerState);
+export const MyDetail = () => {
   const coordinate = useRecoilValue(recoil_.geoState);
   const [dialogOpen, setDialogOpen] = useRecoilState(recoil_.detailDialogState);
-
-  const navigate = useNavigate();
   let { post_id } = useParams<string>();
 
   const {
@@ -71,43 +66,17 @@ export const Detail = () => {
         .catch((err) => console.log(err));
     }
   };
-
   const onChange = (currentSlide: number) => {
     // console.log(currentSlide);
   };
 
-  useEffect(() => {
-    //모달 상태에서 스크롤 막기
-    document.body.style.overflow = "hidden";
-    setHeader({
-      title: "게시물 보기",
-      rightButton1: HEADER_FN.EMPTY,
-      rightButton2: HEADER_FN.EMPTY,
-    });
-    return () => {
-      document.body.style.overflow = "auto";
-      setHeader({
-        title: "",
-        vis_goBack: false,
-        rightButton1: HEADER_FN.ALARM,
-        rightButton2: HEADER_FN.MYPAGE,
-      });
-    };
-  }, [postData]);
-
-  // const time = getFormattedDate(new Date(postData.created_time!));
-
-  useEffect(() => {
-    console.log(postData);
-    setDialogOpen(false);
-  }, [setDialogOpen, postData]);
-
   if (!postSuccess) return <LoadingBox />;
   if (postData.statusCode === 500) return <ErrPost />;
-  // if (!geoSuccess || !postData.image) return <LoadingBox />;
   return (
     <>
-      <StyledDetail onClick={() => navigate("/")}>
+      <Header />
+
+      <StyledDetail2>
         <div className="postContainer" onClick={(e) => e.stopPropagation()}>
           <div className="background">
             {postData.forFriend === 1 && (
@@ -178,7 +147,7 @@ export const Detail = () => {
             </div>
           </div>
         </div>
-      </StyledDetail>
+      </StyledDetail2>
       {dialogOpen && (
         <Dialog isOwner={postData.owner} post_id={postData.post_id} />
       )}
@@ -190,28 +159,3 @@ const emotionStyle = {
   backgroundColor: "#ffffffd4",
   color: "#222",
 };
-
-export interface postType {
-  post_id: string;
-  content: string;
-  created_time: string;
-  forFriend: number;
-  latitude: number;
-  longitude: number;
-  like_count: number;
-  cool_count: number;
-  sad_count: number;
-  emotion: {
-    emotion_id: string;
-    emotion_type: number;
-  };
-  image: [
-    {
-      img_id: string;
-      img_url: string;
-    }
-  ];
-  distance: number;
-  owner: boolean;
-  statusCode?: number;
-}
