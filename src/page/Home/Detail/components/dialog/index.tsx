@@ -24,7 +24,9 @@ export const Dialog = ({ isOwner, post_id }: DialogPropType) => {
         {isOwner && (
           <div
             className="button delete"
-            onClick={() => deletePost(post_id).then(() => navigate("/"))}
+            onClick={() =>
+              deletePost(post_id).then(() => (window.location.href = "/"))
+            }
           >
             삭제합니다.
           </div>

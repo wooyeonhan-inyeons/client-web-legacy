@@ -22,6 +22,8 @@ import Avatar from "boring-avatars";
 import { AvatarColor } from "../../../constants";
 import { GetRevGeocode } from "../../Home/Map/api/getRevGeocode";
 import { Dialog } from "../../Home/Detail/components/dialog";
+import { useEffect } from "react";
+import NoMatch from "../../NoMatch";
 
 export const MyDetail = () => {
   const coordinate = useRecoilValue(recoil_.geoState);
@@ -40,6 +42,9 @@ export const MyDetail = () => {
       retry: false,
       refetchOnReconnect: false,
       cacheTime: 0,
+      onSuccess: (res) => {
+        console.log(res);
+      },
     }
   );
   const { data: geoData, isSuccess: geoSuccess } = useQuery(
@@ -71,12 +76,21 @@ export const MyDetail = () => {
     // console.log(currentSlide);
   };
 
+  useEffect(() => {
+    //모달 상태에서 스크롤 막기
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [postData]);
+
   if (!postSuccess) return <LoadingBox />;
   if (postData.statusCode === 500) return <ErrPost />;
+  // if (postData.statusCode !== 400) return <NoMatch />;
+
   return (
     <>
       <Header />
-
       <StyledDetail2>
         <div className="postContainer" onClick={(e) => e.stopPropagation()}>
           <div className="background">
