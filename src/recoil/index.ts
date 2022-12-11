@@ -3,6 +3,7 @@ import { tabState } from "./tab";
 import { headerState } from "./header";
 import { geoState } from "./geolocation";
 import { detailDialogState } from "./detailDialog";
+import { markerState } from "./marker";
 
 export const recoil_ = {
   userState,
@@ -10,4 +11,5 @@ export const recoil_ = {
   headerState,
   geoState,
   detailDialogState,
+  markerState,
 };
