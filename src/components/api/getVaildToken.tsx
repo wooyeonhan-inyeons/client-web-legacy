@@ -6,7 +6,7 @@ export const GetVaildToken = () => {
   const tokenTime = new Date(decoded.exp * 1000);
   const newTime = new Date().getTime();
 
-  if (Number(tokenTime) > Number(newTime)) {
+  if (Number(tokenTime) < Number(newTime)) {
     return true;
   }
   return false;

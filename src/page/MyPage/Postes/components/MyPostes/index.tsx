@@ -46,7 +46,7 @@ export const MyPostes = () => {
       <div className="ImageContainer">
         <>
           {myData.pages.flat().map((item: any, index: number) => (
-            <PostImage url={item.img_url} key={index} />
+            <PostImage url={item.img_url} key={index} post_id={item.post_id} />
           ))}
         </>
 
