@@ -23,10 +23,11 @@ export const GetAdmin = async (data: FormData) => {
   })
     .then((response) => response.json())
     .then((response) => {
+      console.log(response);
       if (response.access_token) {
         localStorage.setItem("key", response.access_token);
       } else if (response.access_token === undefined) {
-        throw new Error("로그인 정보가 옳바르지 않습니다.");
+        throw new Error(response?.message);
       }
     });
 };

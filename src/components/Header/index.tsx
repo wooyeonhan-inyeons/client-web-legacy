@@ -12,7 +12,7 @@ const StyledHeader = styled.div`
 
   width: 100%;
   max-width: 600px;
-  height: 3.5rem;
+  height: 3rem;
   font-size: 1.3rem;
 
   left: 50%;

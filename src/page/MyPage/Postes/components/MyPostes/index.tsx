@@ -1,49 +1,56 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { useInfiniteQuery } from "react-query";
 import { useInView } from "react-intersection-observer";
-import { useRecoilState } from "recoil";
-import { recoil_ } from "../../../../../recoil";
-import { MYPAGE_ } from "../../../../../constants";
-// import { GetImages } from "../../../api";
-import { GetTest } from "../TabBox/GetTest";
 
 import { LoadingOutlined } from "@ant-design/icons";
 import { PostImage } from "../../../components/PostImage";
 import { PostImageContainer } from "../../components/MyPostes/styled";
+import { GetPostMine } from "../../../api/GetPostMine";
+import { LoadingBox } from "../../../../../components/LoadingContainer";
 
 export const MyPostes = () => {
   const [ref, inView] = useInView();
-  const [tab] = useRecoilState(recoil_.tabState);
-  const { data, isError, error, isFetching, fetchNextPage, hasNextPage } =
-    useInfiniteQuery(
-      ["image"],
-      ({ pageParam = 0 }) => GetTest({ idx: pageParam }),
-      {
-        retry: 3,
-        getNextPageParam: (lastPage) => {
-          // lastPage: 콜백함수에서 리턴한 값을 의미한다!!
-          // 직전에 받은 배열의 다음 index를 요청함
-          if (lastPage[lastPage.length - 1] === undefined)
-            console.log("마지막!");
-          return lastPage[lastPage.length - 1].id;
-          // 마지막 id 요소 관련 이벤트 처리 추가해야함
-        },
-      }
-    );
+
+  const {
+    data: myData,
+    isFetching: myIsFetching,
+    isSuccess: myIsSuccess,
+    fetchNextPage: myfetchNextPage,
+    hasNextPage: myHasNextPage,
+  } = useInfiniteQuery(
+    ["mypage/mypost"],
+    ({ pageParam = 0 }) => GetPostMine({ idx: pageParam }),
+    {
+      retry: 3,
+      getNextPageParam: (lastPage, allPages) => {
+        if (
+          lastPage[lastPage.length - 1]?.statusCode === 500 ||
+          allPages.flat().length !== 15
+        )
+          return null;
+        return Math.floor((1 + allPages.flat().length) / 15);
+      },
+      onSuccess(data) {
+        console.log(data);
+      },
+    }
+  );
 
   useEffect(() => {
-    if (inView && hasNextPage) fetchNextPage();
+    if (inView && myHasNextPage) myfetchNextPage();
   });
+
+  if (!myData || !myIsSuccess) return <LoadingBox />;
   return (
     <PostImageContainer>
       <div className="ImageContainer">
         <>
-          {data?.pages.flat().map((item, index) => (
-            <PostImage url={item.url} key={index} />
+          {myData.pages.flat().map((item: any, index: number) => (
+            <PostImage url={item.img_url} key={index} />
           ))}
         </>
 
-        {isFetching && (
+        {myIsFetching && (
           <div
             style={{
               width: "100%",
