@@ -1,7 +1,9 @@
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { recoil_ } from "../../../../recoil";
 import { GetUserExperience } from "../../api";
-import { AvatarColor } from "../../../../constants";
+import { AvatarColor, MYPAGE_ } from "../../../../constants";
 
 import Avatar from "boring-avatars";
 import {
@@ -22,13 +24,15 @@ import { FriendsButton } from "../FriendsButton";
 import { MyPostButton } from "../MyPostButton";
 
 export const MyProfile = ({ userPost }: any) => {
-  const { data } = useQuery("user", GetUserExperience, {
+  const [, setTab] = useRecoilState(recoil_.tabState);
+
+  const { data } = useQuery("userExperience", GetUserExperience, {
     retry: 1,
     refetchOnReconnect: false,
-    staleTime: 10 * 1000, // 1분
     onSuccess: () => {},
   });
   const navigate = useNavigate();
+
   return (
     <>
       <ProfileContainer>
@@ -64,7 +68,10 @@ export const MyProfile = ({ userPost }: any) => {
         </ProfileInfoContainer>
 
         <MyPostButton
-          onClick={() => navigate("/")}
+          onClick={() => {
+            navigate("/mypage/postes");
+            setTab(MYPAGE_.VISITED_POST);
+          }}
           url1={data && userPost[0]?.url}
           url2={data && userPost[1]?.url}
         />

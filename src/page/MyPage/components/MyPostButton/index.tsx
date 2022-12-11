@@ -68,12 +68,12 @@ export const MyPostButton = ({ url1, url2, onClick }: ImageURL) => {
       <MyPostImages>
         {url1 && (
           <div className="images one">
-            <img src={url1} />
+            <img src={url1} alt="image1" />
           </div>
         )}
         {url2 && (
           <div className="images two">
-            <img src={url2} />
+            <img src={url2} alt="image2" />
           </div>
         )}
         <div className="images another">···</div>

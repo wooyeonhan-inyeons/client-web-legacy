@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+
 import { useRecoilState } from "recoil";
 import { recoil_ } from "./recoil/index";
 import { USER_ROLE } from "./constants";
+
 import {
   createBrowserRouter,
   RouterProvider,
@@ -16,19 +18,30 @@ import AdminLogin from "./page/Admin/Login";
 import NoMatch from "./page/NoMatch";
 import Login from "./page/Login";
 import Mypage from "./page/MyPage";
-import { LoginRedirect } from "./components/api";
 import { MyPostes } from "./page/MyPage/Postes";
+import { Detail } from "./page/Home/Detail";
+import { Write } from "./page/Write";
+import { LoginRedirect } from "./components/api/loginRedirect";
 
 function App() {
   const [user] = useRecoilState(recoil_.userState);
-
-  const getUser = () => {};
 
   const router = createBrowserRouter([
     {
       path: "/*",
       element: <Home />,
       errorElement: <NoMatch />,
+      children: [
+        {
+          path: "detail/:post_id",
+          element: <Detail />,
+        },
+      ],
+      loader: () => user.role === USER_ROLE.GUEST && redirect("/login"),
+    },
+    {
+      path: "write/",
+      element: <Write />,
       loader: () => user.role === USER_ROLE.GUEST && redirect("/login"),
     },
     {
@@ -56,7 +69,7 @@ function App() {
       path: "mypage/*",
       children: [
         {
-          path: "postes",
+          path: "postes/*",
           element: <MyPostes />,
         },
         {
@@ -82,7 +95,7 @@ function App() {
   ]);
 
   useEffect(() => {
-    getUser();
+    // getUser();
   }, []);
 
   return <RouterProvider router={router} />;
