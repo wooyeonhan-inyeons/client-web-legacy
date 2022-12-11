@@ -6,10 +6,6 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { AvatarColor, HEADER_FN } from "../../../constants";
 import { recoil_ } from "../../../recoil";
 
-import TimeAgo from "timeago-react";
-import * as timeago from "timeago.js";
-import ko from "timeago.js/lib/lang/ko";
-
 import { GetPostOne } from "../Map/api/getPost";
 import { GetRevGeocode } from "../Map/api/getRevGeocode";
 import { setEmotion } from "./api/setEmotion";
@@ -26,6 +22,7 @@ import { LoadingBox } from "../../../components/LoadingContainer";
 import Avatar from "boring-avatars";
 import { Dialog } from "./components/dialog";
 import { ErrPost } from "./components/errPost";
+import { getFormattedDate } from "../../../components/api/getFormattedDate";
 
 export const Detail = () => {
   const [, setHeader] = useRecoilState(recoil_.headerState);
@@ -34,8 +31,6 @@ export const Detail = () => {
 
   const navigate = useNavigate();
   let { post_id } = useParams<string>();
-
-  //timeago 한글 변환
 
   const {
     data: postData,
@@ -49,21 +44,14 @@ export const Detail = () => {
       retry: false,
       refetchOnReconnect: false,
       cacheTime: 0,
-      onSuccess(data) {
-        console.log(coordinate, data);
-      },
     }
   );
   const { data: geoData, isSuccess: geoSuccess } = useQuery(
     "detail/getRevGeo",
     () =>
-      postData &&
-      GetRevGeocode({ lat: postData.latitude, lng: postData.longitude }),
+      coordinate && GetRevGeocode({ lat: coordinate.lat, lng: coordinate.lng }),
     {
       retry: 1,
-      onSuccess(data) {
-        console.log(data);
-      },
     }
   );
 
@@ -84,8 +72,6 @@ export const Detail = () => {
     }
   };
 
-  const time = postData && timeago.format(postData.created_time, "ko");
-  timeago.register("ko", ko);
   const onChange = (currentSlide: number) => {
     // console.log(currentSlide);
   };
@@ -108,6 +94,8 @@ export const Detail = () => {
       });
     };
   }, [postData]);
+
+  // const time = getFormattedDate(new Date(postData.created_time!));
 
   useEffect(() => {
     console.log(postData);
@@ -154,13 +142,8 @@ export const Detail = () => {
             {postData.content}
             <div className="PostInfo">
               <div className="date">
-                <TimeAgo
-                  datetime={postData.created_time}
-                  opts={{ relativeDate: new Date().toISOString() }}
-                  locale="ko"
-                />
+                {getFormattedDate(new Date(postData.created_time!))}
               </div>
-
               <div className="location">
                 <EnvironmentOutlined /> {geoData}
               </div>
