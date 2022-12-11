@@ -22,9 +22,18 @@ import Avatar from "boring-avatars";
 import { AvatarColor } from "../../../constants";
 import { GetRevGeocode } from "../../Home/Map/api/getRevGeocode";
 import { Dialog } from "../../Home/Detail/components/dialog";
-import { useEffect } from "react";
 import NoMatch from "../../NoMatch";
+import { useState, useEffect } from "react";
+import styled from "styled-components";
 
+const FootCnt = styled.span`
+  font-size: 10px;
+  padding: 0.5rem;
+
+  .date {
+    padding-right: 0.5rem;
+  }
+`;
 export const MyDetail = () => {
   const coordinate = useRecoilValue(recoil_.geoState);
   const [dialogOpen, setDialogOpen] = useRecoilState(recoil_.detailDialogState);
@@ -72,6 +81,7 @@ export const MyDetail = () => {
         .catch((err) => console.log(err));
     }
   };
+
   const onChange = (currentSlide: number) => {
     // console.log(currentSlide);
   };
@@ -127,10 +137,11 @@ export const MyDetail = () => {
             <div className="PostInfo">
               <div className="date">
                 {getFormattedDate(new Date(postData.created_time!))}
+                <EyeOutlined style={{ paddingLeft: "0.5rem" }} />
+                <FootCnt>{postData.footprint_count}</FootCnt>
               </div>
               <div className="location">
                 <EnvironmentOutlined /> {geoData}
-          
               </div>
             </div>
           </div>

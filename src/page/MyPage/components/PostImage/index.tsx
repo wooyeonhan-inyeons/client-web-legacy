@@ -6,7 +6,7 @@ interface PostProps {
   post_id: string;
 }
 
-export const PostImage = ({ url, morePost, post_id }: PostProps) => {
+export const PostImage = ({ url, post_id, morePost}: PostProps) => {
   const navigate = useNavigate();
   if (morePost) {
     return (

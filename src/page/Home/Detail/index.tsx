@@ -199,6 +199,7 @@ export interface postType {
   latitude: number;
   longitude: number;
   like_count: number;
+  footprint_count: number;
   cool_count: number;
   sad_count: number;
   emotion: {
