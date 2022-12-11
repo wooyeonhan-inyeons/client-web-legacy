@@ -16,37 +16,7 @@ import { MarkerImages } from "./components/Mark";
 import { useNavigate } from "react-router-dom";
 
 import MarkerClusterIcon from "./images/MarkerCluster.png";
-
-interface MarkerProps {
-  content: string;
-  created_time: string;
-  latitude: number;
-  longitude: number;
-  post_id: string;
-  forFriend: boolean;
-  viewed: boolean;
-}
-
-declare global {
-  interface Window {
-    initMap: () => void;
-  }
-}
-
-const options: any = {
-  zoom: 17,
-  mapId: "7c08bc77e896521d",
-  backgroundColor: "#242f3e",
-  minZoom: 13,
-  // maxZoom: 20,
-  zoomControl: false,
-  mapTypeControl: false,
-  scaleControl: false,
-  streetViewControl: false,
-  rotateControl: false,
-  fullscreenControl: false,
-  clickableIcons: false,
-};
+import MarkerClusterIcon2 from "./images/MarkerCluster2.png";
 
 export default function Map() {
   return (
@@ -88,6 +58,7 @@ function MapComponent() {
   return <div ref={ref!} id="map" />;
 }
 
+//맵 불러오는 함수
 function initMap(
   coordinate: google.maps.LatLngLiteral,
   data: Array<MarkerProps>,
@@ -115,8 +86,8 @@ function initMap(
   const renderer = {
     render: ({ count, position }: Cluster) =>
       new google.maps.Marker({
-        icon: MarkerClusterIcon,
-        label: { text: String(count), color: "white", fontSize: "10px" },
+        icon: MarkerClusterIcon2,
+        label: { text: String(count), color: "#222", fontSize: "0.9rem" },
         position,
         // adjust zIndex to be above other markers
         zIndex: Number(google.maps.Marker.MAX_ZINDEX) + count,
@@ -129,3 +100,37 @@ function initMap(
     renderer,
   });
 }
+
+interface MarkerProps {
+  content: string;
+  created_time: string;
+  latitude: number;
+  longitude: number;
+  post_id: string;
+  forFriend: boolean;
+  viewed: boolean;
+}
+
+declare global {
+  interface Window {
+    initMap: () => void;
+  }
+}
+
+const options: any = {
+  zoom: 17,
+  mapId: "7c08bc77e896521d",
+  backgroundColor: "#242f3e",
+  minZoom: 13,
+  // maxZoom: 20,
+  // gestureHandling: "none",
+  // zoomControl: false,
+  mapTypeControl: false,
+  scaleControl: false,
+  streetViewControl: false,
+  rotateControl: false,
+  fullscreenControl: false,
+  clickableIcons: false,
+  disableDefaultUI: true,
+  setMyLocationEnabled: true,
+};

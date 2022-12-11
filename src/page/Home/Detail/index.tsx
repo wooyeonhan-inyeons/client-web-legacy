@@ -5,9 +5,11 @@ import { useRecoilState, useRecoilValue } from "recoil";
 
 import { AvatarColor, HEADER_FN } from "../../../constants";
 import { recoil_ } from "../../../recoil";
+
 import TimeAgo from "timeago-react";
 import * as timeago from "timeago.js";
 import ko from "timeago.js/lib/lang/ko";
+
 import { GetPostOne } from "../Map/api/getPost";
 import { GetRevGeocode } from "../Map/api/getRevGeocode";
 import { setEmotion } from "./api/setEmotion";
@@ -25,31 +27,6 @@ import Avatar from "boring-avatars";
 import { Dialog } from "./components/dialog";
 import { ErrPost } from "./components/errPost";
 
-export interface postType {
-  post_id: string;
-  content: string;
-  created_time: string;
-  forFriend: number;
-  latitude: number;
-  longitude: number;
-  like_count: number;
-  cool_count: number;
-  sad_count: number;
-  emotion: {
-    emotion_id: string;
-    emotion_type: number;
-  };
-  image: [
-    {
-      img_id: string;
-      img_url: string;
-    }
-  ];
-  distance: number;
-  owner: boolean;
-  statusCode?: number;
-}
-
 export const Detail = () => {
   const [, setHeader] = useRecoilState(recoil_.headerState);
   const coordinate = useRecoilValue(recoil_.geoState);
@@ -66,21 +43,27 @@ export const Detail = () => {
     isError: postError,
     refetch: postRefetch,
   } = useQuery<postType, { statusCode: number; message: string }>(
-    "userInfo",
+    "detail/userInfo",
     () => coordinate && GetPostOne(post_id, coordinate.lat, coordinate.lng),
     {
       retry: false,
       refetchOnReconnect: false,
       cacheTime: 0,
+      onSuccess(data) {
+        console.log(coordinate, data);
+      },
     }
   );
   const { data: geoData, isSuccess: geoSuccess } = useQuery(
-    "getRevGeo",
+    "detail/getRevGeo",
     () =>
       postData &&
       GetRevGeocode({ lat: postData.latitude, lng: postData.longitude }),
     {
       retry: 1,
+      onSuccess(data) {
+        console.log(data);
+      },
     }
   );
 
@@ -133,7 +116,7 @@ export const Detail = () => {
 
   if (!postSuccess) return <LoadingBox />;
   if (postData.statusCode === 500) return <ErrPost />;
-  if (!geoSuccess || !postData.image) return <LoadingBox />;
+  // if (!geoSuccess || !postData.image) return <LoadingBox />;
   return (
     <>
       <StyledDetail onClick={() => navigate("/")}>
@@ -172,8 +155,8 @@ export const Detail = () => {
             <div className="PostInfo">
               <div className="date">
                 <TimeAgo
-                  datetime={Date.now()}
-                  opts={{ relativeDate: postData.created_time }}
+                  datetime={postData.created_time}
+                  opts={{ relativeDate: new Date().toISOString() }}
                   locale="ko"
                 />
               </div>
@@ -224,3 +207,28 @@ const emotionStyle = {
   backgroundColor: "#ffffffd4",
   color: "#222",
 };
+
+export interface postType {
+  post_id: string;
+  content: string;
+  created_time: string;
+  forFriend: number;
+  latitude: number;
+  longitude: number;
+  like_count: number;
+  cool_count: number;
+  sad_count: number;
+  emotion: {
+    emotion_id: string;
+    emotion_type: number;
+  };
+  image: [
+    {
+      img_id: string;
+      img_url: string;
+    }
+  ];
+  distance: number;
+  owner: boolean;
+  statusCode?: number;
+}
