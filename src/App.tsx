@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { recoil_ } from "./recoil/index";
 import { USER_ROLE } from "./constants";
 
@@ -22,18 +22,31 @@ import { MyPostes } from "./page/MyPage/Postes";
 import { Detail } from "./page/Home/Detail";
 import { Write } from "./page/Write";
 import { LoginRedirect } from "./components/api/loginRedirect";
-import { GetUser } from "./components/api/getUser";
 import { useQuery } from "react-query";
+import { GetVaildToken } from "./components/api/getVaildToken";
 
 function App() {
   const [user] = useRecoilState(recoil_.userState);
+  const resetUser = useResetRecoilState(recoil_.userState);
 
-  // const { data } = useQuery("getUser", GetUser, {
+  // const { data: get } = useQuery("getUser", GetVaildToken, {
   //   retry: 1,
   //   onSuccess: (res) => {
   //     console.log(res);
+  //     if (!res) {
+  //       // localStorage.removeItem("key");
+  //       // resetUser();
+  //     }
   //   },
   // });
+
+  // useEffect(() => {
+  //   if (GetVaildToken()) {
+  //     console.log("good");
+  //   } else {
+  //     console.log("bad");
+  //   }
+  // }, []);
 
   const router = createBrowserRouter([
     {
@@ -50,7 +63,7 @@ function App() {
     },
     {
       path: "write/",
-      element: <NoMatch />,
+      element: <Write />,
       loader: () => user.role === USER_ROLE.GUEST && redirect("/login"),
     },
     {
