@@ -2,7 +2,6 @@ import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { recoil_ } from "../../../../recoil";
-import { GetUserExperience } from "../../api";
 import { AvatarColor, MYPAGE_ } from "../../../../constants";
 
 import Avatar from "boring-avatars";
@@ -22,14 +21,14 @@ import {
 } from "./styled";
 import { FriendsButton } from "../FriendsButton";
 import { MyPostButton } from "../MyPostButton";
+import { GetUser } from "../../api/GetUser";
 
 export const MyProfile = ({ userPost }: any) => {
   const [, setTab] = useRecoilState(recoil_.tabState);
 
-  const { data } = useQuery("userExperience", GetUserExperience, {
+  const { data } = useQuery<userProps>("mypage/user", GetUser, {
     retry: 1,
     refetchOnReconnect: false,
-    onSuccess: () => {},
   });
   const navigate = useNavigate();
 
@@ -41,23 +40,26 @@ export const MyProfile = ({ userPost }: any) => {
             <Avatar
               size={56}
               variant="beam"
-              name={Date.now().toString()}
+              name={data?.user_id}
               colors={AvatarColor}
             />
             <MyProfileTextBox>
-              <div className="username">username</div>
+              <div className="username">{data?.name}</div>
+              <div className="message">{data?.message}</div>
               <MyProfileInfo>
                 <div>
                   <PushpinOutlined />
-                  {data?.userPost}
+                  {" " + data?.follower_count}
                 </div>
                 <div className="divider"></div>
                 <div>
-                  <HeartOutlined /> {data?.userFavorite}
+                  <HeartOutlined />
+                  {" " + data?.following_count}
                 </div>
                 <div className="divider"></div>
                 <div>
-                  <TeamOutlined /> {data?.userFriend}
+                  <TeamOutlined />
+                  {" " + data?.follower_count}
                 </div>
               </MyProfileInfo>
             </MyProfileTextBox>
@@ -80,3 +82,13 @@ export const MyProfile = ({ userPost }: any) => {
     </>
   );
 };
+
+interface userProps {
+  user_id: string;
+  name: string;
+  message: string;
+  email: string;
+  created_at: string;
+  follower_count: number;
+  following_count: number;
+}
