@@ -90,19 +90,17 @@ const NoBtn = styled.button`
 
   cursor: pointer;
   &:hover {
-    background-color: #242a37;  
+    background-color: #242a37;
   }
 `;
 export interface IProps {
   friend_id: string;
 }
 
-function RequestFriend({getNumber}:any) {
+function RequestFriend({ getNumber }: any) {
   const [requested, setRequested] = useState<any>([]);
   //
-  const [numRe, setNumRe] = useState(0);
-  getNumber(numRe);
-  
+
   useEffect(() => {
     getRequests().then((res: any) => {
       const requestedFr: any = res.map((data: any) => ({
@@ -111,11 +109,10 @@ function RequestFriend({getNumber}:any) {
         at_Time: data.create_at,
       }));
       const result: any = [...requestedFr];
-      //
-      setNumRe(result.length);
+      getNumber(result.length);
       setRequested(result);
     });
-  }, [numRe, requested]);
+  }, []);
 
   const onClickOk = (friend_id: string) => {
     getOk(friend_id)
@@ -131,8 +128,8 @@ function RequestFriend({getNumber}:any) {
       .catch((e) => console.log(e));
   };
 
-  const onRemove = (id : string) => {
-    setRequested(requested.filter((user : any) => user.friend_id !== id));
+  const onRemove = (id: string) => {
+    setRequested(requested.filter((user: any) => user.friend_id !== id));
   };
 
   return (
@@ -151,7 +148,8 @@ function RequestFriend({getNumber}:any) {
             <TextBox>
               <Time>10분 전</Time>
               <Explaination>
-                <span style={{fontWeight: "900"}}>{item.friend_name}</span>님으로부터 친구 요청이 왔습니다.
+                <span style={{ fontWeight: "900" }}>{item.friend_name}</span>
+                님으로부터 친구 요청이 왔습니다.
               </Explaination>
             </TextBox>
             <BtnBox>

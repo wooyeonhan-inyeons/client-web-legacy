@@ -37,6 +37,8 @@ const FriendsPage = () => {
   const onClick = () => {
     setTabList(prev => !prev);
     setTabRequest(prev => !prev);
+
+    
   }
 
   return (
