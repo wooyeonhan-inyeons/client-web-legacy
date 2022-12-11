@@ -7,7 +7,7 @@ import { AvatarColor, MYPAGE_ } from "../../../../constants";
 import Avatar from "boring-avatars";
 import {
   EditOutlined,
-  PushpinOutlined,
+  EnvironmentOutlined,
   HeartOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
@@ -22,16 +22,27 @@ import {
 import { FriendsButton } from "../FriendsButton";
 import { MyPostButton } from "../MyPostButton";
 import { GetUser } from "../../api/GetUser";
+import { useEffect, useState } from "react";
+import { getPostingInfo } from "./api";
 
 export const MyProfile = ({ userPost }: any) => {
   const [, setTab] = useRecoilState(recoil_.tabState);
-
+  const [postingCnt, setPostingCnt] = useState(0);
+  const [emotionCnt, setEmotionCnt] = useState(0);
+  const [friendsCnt, setFriendsCnt] = useState(0);
   const { data } = useQuery<userProps>("mypage/user", GetUser, {
     retry: 1,
     refetchOnReconnect: false,
   });
   const navigate = useNavigate();
 
+  useEffect(() => {
+    getPostingInfo().then((res: any) => {
+      setPostingCnt(res.posting_count);
+      setEmotionCnt(res.emotion_count);
+      setFriendsCnt(res.friend_count);
+    })
+  }, [])
   return (
     <>
       <ProfileContainer>
@@ -48,18 +59,18 @@ export const MyProfile = ({ userPost }: any) => {
               <div className="message">{data?.message}</div>
               <MyProfileInfo>
                 <div>
-                  <PushpinOutlined />
-                  {" " + data?.follower_count}
+                <EnvironmentOutlined/>
+                  {" " + postingCnt}
                 </div>
                 <div className="divider"></div>
                 <div>
                   <HeartOutlined />
-                  {" " + data?.following_count}
+                  {" " + emotionCnt}
                 </div>
                 <div className="divider"></div>
                 <div>
                   <TeamOutlined />
-                  {" " + data?.follower_count}
+                  {" " + friendsCnt}
                 </div>
               </MyProfileInfo>
             </MyProfileTextBox>

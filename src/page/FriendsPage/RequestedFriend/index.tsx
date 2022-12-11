@@ -4,9 +4,9 @@ import { AvatarColor, COLOR } from "../../../constants";
 import Avatar from "boring-avatars";
 import { getRequests, getOk, getNo } from "./api";
 import { message } from "antd";
-// import TimeAgo from "timeago-react";
-// import * as timeago from "timeago.js";
-// import ko from "timeago.js/lib/lang/ko";
+import TimeAgo from "timeago-react";
+import * as timeago from "timeago.js";
+import ko from "timeago.js/lib/lang/ko";
 
 const ListBox = styled.ul`
   width: 100%;
@@ -139,8 +139,8 @@ function RequestFriend() {
     setRequested(requested.filter((user: any) => user.friend_id !== id));
   };
 
-  // const time = date && timeago.format(date, "ko");
-  // timeago.register("ko", ko);
+  const time = date && timeago.format(date, "ko");
+  timeago.register("ko", ko);
 
   return (
     <>
@@ -156,12 +156,12 @@ function RequestFriend() {
               />
             </ImageDiv>
             <TextBox>
-              <Time>10분 전</Time>
-              {/* <TimeAgo
+              {/* <Time>10분 전</Time> */}
+              <TimeAgo
                   datetime={date}
                   opts={{ relativeDate: new Date().toISOString() }}
                   locale="ko"
-                /> */}
+                />
               <Explaination>
                 <span style={{ fontWeight: "900" }}>{item.friend_name}</span>
                 님으로부터 친구 요청이 왔습니다.

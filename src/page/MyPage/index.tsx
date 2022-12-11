@@ -31,11 +31,6 @@ const Mypage = () => {
     }
   );
 
-  useEffect(() => {
-    // if (postData?.pages.flat().length! < 9) fetchNextPage();
-    // console.log("배열길이: ", postData);
-  }, [postSuccess, postData]);
-
   return (
     <>
       <Header title="마이페이지" />

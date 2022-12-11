@@ -14,7 +14,6 @@ import { useRecoilState } from "recoil";
 import { recoil_ } from "../../../recoil";
 import { getNearTest } from "./api/getPost";
 import { MarkerImages, MarkerImages2 } from "./components/Mark";
-
 import MarkerClusterIcon from "./images/MarkerCluster.png";
 import MarkerClusterIcon2 from "./images/MarkerCluster2.png";
 
@@ -48,6 +47,9 @@ function MapComponent() {
     getNearTest(coordinate)?.then((res) => {
       setData(res);
     });
+
+    //
+    // console.log("코디네이트: ", coordinate.lat, coordinate.lng);
   }, [coordinate]);
 
   useEffect(() => {
@@ -92,6 +94,7 @@ function initMap(
     });
     return marker;
   });
+
   const renderer = {
     render: ({ count, position }: Cluster) =>
       new google.maps.Marker({

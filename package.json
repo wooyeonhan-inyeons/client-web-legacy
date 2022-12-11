@@ -73,6 +73,11 @@
     "@types/react-geocode": "^0.2.1",
     "@types/styled-components": "^5.1.26",
     "babel-plugin-named-exports-order": "^0.0.2",
+    "image-minimizer-webpack-plugin": "^3.8.1",
+    "imagemin-gifsicle": "^7.0.0",
+    "imagemin-jpegtran": "^7.0.0",
+    "imagemin-optipng": "^8.0.0",
+    "imagemin-svgo": "^10.0.1",
     "prop-types": "^15.8.1",
     "webpack": "^5.74.0"
   }
