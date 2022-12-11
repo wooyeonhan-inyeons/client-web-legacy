@@ -6,9 +6,8 @@ export const GetPostOne = async (
   lng?: number
 ) => {
   if (lat === undefined) throw new Error("알 수 없는 오류가 발생하였습니다.");
-  return fetch(
+  const response = await fetch(
     `${BACK_URL}/posting?post_id=${post_id}&latitude=${lat}&longitude=${lng}`,
-    // `${BACK_URL}/posting/near?latitude=35.8591&longitude=128.4878`,
     {
       method: "GET",
       headers: {
@@ -18,9 +17,9 @@ export const GetPostOne = async (
       },
     }
   ).then((response) => {
-    // if (response.ok) console.log(response.json());
     return response.json();
   });
+  return response;
 };
 
 // export const GetNearPost = async (

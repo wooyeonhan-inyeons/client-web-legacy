@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useInfiniteQuery } from "react-query";
+import { useInfiniteQuery, useQuery } from "react-query";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useResetRecoilState } from "recoil";
 import { recoil_ } from "../../recoil";
@@ -11,50 +11,38 @@ import { MyPost } from "./components/MyPost";
 import { LogoutButton } from "./components/LogoutButton";
 import { LoadingBox } from "../../components/LoadingContainer";
 import { GetTest } from "./Postes/components/TabBox/GetTest";
+import { GetPostMine } from "./api/GetPostMine";
 
 const Mypage = () => {
   const resetUser = useResetRecoilState(recoil_.userState);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  //한 번만 불러오는 query.
-  // const { data } = useQuery("images", () => GetTest({ idx: 0 }), {
-  //   retry: 1,
-  //   refetchOnReconnect: false,
-  //   onSuccess: (res) => {
-  //     console.log(res);
-  //     setLoading(false);
-  //   },
-  // });
-
-  const { data, fetchNextPage } = useInfiniteQuery(
-    ["images"],
-    ({ pageParam = 0 }) => GetTest({ idx: pageParam }),
+  //15장 불러오면 9장이 최대인 여기에선 불필요해서 useQuery로 변경
+  const { data: postData, isSuccess: postSuccess } = useQuery(
+    ["mypage"],
+    () => GetPostMine({ idx: 0 }),
     {
       retry: 3,
-      getNextPageParam: (lastPage) => {
-        // lastPage: 콜백함수에서 리턴한 값을 의미한다!!
-        // 직전에 받은 배열의 다음 index를 요청함
-        return lastPage[lastPage.length - 1].id;
-        // 마지막 id 요소 관련 이벤트 처리 추가해야함
-      },
-      onSuccess: () => {
+      onSuccess: (res) => {
+        // console.log(res);
         setLoading(false);
       },
     }
   );
 
   useEffect(() => {
-    if (data?.pages.flat().length! < 9) fetchNextPage();
-  });
+    // if (postData?.pages.flat().length! < 9) fetchNextPage();
+    console.log(postData);
+  }, [postSuccess, postData]);
 
   return (
     <>
       <Header title="마이페이지" />
-      {!loading ? (
+      {postSuccess ? (
         <StyledContainer>
-          <MyProfile userPost={data?.pages.flat()} />
-          <MyPost data={data?.pages.flat()} />
+          <MyProfile userPost={postData} />
+          <MyPost data={postData} />
           <LogoutButton
             onClick={() => {
               localStorage.removeItem("key");

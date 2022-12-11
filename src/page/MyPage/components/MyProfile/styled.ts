@@ -27,6 +27,7 @@ export const ProfileInfoContainer = styled.div`
 export const ProfileLeft = styled.div`
   display: flex;
   gap: 1rem;
+  align-items: center;
 
   @media (max-width: 351px) {
     gap: 0.5rem;
