@@ -9,18 +9,18 @@ export const InputDiv = styled.div`
 
 export const Input = styled.input`
     position: absolute;
-    width: 77%;
+    width: 79%;
     height: 7.5vh; 
     min-height: 55px;
     font-size: 20px;
     border: 0;
-    border-radius: 10px;
+    border-radius: 16px;
     outline: none;
     padding-left: 10px;
     padding-right: 1em;
     background-color: ${COLOR.background};
     font-family: inherit;
-    border: solid 2px white; border-radius: 12px 0px 0px 12px; 
+    border: solid 2px white; border-radius: 16px 0px 0px 16px; 
     color: white;
     flex-grow: 1;
 `
@@ -34,7 +34,7 @@ export const Button = styled.button`
     outline: none;
     background-color: white;
     font-family: inherit;
-    border: solid 2px white; border-radius: 8px;
+    border: solid 2px white; border-radius: 16px;
     color: #18283d;
     font-weight: bold;
 
@@ -52,7 +52,7 @@ export const ListBox = styled.ul`
     width: 100%;
     background-color: #626F88;
     font-family: inherit;
-    border-radius: 20px;
+    border-radius: 16px;
     padding: 15px;
 `
 
@@ -62,18 +62,20 @@ export const List = styled.li`
     align-items: center;
     color: white;
     height: 60px;
-    padding: 10px 5px 5px 5px;
-    margin-bottom: 5px;
-    border-bottom: 1px solid #efefef;
+    padding: 1em 0em;
+    margin-bottom: 1rem;
+    border-bottom: 0.1px solid white;
     font-size: 25px;
     list-style: none;
-
+    /* border-radius: 16px; */
 `
 
 export const IdLabel = styled.p`
     color:white;
     margin: 0;
     font-weight: bold;
+    padding-bottom: 0.5rem;
+    padding-left: 0.2rem;
 `
 
 export const ListItem = styled.p`

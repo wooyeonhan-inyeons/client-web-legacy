@@ -3,6 +3,10 @@ import styled from "styled-components";
 import { AvatarColor, COLOR } from "../../../constants";
 import Avatar from "boring-avatars";
 import { getRequests, getOk, getNo } from "./api";
+import { message } from "antd";
+// import TimeAgo from "timeago-react";
+// import * as timeago from "timeago.js";
+// import ko from "timeago.js/lib/lang/ko";
 
 const ListBox = styled.ul`
   width: 100%;
@@ -65,7 +69,7 @@ const YesBtn = styled.button`
   height: 72%;
   background-color: white;
   border: solid 2px white;
-  border-radius: 10px;
+  border-radius: 16px;
   color: black;
   outline: none;
   margin-right: 0.5em;
@@ -81,7 +85,7 @@ const NoBtn = styled.button`
   width: 50%;
   height: 72%;
   border: solid 2px ${COLOR.background};
-  border-radius: 10px;
+  border-radius: 16px;
   background-color: ${COLOR.background};
   color: white;
   outline: none;
@@ -97,8 +101,9 @@ export interface IProps {
   friend_id: string;
 }
 
-function RequestFriend({ getNumber }: any) {
+function RequestFriend() {
   const [requested, setRequested] = useState<any>([]);
+  const [date, setDate] = useState("");
   //
 
   useEffect(() => {
@@ -109,8 +114,8 @@ function RequestFriend({ getNumber }: any) {
         at_Time: data.create_at,
       }));
       const result: any = [...requestedFr];
-      getNumber(result.length);
       setRequested(result);
+      setDate(res.create_at);
     });
   }, []);
 
@@ -118,6 +123,7 @@ function RequestFriend({ getNumber }: any) {
     getOk(friend_id)
       .then((res) => console.log(res))
       .then(() => onRemove(friend_id))
+      .then(() => message.success("수락 완료!"))
       .catch((e) => console.log(e));
   };
 
@@ -125,12 +131,16 @@ function RequestFriend({ getNumber }: any) {
     getNo(friend_id)
       .then((res) => console.log(res))
       .then(() => onRemove(friend_id))
+      .then(() => message.success("거절 완료!"))
       .catch((e) => console.log(e));
   };
 
   const onRemove = (id: string) => {
     setRequested(requested.filter((user: any) => user.friend_id !== id));
   };
+
+  // const time = date && timeago.format(date, "ko");
+  // timeago.register("ko", ko);
 
   return (
     <>
@@ -147,6 +157,11 @@ function RequestFriend({ getNumber }: any) {
             </ImageDiv>
             <TextBox>
               <Time>10분 전</Time>
+              {/* <TimeAgo
+                  datetime={date}
+                  opts={{ relativeDate: new Date().toISOString() }}
+                  locale="ko"
+                /> */}
               <Explaination>
                 <span style={{ fontWeight: "900" }}>{item.friend_name}</span>
                 님으로부터 친구 요청이 왔습니다.

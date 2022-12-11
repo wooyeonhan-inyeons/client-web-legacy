@@ -4,6 +4,7 @@ import { AvatarColor, COLOR } from "../../../../constants";
 import Avatar from "boring-avatars";
 import { getDetail } from './api'
 import { gerRequestFr } from './Request/api'
+import { message } from "antd";
 
 
 const Modal = styled.div`
@@ -130,7 +131,7 @@ function ShowModal({ friendId, closeModal }: IProps) {
 
     const onRequest = () => {
         gerRequestFr({friendId})
-        .then((res: any) => {console.log("친구 요청 성공")})
+        .then(() => message.success("요청 완료!"))
         .then(()=> setSuccess(true))
         .then(()=> closeModal())
         .catch((e)=>console.log(e));

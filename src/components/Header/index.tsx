@@ -11,7 +11,7 @@ const StyledHeader = styled.div`
   justify-content: space-between;
 
   width: 100%;
-  height: 3.5rem;
+  height: 4.5rem;
   font-size: 1.3rem;
 
   color: ${COLOR.content} !important;

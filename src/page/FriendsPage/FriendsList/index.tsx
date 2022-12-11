@@ -17,6 +17,8 @@ import { getFriends } from "./../api";
 import ShowModal from "./ShowModal";
 import styled from "styled-components";
 import More from "./More";
+import { useRecoilValue } from "recoil";
+import { recoil_ } from "../../../recoil";
 
 const ImageDiv = styled.div`
   display: flex;
@@ -35,7 +37,7 @@ const TextBox = styled.div`
   padding-bottom: 10px;
 `;
 
-function FriendsList({ getNumber }: any) {
+function FriendsList() {
   const [friendInput, setFriendInput] = useState<string>("");
   const [friends, setFriends] = useState([]);
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
@@ -50,15 +52,15 @@ function FriendsList({ getNumber }: any) {
     setModalOpen(true);
   };
   const [currentInfo, setCurrentInfo] = useState({});
+  const user = useRecoilValue(recoil_.userState);
+  //
+  console.log("user: ", user.userId);
   const onMore = (e: any) => {
-    // console.log(e.target);
     const index = e.target.dataset.index;
-    // console.log(index);
-    // console.log("index", index);
-    // console.log(friends[index]);
     setCurrentInfo(friends[index]);
     setMore(true);
   };
+
   const closeMore = () => {
     setMore(false);
   };
@@ -75,22 +77,15 @@ function FriendsList({ getNumber }: any) {
         user_info: data.following,
       }));
       const result: any = [...follower, ...following];
-      //
-      getNumber(result.length);
-
       setFriends(result);
     });
   }, []);
-
-  useEffect(() => {
-    console.log(friends);
-  }, [friends]);
 
   return (
     <>
       <form onSubmit={onSubmit}>
         <InputDiv>
-          <IdLabel>아이디</IdLabel>
+          <IdLabel>내 아이디 : {user.userId}</IdLabel>
           <Input
             onChange={onChange}
             value={friendInput}

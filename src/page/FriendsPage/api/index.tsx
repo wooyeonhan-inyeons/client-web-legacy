@@ -11,7 +11,7 @@ export const getFriends = () => {
 };
 
 export const getSum = () => {
-  return fetch(`${BACK_URL}/friends`, {
+  return fetch(`${BACK_URL}/friends/sum`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

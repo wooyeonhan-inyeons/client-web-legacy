@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../components/Header";
 import { StyledContainer } from "../../components/StyledContainer";
@@ -7,6 +7,7 @@ import FriendsList from "./FriendsList";
 import RequestFriend from "./RequestedFriend";
 import styled from "styled-components";
 import { COLOR } from "../../constants";
+import { getSum } from "./api";
 
 const TabBtn = styled.button< { toggle : boolean } >`
   width: 50%;
@@ -31,15 +32,19 @@ const FriendsPage = () => {
   const [numFr, setNumFr] = useState(0);
   const [numRe, setNumRe] = useState(0);
 
-  const getNumFr = (e:any) => { setNumFr(e);}
-  const getNumRe = (e:any) => { setNumRe(e);}
-
   const onClick = () => {
     setTabList(prev => !prev);
     setTabRequest(prev => !prev);
-
-    
   }
+
+  useEffect(() => {
+    getSum().then((res: any) => {
+      setNumFr(res.friend_count);
+      setNumRe(res.request_count);
+      console.log(res);
+    })
+  }, [])
+  
 
   return (
     <>
@@ -57,10 +62,10 @@ const FriendsPage = () => {
         <Num> ({numRe})</Num></TabBtn>
         { tabList ?
         <FriendsList
-        getNumber={getNumFr}
+        // getNumber={getNumFr}
         ></FriendsList> : 
         <RequestFriend
-        getNumber={getNumRe}
+        // getNumber={getNumRe}
         ></RequestFriend>}
       </StyledContainer>
     </>
