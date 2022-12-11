@@ -11,6 +11,7 @@ import {
   FriendName,
   FriendMessage,
 } from "../styled";
+import message from 'antd';
 import { AvatarColor, COLOR } from "../../../constants";
 import Avatar from "boring-avatars";
 import { getFriends } from "./../api";
@@ -49,11 +50,15 @@ function FriendsList() {
     event.preventDefault();
   };
   const onClickModal = () => {
-    setModalOpen(true);
+    if (!friendInput) {
+      console.log("비어있음")
+    } else {
+      setModalOpen(true);
+    }
   };
   const [currentInfo, setCurrentInfo] = useState({});
   const user = useRecoilValue(recoil_.userState);
-  //
+  
   console.log("user: ", user.userId);
   const onMore = (e: any) => {
     const index = e.target.dataset.index;

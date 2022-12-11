@@ -36,7 +36,6 @@ const FootCnt = styled.span`
 export const MyDetail = () => {
   const coordinate = useRecoilValue(recoil_.geoState);
   const [dialogOpen, setDialogOpen] = useRecoilState(recoil_.detailDialogState);
-  // const [footCnt, setFootCnt] = useState(0);
   let { post_id } = useParams<string>();
 
   const {
@@ -82,12 +81,6 @@ export const MyDetail = () => {
   const onChange = (currentSlide: number) => {
     // console.log(currentSlide);
   };
-
-  // useEffect(() => {
-  //   GetPostOne().then((res:any) => {
-  //     // setFootCnt(res.footprint_count);
-  //   })
-  // }, [])
 
   if (!postSuccess) return <LoadingBox />;
   if (postData.statusCode === 500) return <ErrPost />;
