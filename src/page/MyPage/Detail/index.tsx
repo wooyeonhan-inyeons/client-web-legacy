@@ -137,7 +137,7 @@ export const MyDetail = () => {
             <div className="PostInfo">
               <div className="date">
                 {getFormattedDate(new Date(postData.created_time!))}
-                <EyeOutlined style={{ paddingLeft: "0.5rem" }} />
+                <EyeOutlined style={{ paddingLeft: "0.8rem" }} />
                 <FootCnt>{postData.footprint_count}</FootCnt>
               </div>
               <div className="location">
