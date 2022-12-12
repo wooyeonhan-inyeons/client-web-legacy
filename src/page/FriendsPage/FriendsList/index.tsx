@@ -59,7 +59,8 @@ function FriendsList() {
   const [friends, setFriends] = useState([]);
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [more, setMore] = useState<boolean>(false);
-
+  const user = useRecoilValue(recoil_.userState);
+  
   const closeModal = () => setModalOpen(false);
   const resetInput = () => setFriendInput("");
   const onChange = (event: any) => setFriendInput(event.target.value);
@@ -69,12 +70,15 @@ function FriendsList() {
   const onClickModal = () => {
     if (!friendInput) {
       console.log("비어있음")
-    } else {
+    } else if (friendInput === user.userId ){
+      alert("본인 아이디는 요청할 수 없습니다.");
+      setFriendInput("");
+    } 
+    else {
       setModalOpen(true);
     }
   };
   const [currentInfo, setCurrentInfo] = useState({});
-  const user = useRecoilValue(recoil_.userState);
   
   const onMore = (e: any) => {
     const index = e.currentTarget.dataset.index;

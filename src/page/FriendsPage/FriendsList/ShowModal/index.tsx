@@ -12,7 +12,7 @@ const Modal = styled.div`
     flex-direction: column;
     width: 70vw;
     max-width: 500px;
-    height: 50vh;
+    /* height: 50vh; */
     min-height: 350px;
     z-index: 999;
     position: absolute;
@@ -37,18 +37,16 @@ const Label = styled.p`
 
 const DetailBox = styled.div`
     display: grid;
-    grid-template-rows: 40% 20% 20% 20%;
-    height: 75vh;
+    /* height: 30vh; */
     text-align: center;
     justify-content: center;
     padding: 2em;
-    padding-top: 10px;
-
+    padding-top: 1rem;
 `
 
 export const BtnBox = styled.div`
     display: flex;
-    height: 25vh;
+    /* height: 25vh; */
     text-align: center;
     justify-content: space-evenly;
 `
@@ -63,7 +61,7 @@ export const BackBtn = styled.button`
     height: 60%;
     margin-right: 0px;
     box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
-
+    padding: 1rem 0rem;
     cursor: pointer;
     &:hover {
         background-color: #1b253a;
@@ -80,7 +78,7 @@ export const SaveBtn = styled.button`
     width: 35%;
     height: 60%;
     box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
-
+    padding: 1rem 0rem;
     cursor: pointer;
     &:hover {
         background-color: #e1e1e1;
