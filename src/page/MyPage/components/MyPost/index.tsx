@@ -7,7 +7,7 @@ export const MyPost = ({ data }: any) => {
   const currIndex = data.length;
 
   const [more, setMore] = useState(false);
-  console.log("ㅇㅇ ", currIndex);
+  // console.log("ㅇㅇ ", currIndex);
 
   const PostList = data.map((data: any, index: number) => {
     if (index < maxIndex - 1) {

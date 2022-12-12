@@ -7,6 +7,7 @@ import UserTable from "./UserTable";
 import { useRef } from "react";
 import FriendsTable from "./FriendTable";
 import PostTable from "./PostTable";
+import ReportTable from "./ReportTable";
 
 const AdminHome: React.FC = () => {
   const resetUser = useResetRecoilState(recoil_.userState);
@@ -20,6 +21,7 @@ const AdminHome: React.FC = () => {
     user: <UserTable />,
     friends: <FriendsTable />,
     post: <PostTable />,
+    report: <ReportTable />,
   });
 
   return (
@@ -61,6 +63,10 @@ const AdminHome: React.FC = () => {
               {
                 value: "post",
                 label: "post",
+              },
+              {
+                value: "report",
+                label: "report",
               },
               // {
               //   value: "posting",

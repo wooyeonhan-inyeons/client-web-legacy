@@ -5,7 +5,7 @@ export const StyledWriteContainer = styled.div`
   width: 100%;
   height: 100vh;
   background-color: #263145;
-  padding: 4rem 1rem;
+  padding: 4.5rem 1rem;
   color: #fff;
   overflow-y: scroll;
 

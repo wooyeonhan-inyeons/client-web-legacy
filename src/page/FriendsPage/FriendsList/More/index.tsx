@@ -2,15 +2,20 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { AvatarColor, COLOR } from "../../../../constants";
 import Avatar from "boring-avatars";
+import { message } from "antd";
 import { getDelete } from "./api";
+import { useRecoilState } from "recoil";
+import { friendCountState } from "../../../../recoil/friend";
 
 const Modal = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: inherit;
+
   width: 70vw;
   max-width: 500px;
-  height: 50vh;
+  height: 20vh;
   min-height: 350px;
   z-index: 999;
   position: absolute;
@@ -45,13 +50,14 @@ const BtnBox = styled.div`
   width: 100%;
   height: 10vh;
   text-align: center;
+  font-family: inherit;
   justify-content: space-evenly;
 `;
 
 const BackBtn = styled.button`
   background-color: #1a212e;
+  font-size: 14px;
   font-family: inherit;
-  font-size: 20px;
   margin: 10px 20px 10px 20px;
   border: none;
   border-radius: 8px;
@@ -69,6 +75,7 @@ export const SaveBtn = styled.button`
   background-color: white;
   color: black;
   font-family: inherit;
+  font-size: 14px;
   margin: 10px 20px 10px 20px;
   border: none;
   border-radius: 8px;
@@ -117,32 +124,43 @@ export interface IProps {
 }
 
 function More({ item, friendId, closeMore }: IProps) {
-    const onDelete = () => {
-        getDelete(item.friend_id).then((res: any) => {
-            console.log("deleted");
-        })
-    }
+  const [numFr, setNumFr] = useRecoilState(friendCountState);
 
-    return (
+  // console.log(item);
+  const onDelete = () => {
+    getDelete(item.friend_id)
+      .then(closeMore)
+      .then(() => {
+        setNumFr(numFr - 1);
+        message.success("삭제 완료!");
+      });
+  };
+
+  return (
     <>
-    <Modal>
+      <Modal>
         <InfoBox>
-            <ImageBox>
-                <Avatar size={50} variant="beam" name={"cc"} colors={AvatarColor} />
-            </ImageBox>
-            <TextBox>
-                <Name>{item?.user_info?.name}</Name>
-                <Message>{item?.user_info?.message}</Message>
-            </TextBox>
+          <ImageBox>
+            <Avatar
+              size={50}
+              variant="beam"
+              name={friendId}
+              colors={AvatarColor}
+            />
+          </ImageBox>
+          <TextBox>
+            <Name>{item?.user_info?.name}</Name>
+            <Message>{item?.user_info?.message}</Message>
+          </TextBox>
         </InfoBox>
         <CheckWarn>이 친구를 삭제하시겠습니까?</CheckWarn>
         <BtnBox>
-        <BackBtn onClick={closeMore}>취소</BackBtn>
-        <SaveBtn onClick={onDelete}>삭제</SaveBtn>
+          <BackBtn onClick={closeMore}>취소</BackBtn>
+          <SaveBtn onClick={onDelete}>삭제</SaveBtn>
         </BtnBox>
-    </Modal>
+      </Modal>
     </>
-    );
+  );
 }
 
 export default More;

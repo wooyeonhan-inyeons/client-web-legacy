@@ -12,7 +12,7 @@ const Modal = styled.div`
     flex-direction: column;
     width: 70vw;
     max-width: 500px;
-    height: 50vh;
+    /* height: 50vh; */
     min-height: 350px;
     z-index: 999;
     position: absolute;
@@ -37,18 +37,16 @@ const Label = styled.p`
 
 const DetailBox = styled.div`
     display: grid;
-    grid-template-rows: 40% 20% 20% 20%;
-    height: 75vh;
+    /* height: 30vh; */
     text-align: center;
     justify-content: center;
     padding: 2em;
-    padding-top: 10px;
-
+    padding-top: 1rem;
 `
 
 export const BtnBox = styled.div`
     display: flex;
-    height: 25vh;
+    /* height: 25vh; */
     text-align: center;
     justify-content: space-evenly;
 `
@@ -63,7 +61,7 @@ export const BackBtn = styled.button`
     height: 60%;
     margin-right: 0px;
     box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
-
+    padding: 1rem 0rem;
     cursor: pointer;
     &:hover {
         background-color: #1b253a;
@@ -80,7 +78,7 @@ export const SaveBtn = styled.button`
     width: 35%;
     height: 60%;
     box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
-
+    padding: 1rem 0rem;
     cursor: pointer;
     &:hover {
         background-color: #e1e1e1;
@@ -114,11 +112,12 @@ export const Message = styled.p`
 `
 export interface IProps {
     friendId: string,
-    closeModal: ()=> void
+    closeModal: () => void
+    resetInput: () => void
 }
 
 // 모달 UI 수정
-function ShowModal({ friendId, closeModal }: IProps) {
+function ShowModal({ friendId, closeModal, resetInput }: IProps) {
     const [detail, setDetail] = useState([]);
     const [success, setSuccess] = useState(false);
     // 친구정보 useState로 전달하기
@@ -131,9 +130,11 @@ function ShowModal({ friendId, closeModal }: IProps) {
 
     const onRequest = () => {
         gerRequestFr({friendId})
-        .then(() => message.success("요청 완료!"))
+        .then(() => {
+            closeModal();
+            resetInput();
+            message.success("요청 완료!");})
         .then(()=> setSuccess(true))
-        .then(()=> closeModal())
         .catch((e)=>console.log(e));
     }
 
@@ -146,7 +147,7 @@ function ShowModal({ friendId, closeModal }: IProps) {
                         <Avatar
                         size={60}
                         variant="beam"
-                        name={"cc"}
+                        name={friendId}
                         colors={AvatarColor}
                         />
                     </ImageDiv>
