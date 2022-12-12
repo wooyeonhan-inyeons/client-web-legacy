@@ -6,6 +6,7 @@ import { Post } from "./api";
 import useGeolocation from "react-hook-geolocation";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
+import ScrollToTop from "../../components/Scroll";
 
 export const Write = () => {
   const navigate = useNavigate();
@@ -74,6 +75,8 @@ export const Write = () => {
 
   return (
     <>
+      <ScrollToTop />
+
       <Header title="우연 공유" vis_goBack={true} />
       <StyledWriteContainer>
         <form encType="multipart/form-data" onSubmit={Validata}>

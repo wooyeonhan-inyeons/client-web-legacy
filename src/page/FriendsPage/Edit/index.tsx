@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Header } from "../../../components/Header";
+import ScrollToTop from "../../../components/Scroll";
 import { StyledContainer } from "../../../components/StyledContainer";
 import { COLOR } from "../../../constants";
 import { getInfo } from "./api";
@@ -110,6 +111,8 @@ const Edit = () => {
 
   return (
     <>
+      <ScrollToTop />
+
       <Header title="프로필 수정" />
       <StyledContainer>
         <InputDiv>
