@@ -388,6 +388,7 @@ export const StyledDetail3 = styled.div`
   backdrop-filter: blur(3px);
   padding-top: 7rem;
   overflow-x: hidden;
+  overflow-y: scroll;
 
   .postContainer {
     width: 90%;
