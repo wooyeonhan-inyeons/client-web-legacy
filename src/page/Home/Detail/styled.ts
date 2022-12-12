@@ -98,6 +98,7 @@ export const StyledDetail = styled.div`
     justify-content: space-between;
     align-items: center;
     padding-bottom: 1rem;
+    color: white;
   }
 
   .content .header .title {
