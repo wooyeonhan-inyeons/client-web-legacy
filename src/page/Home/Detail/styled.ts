@@ -8,7 +8,7 @@ export const StyledDetail = styled.div`
   position: fixed;
   z-index: ${zIndex.middle};
   backdrop-filter: blur(3px);
-  // padding-top: 7rem;
+  /* padding-top: 4rem; */
   overflow-y: scroll;
 
   display: flex;
@@ -57,6 +57,7 @@ export const StyledDetail = styled.div`
     top: 50%;
     transform: translate(0, -50%);
     position: absolute;
+    border-radius: 16px 16px 0px 0px;
   }
   .actionSpace {
     width: 100%;
@@ -242,6 +243,7 @@ export const StyledDetail2 = styled.div`
     top: 50%;
     transform: translate(0, -50%);
     position: absolute;
+    border-radius: 16px 16px 0px 0px;
   }
   .actionSpace {
     width: 100%;

@@ -114,7 +114,7 @@ const Edit = () => {
       <StyledContainer>
         <InputDiv>
           <InputLabel>이름</InputLabel>
-          <Input placeholder={nickname} value={nickname} />
+          <Input readOnly={true} placeholder={nickname} value={nickname} />
         </InputDiv>
         <InputDiv>
           <InputLabel>상태메세지</InputLabel>

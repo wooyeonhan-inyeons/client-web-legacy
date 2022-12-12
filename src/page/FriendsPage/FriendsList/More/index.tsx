@@ -11,6 +11,8 @@ const Modal = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: inherit;
+
   width: 70vw;
   max-width: 500px;
   height: 20vh;
@@ -48,13 +50,14 @@ const BtnBox = styled.div`
   width: 100%;
   height: 10vh;
   text-align: center;
+  font-family: inherit;
   justify-content: space-evenly;
 `;
 
 const BackBtn = styled.button`
   background-color: #1a212e;
+  font-size: 14px;
   font-family: inherit;
-  font-size: 20px;
   margin: 10px 20px 10px 20px;
   border: none;
   border-radius: 8px;
@@ -72,6 +75,7 @@ export const SaveBtn = styled.button`
   background-color: white;
   color: black;
   font-family: inherit;
+  font-size: 14px;
   margin: 10px 20px 10px 20px;
   border: none;
   border-radius: 8px;
