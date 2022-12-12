@@ -19,6 +19,9 @@ import MarkerClusterIcon from "./images/MarkerCluster.png";
 import MarkerClusterIcon2 from "./images/MarkerCluster2.png";
 
 export default function Map() {
+  useEffect(() => {
+    console.log(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
+  }, []);
   return (
     <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY!}>
       <MapComponent />

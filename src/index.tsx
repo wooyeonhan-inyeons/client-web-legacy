@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { RecoilRoot } from "recoil";
 import "antd/dist/antd.min.css";
 import { QueryClient, QueryClientProvider } from "react-query";
+import StartUp from "./.start/index";
 
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(
@@ -15,6 +16,7 @@ root.render(
   <React.StrictMode>
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
+        <StartUp />
         <App />
       </QueryClientProvider>
     </RecoilRoot>
