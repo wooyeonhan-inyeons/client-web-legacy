@@ -5,6 +5,7 @@ import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import {
   Cluster,
   DefaultRenderer,
+  GridAlgorithm,
   MarkerClusterer,
   Renderer,
 } from "@googlemaps/markerclusterer";
@@ -14,11 +15,13 @@ import { useRecoilState } from "recoil";
 import { recoil_ } from "../../../recoil";
 import { getNearTest } from "./api/getPost";
 import { MarkerImages, MarkerImages2 } from "./components/Mark";
-
 import MarkerClusterIcon from "./images/MarkerCluster.png";
 import MarkerClusterIcon2 from "./images/MarkerCluster2.png";
 
 export default function Map() {
+  useEffect(() => {
+    console.log(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
+  }, []);
   return (
     <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY!}>
       <MapComponent />
@@ -33,6 +36,10 @@ function MapComponent() {
   const [coordinate, setCoordinate] = useRecoilState<google.maps.LatLngLiteral>(
     recoil_.geoState
   );
+  const [markers, setMarkers] = useRecoilState<MarkerProps[]>(
+    recoil_.markerState
+  );
+
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -47,13 +54,24 @@ function MapComponent() {
   useEffect(() => {
     getNearTest(coordinate)?.then((res) => {
       setData(res);
+      setMarkers(res);
     });
+
+    // console.log("코디네이트: ", coordinate.lat, coordinate.lng);
   }, [coordinate]);
 
   useEffect(() => {
-    initMap(coordinate, data, navigate);
+    initMap(coordinate, markers, navigate);
     // window.initMap = initMap;
-  }, [data, initMap]);
+  }, [markers, initMap]);
+
+  useEffect(() => {
+    //모달 상태에서 스크롤 막기
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [data]);
 
   return <div ref={ref!} id="map" />;
 }
@@ -61,7 +79,7 @@ function MapComponent() {
 //맵 불러오는 함수
 function initMap(
   coordinate: google.maps.LatLngLiteral,
-  data: Array<MarkerProps>,
+  data: Array<any>,
   navigate: any
 ): void {
   const map = new google.maps.Map(
@@ -87,14 +105,17 @@ function initMap(
             scaledSize: new google.maps.Size(56, 56),
           },
     });
+
     marker.addListener("click", () => {
       navigate(`detail/${item.post_id}`);
     });
     return marker;
   });
+
   const renderer = {
     render: ({ count, position }: Cluster) =>
       new google.maps.Marker({
+        // gridSize: 50,
         icon: MarkerClusterIcon2,
         label: { text: String(count), color: "#222", fontSize: "0.9rem" },
         position,
@@ -102,15 +123,17 @@ function initMap(
         zIndex: Number(google.maps.Marker.MAX_ZINDEX) + count,
       }),
   };
+  const algorithm = new GridAlgorithm({ maxDistance: 500000, gridSize: 40 });
 
   new MarkerClusterer({
     map,
     markers,
     renderer,
+    algorithm,
   });
 }
 
-interface MarkerProps {
+export interface MarkerProps {
   content: string;
   created_time: string;
   latitude: number;
@@ -132,8 +155,8 @@ const options: any = {
   backgroundColor: "#242f3e",
   minZoom: 13,
   // maxZoom: 20,
-  // gestureHandling: "none",
-  // zoomControl: false,
+  gestureHandling: "none",
+  zoomControl: false,
   mapTypeControl: false,
   scaleControl: false,
   streetViewControl: false,

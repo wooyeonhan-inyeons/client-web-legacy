@@ -20,7 +20,12 @@ const Login = () => {
       <StyledContainerFull>
         <CenterBox>
           <Rectangle />
-          <LoginTitle>
+          <LoginTitle
+            style={{
+              fontFamily: "KOTRA_SONGEULSSI",
+              lineHeight: 1.5,
+            }}
+          >
             우연한 <br />
             발견
           </LoginTitle>
@@ -45,7 +50,7 @@ const Login = () => {
                 sns={SNS.NONE}
                 onClick={() =>
                   navigate(
-                    "/auth/kakao/redirect?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNmRmZDhmZjEtOWMzMC00ZjFlLTg3OTQtMmVkMmJmZGNlMmUwIiwibmFtZSI6IuydtOybkOyjvCIsImVtYWlsIjoidHVydGxlNDI2NUBrYWthby5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY3MDc3MTY0NCwiZXhwIjoxNjcwODU4MDQ0fQ.n2Zobt7zBHjX-yKHZzBCda9rl84PKutSwmiVEbYL438"
+                    "/auth/kakao/redirect?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNmRmZDhmZjEtOWMzMC00ZjFlLTg3OTQtMmVkMmJmZGNlMmUwIiwibmFtZSI6IuydtOybkOyjvCIsImVtYWlsIjoidHVydGxlNDI2NUBrYWthby5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY3MDgzMDMwNCwiZXhwIjoxNjcwOTE2NzA0fQ.qErzLsjjxLuXCR3bPIhpEFDW9t3fl0oWdsO94cuffRM"
                   )
                 }
               >

@@ -71,11 +71,16 @@ export const List = styled.li`
 `
 
 export const IdLabel = styled.p`
+    /* display: inline; */
+    max-width: 90%;
     color:white;
     margin: 0;
     font-weight: bold;
     padding-bottom: 0.5rem;
     padding-left: 0.2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `
 
 export const ListItem = styled.p`

@@ -22,7 +22,7 @@ export const PostImageContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 0.05%;
-    justify-content: space-between;
+    justify-content: flex-start;
   }
 
   .postThumb {
@@ -45,8 +45,8 @@ export const PostImageContainer = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    /* align-items: center; */
+    /* justify-content: center; */
     font-size: 1rem;
 
     background-color: #000000a1;

@@ -1,4 +1,6 @@
 import { BACK_URL } from "../../../constants/GlobalConstants";
+import imageCompression from "browser-image-compression";
+import Compressor from "compressorjs";
 
 export const Post = async (e: any) => {
   e.preventDefault();
@@ -9,11 +11,21 @@ export const Post = async (e: any) => {
   formData.append("latitude", e.target.latitude.value);
   formData.append("longitude", e.target.longitude.value);
 
+  const option = {
+    maxSizeMB: 1,
+    maxWidthOrHeight: 1024,
+  };
+
   const files = Array.from(e.target.imageFile.files);
-  files.map((file: any) => {
-    console.log(file);
-    formData.append("file", file);
-  });
+  for (let i = 0; i < files.length; i++) {
+    const compressedBlob = await imageCompression(files[i] as any, option);
+    const compressedFile = new File([compressedBlob], compressedBlob.name, {
+      type: compressedBlob.type,
+    });
+    console.log(files[i]);
+    console.log(compressedFile);
+    formData.append("file", compressedFile);
+  }
 
   const options = {
     method: "POST",
@@ -29,6 +41,7 @@ export const Post = async (e: any) => {
       return response.json();
     }
   );
+  console.log(response);
   return response;
 };
 

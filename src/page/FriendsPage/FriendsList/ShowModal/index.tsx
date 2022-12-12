@@ -114,11 +114,12 @@ export const Message = styled.p`
 `
 export interface IProps {
     friendId: string,
-    closeModal: ()=> void
+    closeModal: () => void
+    resetInput: () => void
 }
 
 // 모달 UI 수정
-function ShowModal({ friendId, closeModal }: IProps) {
+function ShowModal({ friendId, closeModal, resetInput }: IProps) {
     const [detail, setDetail] = useState([]);
     const [success, setSuccess] = useState(false);
     // 친구정보 useState로 전달하기
@@ -131,9 +132,11 @@ function ShowModal({ friendId, closeModal }: IProps) {
 
     const onRequest = () => {
         gerRequestFr({friendId})
-        .then(() => message.success("요청 완료!"))
+        .then(() => {
+            closeModal();
+            resetInput();
+            message.success("요청 완료!");})
         .then(()=> setSuccess(true))
-        .then(()=> closeModal())
         .catch((e)=>console.log(e));
     }
 
@@ -146,7 +149,7 @@ function ShowModal({ friendId, closeModal }: IProps) {
                         <Avatar
                         size={60}
                         variant="beam"
-                        name={"cc"}
+                        name={friendId}
                         colors={AvatarColor}
                         />
                     </ImageDiv>

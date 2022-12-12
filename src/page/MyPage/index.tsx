@@ -11,7 +11,7 @@ import { MyPost } from "./components/MyPost";
 import { LogoutButton } from "./components/LogoutButton";
 import { LoadingBox } from "../../components/LoadingContainer";
 import { GetTest } from "./Postes/components/TabBox/GetTest";
-import { GetPostMine } from "./api/GetPostMine";
+import { GetPostMine, GetPostMineViewed } from "./api/GetPostMine";
 
 const Mypage = () => {
   const resetUser = useResetRecoilState(recoil_.userState);
@@ -30,18 +30,24 @@ const Mypage = () => {
       },
     }
   );
-
-  useEffect(() => {
-    // if (postData?.pages.flat().length! < 9) fetchNextPage();
-    // console.log("배열길이: ", postData);
-  }, [postSuccess, postData]);
+  const { data: viewedData, isSuccess: viewedSuccess } = useQuery(
+    ["viewed"],
+    () => GetPostMineViewed({ idx: 0 }),
+    {
+      retry: 3,
+      onSuccess: (res) => {
+        // console.log(res);
+        setLoading(false);
+      },
+    }
+  );
 
   return (
     <>
       <Header title="마이페이지" />
       {postSuccess ? (
         <StyledContainer>
-          <MyProfile userPost={postData} />
+          <MyProfile userPost={viewedData} />
           <MyPost data={postData} />
 
           <LogoutButton
