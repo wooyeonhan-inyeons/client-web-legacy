@@ -61,7 +61,7 @@ export const MyPostes = () => {
             <LoadingOutlined />
           </div>
         )}
-        <div style={{ width: "100vw", height: "1rem" }} ref={ref}></div>
+        <div style={{ width: "100vw", height: "5rem" }} ref={ref}></div>
         {/* 이거 보이면 실행 */}
       </div>
     </PostImageContainer>

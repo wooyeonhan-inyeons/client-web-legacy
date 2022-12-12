@@ -75,7 +75,7 @@ export const GroupDetail = () => {
           <PostCard props={item} key={item.post_id} />
         ))}
         {/* <PostCard /> */}
-        <div style={{ width: "100vw", height: "1rem" }} ref={ref}></div>
+        <div style={{ width: "100vw", height: "5rem" }} ref={ref}></div>
       </StyledDetail3>
     </>
   );
