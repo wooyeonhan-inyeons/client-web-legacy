@@ -7,6 +7,7 @@ import { StyledContainer } from "../../../components/StyledContainer";
 import { COLOR } from "../../../constants";
 import { getInfo } from "./api";
 import { getEdit } from "./api";
+import { message } from 'antd';
 
 const InputDiv = styled.div`
   width: 100%;
@@ -98,7 +99,8 @@ const Edit = () => {
   };
 
   const onEdit = () => {
-    getEdit(nickname, message).then((res) => console.log(res));
+    getEdit(nickname, message)
+    .then(() => navigate(-1));
   };
 
   useEffect(() => {
