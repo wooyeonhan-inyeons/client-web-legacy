@@ -20,7 +20,12 @@ const Login = () => {
       <StyledContainerFull>
         <CenterBox>
           <Rectangle />
-          <LoginTitle>
+          <LoginTitle
+            style={{
+              fontFamily: "KOTRA_SONGEULSSI",
+              lineHeight: 1.5,
+            }}
+          >
             우연한 <br />
             발견
           </LoginTitle>
