@@ -42,11 +42,17 @@ const CopyBtn = styled.button`
   border: 0;
   outline: 0;
   background-color: ${COLOR.background};
-  float: right;
+  /* float: right; */
   border-radius: 16px;
   font-size: 1.3rem;
-  position: relative; bottom: 0.3rem;
+  position: relative; bottom: 0.4rem;
 `
+
+const IdBox = styled.div`
+  display: flex;
+  width: 100%;
+`
+
 function FriendsList() {
   const [friendInput, setFriendInput] = useState<string>("");
   const [friends, setFriends] = useState([]);
@@ -137,12 +143,14 @@ function FriendsList() {
     <>
       <form onSubmit={onSubmit}>
         <InputDiv>
-          <IdLabel>
-            내 아이디 : {user.userId}
-              <CopyBtn onClick={() => doCopy(user.userId)}>
-                <CopyOutlined />
-              </CopyBtn>
-          </IdLabel>
+          <IdBox>
+            <IdLabel>
+              내 아이디 : {user.userId}
+            </IdLabel>
+            <CopyBtn onClick={() => doCopy(user.userId)}>
+              <CopyOutlined />
+            </CopyBtn>
+          </IdBox>
           <Input
             onChange={onChange}
             value={friendInput}
