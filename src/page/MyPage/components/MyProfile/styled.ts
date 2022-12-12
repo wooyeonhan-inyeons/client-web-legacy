@@ -42,7 +42,7 @@ export const ProfileLeft = styled.div`
 export const ProfileEditButton = styled.div`
   width: 3rem;
   height: 3rem;
-  border-radius 50%;
+  border-radius: 999px;
 
   background-color: #d5d5d5;
 
@@ -62,7 +62,7 @@ export const ProfileEditButton = styled.div`
   @media (max-width: 351px) {
     width: 2.5rem;
     height: 2.5rem;
-    
+
     & > * {
       line-height: 2.5rem;
     }
@@ -73,10 +73,17 @@ export const MyProfileTextBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
+  width: 180px;
   .username {
     font-weight: bold;
     font-size: 1.3rem;
+  }
+
+  .message {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   @media (max-width: 351px) {

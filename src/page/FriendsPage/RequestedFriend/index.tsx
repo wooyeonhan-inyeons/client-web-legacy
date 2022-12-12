@@ -76,6 +76,7 @@ const YesBtn = styled.button`
   outline: none;
   margin-right: 0.5em;
   font-weight: 900;
+  font-size: 14px;
 
   cursor: pointer;
   &:hover {
@@ -90,6 +91,7 @@ const NoBtn = styled.button`
   border-radius: 16px;
   background-color: ${COLOR.background};
   color: white;
+  font-size: 14px;
   outline: none;
 
   font-weight: 900;
@@ -118,6 +120,7 @@ function RequestFriend() {
       }));
       const result: any = [...requestedFr];
       setRequested(result);
+      setNumRe(result.length);
       setDate(res.create_at);
     });
   }, []);
@@ -129,7 +132,8 @@ function RequestFriend() {
       .then(() => {
         setNumFr(numFr + 1);
         setNumRe(numRe - 1);
-        message.success("수락 완료!")})
+        message.success("수락 완료!");
+      })
       .catch((e) => console.log(e));
   };
 
@@ -139,7 +143,7 @@ function RequestFriend() {
       .then(() => onRemove(friend_id))
       .then(() => {
         setNumRe(numRe - 1);
-        message.success("거절 완료!")
+        message.success("거절 완료!");
       })
       .catch((e) => console.log(e));
   };
@@ -167,10 +171,10 @@ function RequestFriend() {
             <TextBox>
               {/* <Time>10분 전</Time> */}
               <TimeAgo
-                  datetime={date}
-                  opts={{ relativeDate: new Date().toISOString() }}
-                  locale="ko"
-                />
+                datetime={date}
+                opts={{ relativeDate: new Date().toISOString() }}
+                locale="ko"
+              />
               <Explaination>
                 <span style={{ fontWeight: "900" }}>{item.friend_name}</span>
                 님으로부터 친구 요청이 왔습니다.

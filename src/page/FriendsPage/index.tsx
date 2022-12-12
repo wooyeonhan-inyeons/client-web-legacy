@@ -10,6 +10,7 @@ import { COLOR } from "../../constants";
 import { getSum } from "./api";
 import { useRecoilState } from "recoil";
 import { friendCountState, requestedCountState } from "../../recoil/friend";
+import ScrollToTop from "../../components/Scroll";
 
 const TabBtn = styled.button<{ toggle: boolean }>`
   width: 50%;
@@ -49,6 +50,8 @@ const FriendsPage = () => {
 
   return (
     <>
+      <ScrollToTop />
+
       <Header title="친구" />
       <StyledContainer>
         <TabBtn toggle={tabList} onClick={onClick}>

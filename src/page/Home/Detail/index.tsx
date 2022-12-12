@@ -23,6 +23,7 @@ import Avatar from "boring-avatars";
 import { Dialog } from "./components/dialog";
 import { ErrPost } from "./components/errPost";
 import { getFormattedDate } from "../../../components/api/getFormattedDate";
+import ScrollToTop from "../../../components/Scroll";
 
 export const Detail = () => {
   const [, setHeader] = useRecoilState(recoil_.headerState);
@@ -112,6 +113,8 @@ export const Detail = () => {
   // if (!geoSuccess || !postData.image) return <LoadingBox />;
   return (
     <>
+      <ScrollToTop />
+
       <StyledDetail onClick={() => navigate("/")}>
         <div className="postContainer" onClick={(e) => e.stopPropagation()}>
           <div className="background">

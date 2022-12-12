@@ -25,6 +25,7 @@ import { Dialog } from "../../Home/Detail/components/dialog";
 import NoMatch from "../../NoMatch";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
+import ScrollToTop from "../../../components/Scroll";
 
 const FootCnt = styled.span`
   font-size: 10px;
@@ -106,6 +107,8 @@ export const MyDetail = () => {
 
   return (
     <>
+      <ScrollToTop />
+
       <Header />
       <StyledDetail2>
         <div className="postContainer" onClick={(e) => e.stopPropagation()}>

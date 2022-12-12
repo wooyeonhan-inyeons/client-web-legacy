@@ -12,6 +12,7 @@ import { LogoutButton } from "./components/LogoutButton";
 import { LoadingBox } from "../../components/LoadingContainer";
 import { GetTest } from "./Postes/components/TabBox/GetTest";
 import { GetPostMine, GetPostMineViewed } from "./api/GetPostMine";
+import ScrollToTop from "../../components/Scroll";
 
 const Mypage = () => {
   const resetUser = useResetRecoilState(recoil_.userState);
@@ -44,6 +45,8 @@ const Mypage = () => {
 
   return (
     <>
+      <ScrollToTop />
+
       <Header title="마이페이지" />
       {postSuccess ? (
         <StyledContainer>

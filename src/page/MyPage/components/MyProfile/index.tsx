@@ -41,8 +41,8 @@ export const MyProfile = ({ userPost }: any) => {
       setPostingCnt(res.posting_count);
       setEmotionCnt(res.emotion_count);
       setFriendsCnt(res.friend_count);
-    })
-  }, [])
+    });
+  }, []);
   return (
     <>
       <ProfileContainer>
@@ -59,7 +59,7 @@ export const MyProfile = ({ userPost }: any) => {
               <div className="message">{data?.message}</div>
               <MyProfileInfo>
                 <div>
-                <EnvironmentOutlined/>
+                  <EnvironmentOutlined />
                   {" " + postingCnt}
                 </div>
                 <div className="divider"></div>
