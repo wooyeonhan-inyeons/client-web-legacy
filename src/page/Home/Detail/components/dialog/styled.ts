@@ -3,7 +3,7 @@ import { COLOR, zIndex } from "../../../../../constants";
 
 export const StyledDialog = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   color: #fff;
   background-color: #00000094;
   backdrop-filter: blur(3px);

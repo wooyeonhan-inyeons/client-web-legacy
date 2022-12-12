@@ -24,11 +24,13 @@ import { Write } from "./page/Write";
 import { LoginRedirect } from "./components/api/loginRedirect";
 import { GetVaildToken } from "./components/api/getVaildToken";
 import { MyDetail } from "./page/MyPage/Detail";
+import { GroupDetail } from "./page/Home/GroupDetail";
 // import { useQuery } from "react-query";
 
 function App() {
   const [user] = useRecoilState(recoil_.userState);
   const resetUser = useResetRecoilState(recoil_.userState);
+  const [group] = useRecoilState(recoil_.groupState);
 
   const router = createBrowserRouter([
     {
@@ -39,6 +41,11 @@ function App() {
         {
           path: "detail/:post_id",
           element: <Detail />,
+        },
+        {
+          path: "group/",
+          element: <GroupDetail />,
+          loader: () => group.length === 0 && redirect("/"),
         },
       ],
       loader: () => user.role === USER_ROLE.GUEST && redirect("/login"),

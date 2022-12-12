@@ -39,7 +39,13 @@ export const Detail = () => {
     refetch: postRefetch,
   } = useQuery<postType, { statusCode: number; message: string }>(
     "detail/userInfo",
-    () => coordinate && GetPostOne(post_id, coordinate.lat, coordinate.lng),
+    () =>
+      coordinate &&
+      GetPostOne({
+        post_id: post_id,
+        lat: coordinate.lat,
+        lng: coordinate.lng,
+      }),
     {
       retry: false,
       refetchOnReconnect: false,
@@ -98,7 +104,6 @@ export const Detail = () => {
   // const time = getFormattedDate(new Date(postData.created_time!));
 
   useEffect(() => {
-    console.log(postData);
     setDialogOpen(false);
   }, [setDialogOpen, postData]);
 

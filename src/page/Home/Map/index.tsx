@@ -8,15 +8,17 @@ import {
   GridAlgorithm,
   MarkerClusterer,
   Renderer,
+  SuperClusterAlgorithm,
 } from "@googlemaps/markerclusterer";
 
 import useGeolocation from "react-hook-geolocation";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { recoil_ } from "../../../recoil";
 import { getNearTest } from "./api/getPost";
 import { MarkerImages, MarkerImages2 } from "./components/Mark";
 import MarkerClusterIcon from "./images/MarkerCluster.png";
 import MarkerClusterIcon2 from "./images/MarkerCluster2.png";
+import Markercluster from "./images/Markercluster.svg";
 
 export default function Map() {
   useEffect(() => {
@@ -39,6 +41,8 @@ function MapComponent() {
   const [markers, setMarkers] = useRecoilState<MarkerProps[]>(
     recoil_.markerState
   );
+  const [group, setGroup] = useRecoilState(recoil_.groupState);
+  const resetGroup = useResetRecoilState(recoil_.groupState);
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -61,7 +65,7 @@ function MapComponent() {
   }, [coordinate]);
 
   useEffect(() => {
-    initMap(coordinate, markers, navigate);
+    initMap(coordinate, markers, navigate, setGroup, resetGroup);
     // window.initMap = initMap;
   }, [markers, initMap]);
 
@@ -80,7 +84,9 @@ function MapComponent() {
 function initMap(
   coordinate: google.maps.LatLngLiteral,
   data: Array<any>,
-  navigate: any
+  navigate: any,
+  setGroup: any,
+  resetGroup: any
 ): void {
   const map = new google.maps.Map(
     document.getElementById("map") as HTMLElement,
@@ -89,6 +95,7 @@ function initMap(
 
   const markers = data?.map((item: MarkerProps, index: number) => {
     const marker = new google.maps.Marker({
+      title: item.post_id,
       position: { lat: item.latitude, lng: item.longitude },
       icon: item.viewed
         ? {
@@ -113,23 +120,46 @@ function initMap(
   });
 
   const renderer = {
-    render: ({ count, position }: Cluster) =>
-      new google.maps.Marker({
+    render: ({ position, bounds, count, markers }: Cluster) => {
+      const mc = new google.maps.Marker({
         // gridSize: 50,
-        icon: MarkerClusterIcon2,
-        label: { text: String(count), color: "#222", fontSize: "0.9rem" },
+        icon: Markercluster,
+        label: {
+          text: String(count),
+          color: "#fff",
+          fontSize: "0.9rem",
+        },
         position,
         // adjust zIndex to be above other markers
         zIndex: Number(google.maps.Marker.MAX_ZINDEX) + count,
-      }),
-  };
-  const algorithm = new GridAlgorithm({ maxDistance: 500000, gridSize: 40 });
+      });
+      mc.addListener("click", () => {
+        // console.log(group);
+        resetGroup();
+        markers &&
+          markers.map((item: any) =>
+            setGroup((prev: any) => [...prev, item.title])
+          );
 
-  new MarkerClusterer({
+        if (map.getZoom()! <= 20) navigate("/group");
+        // console.log(map.getZoom());
+      });
+
+      return mc;
+    },
+  };
+  // const algorithm = new GridAlgorithm({gridSize: });
+
+  const algorithm = new SuperClusterAlgorithm({
+    radius: 400,
+    maxZoom: 22,
+  });
+
+  const markerClusterer = new MarkerClusterer({
+    algorithm,
     map,
     markers,
     renderer,
-    algorithm,
   });
 }
 
@@ -156,7 +186,7 @@ const options: any = {
   minZoom: 13,
   // maxZoom: 20,
   gestureHandling: "none",
-  zoomControl: false,
+  // zoomControl: false,
   mapTypeControl: false,
   scaleControl: false,
   streetViewControl: false,

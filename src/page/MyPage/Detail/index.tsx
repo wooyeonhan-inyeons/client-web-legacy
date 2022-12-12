@@ -46,7 +46,13 @@ export const MyDetail = () => {
     refetch: postRefetch,
   } = useQuery<postType, { statusCode: number; message: string }>(
     "detail/userInfo",
-    () => coordinate && GetPostOne(post_id, coordinate.lat, coordinate.lng),
+    () =>
+      coordinate &&
+      GetPostOne({
+        post_id: post_id,
+        lat: coordinate.lat,
+        lng: coordinate.lng,
+      }),
     {
       retry: false,
       refetchOnReconnect: false,

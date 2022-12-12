@@ -1,13 +1,42 @@
+import { useRecoilState } from "recoil";
 import { BACK_URL } from "../../../../constants/GlobalConstants";
+import { recoil_ } from "../../../../recoil";
 
-export const GetPostOne = async (
-  post_id?: string | undefined,
-  lat?: number,
-  lng?: number
-) => {
-  if (lat === undefined) throw new Error("알 수 없는 오류가 발생하였습니다.");
+interface PostOneProps {
+  post_id?: string | undefined;
+  lat?: number | undefined;
+  lng?: number | undefined;
+  idx?: number | undefined;
+  groupLength?: number | undefined;
+}
+
+export const GetPostOne = async (data: PostOneProps) => {
+  if (data.lat === undefined)
+    throw new Error("알 수 없는 오류가 발생하였습니다.");
   const response = await fetch(
-    `${BACK_URL}/posting?post_id=${post_id}&latitude=${lat}&longitude=${lng}`,
+    `${BACK_URL}/posting?post_id=${data.post_id}&latitude=${data.lat}&longitude=${data.lng}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem("key")}`,
+      },
+    }
+  ).then((response) => {
+    return response.json();
+  });
+  return response;
+};
+
+export const GetPostGroup = async (data: PostOneProps) => {
+  // console.log("GETPOST: ", data);
+  if (data.lat === undefined)
+    throw new Error("알 수 없는 오류가 발생하였습니다.");
+  else if (data.groupLength === data.idx)
+    throw new Error("알 수 없는 오류가 발생하였습니다.");
+  const response = await fetch(
+    `${BACK_URL}/posting?post_id=${data.post_id}&latitude=${data.lat}&longitude=${data.lng}`,
     {
       method: "GET",
       headers: {
