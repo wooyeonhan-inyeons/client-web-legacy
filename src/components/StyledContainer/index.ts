@@ -3,7 +3,6 @@ import { COLOR, zIndex } from "../../constants";
 
 export const StyledContainer = styled.div`
   padding: 4.5rem 1rem;
-  // padding-top: 4rem;
   margin: 0 auto;
   position: relative;
 
