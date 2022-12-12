@@ -18,8 +18,9 @@ import { getFriends } from "./../api";
 import ShowModal from "./ShowModal";
 import styled from "styled-components";
 import More from "./More";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { recoil_ } from "../../../recoil";
+import { friendCountState } from "../../../recoil/friend";
 
 const ImageDiv = styled.div`
   display: flex;
@@ -60,6 +61,7 @@ function FriendsList() {
   const [more, setMore] = useState<boolean>(false);
 
   const closeModal = () => setModalOpen(false);
+  const resetInput = () => setFriendInput("");
   const onChange = (event: any) => setFriendInput(event.target.value);
   const onSubmit = (event: any) => {
     event.preventDefault();
@@ -98,7 +100,7 @@ function FriendsList() {
       const result: any = [...follower, ...following];
       setFriends(result);
     });
-  }, []);
+  }, [more]);
 
   const doCopy = (user_id : string) => {
     // 흐음 1.
@@ -159,7 +161,7 @@ function FriendsList() {
           <Button onClick={onClickModal}>추가</Button>
         </InputDiv>
         {modalOpen && (
-          <ShowModal friendId={friendInput} closeModal={closeModal}></ShowModal>
+          <ShowModal friendId={friendInput} closeModal={closeModal} resetInput={resetInput}></ShowModal>
         )}
         <ListDiv>
           <ListBox>
@@ -187,14 +189,13 @@ function FriendsList() {
                   }}
                   onClick={onMore}
                 />
-                {more && (
-                  //
+                {more &&
                   <More
                     item={currentInfo}
                     friendId={item.friend_id}
-                    closeMore={() => closeMore}
+                    closeMore={closeMore}
                   ></More>
-                )}
+                }
               </List>
             ))}
           </ListBox>

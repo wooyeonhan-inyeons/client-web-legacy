@@ -4,6 +4,8 @@ import { AvatarColor, COLOR } from "../../../../constants";
 import Avatar from "boring-avatars";
 import { message } from "antd";
 import { getDelete } from "./api";
+import { useRecoilState } from "recoil";
+import { friendCountState } from "../../../../recoil/friend";
 
 const Modal = styled.div`
   display: flex;
@@ -118,34 +120,43 @@ export interface IProps {
 }
 
 function More({ item, friendId, closeMore }: IProps) {
+  const [numFr, setNumFr] = useRecoilState(friendCountState);
 
-    // console.log(item);
-    const onDelete = () => {
-        getDelete(item.friend_id)
-        // .then(() => closeMore)
-        .then(() => message.success("삭제 완료!"))
-    }
+  // console.log(item);
+  const onDelete = () => {
+    getDelete(item.friend_id)
+      .then(closeMore)
+      .then(() => {
+        setNumFr(numFr - 1);
+        message.success("삭제 완료!");
+      });
+  };
 
-    return (
+  return (
     <>
-    <Modal>
+      <Modal>
         <InfoBox>
-            <ImageBox>
-                <Avatar size={50} variant="beam" name={friendId} colors={AvatarColor} />
-            </ImageBox>
-            <TextBox>
-                <Name>{item?.user_info?.name}</Name>
-                <Message>{item?.user_info?.message}</Message>
-            </TextBox>
+          <ImageBox>
+            <Avatar
+              size={50}
+              variant="beam"
+              name={friendId}
+              colors={AvatarColor}
+            />
+          </ImageBox>
+          <TextBox>
+            <Name>{item?.user_info?.name}</Name>
+            <Message>{item?.user_info?.message}</Message>
+          </TextBox>
         </InfoBox>
         <CheckWarn>이 친구를 삭제하시겠습니까?</CheckWarn>
         <BtnBox>
-        <BackBtn onClick={closeMore}>취소</BackBtn>
-        <SaveBtn onClick={onDelete}>삭제</SaveBtn>
+          <BackBtn onClick={closeMore}>취소</BackBtn>
+          <SaveBtn onClick={onDelete}>삭제</SaveBtn>
         </BtnBox>
-    </Modal>
+      </Modal>
     </>
-    );
+  );
 }
 
 export default More;
