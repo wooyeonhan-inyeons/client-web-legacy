@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { AvatarColor, COLOR } from "../../../../constants";
 import Avatar from "boring-avatars";
+import { message } from "antd";
 import { getDelete } from "./api";
 
 const Modal = styled.div`
@@ -10,7 +11,7 @@ const Modal = styled.div`
   align-items: center;
   width: 70vw;
   max-width: 500px;
-  height: 50vh;
+  height: 20vh;
   min-height: 350px;
   z-index: 999;
   position: absolute;
@@ -117,10 +118,12 @@ export interface IProps {
 }
 
 function More({ item, friendId, closeMore }: IProps) {
+
+    // console.log(item);
     const onDelete = () => {
-        getDelete(item.friend_id).then((res: any) => {
-            console.log("deleted");
-        })
+        getDelete(item.friend_id)
+        // .then(() => closeMore)
+        .then(() => message.success("삭제 완료!"))
     }
 
     return (

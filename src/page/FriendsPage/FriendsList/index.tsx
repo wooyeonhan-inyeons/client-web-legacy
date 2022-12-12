@@ -74,9 +74,8 @@ function FriendsList() {
   const [currentInfo, setCurrentInfo] = useState({});
   const user = useRecoilValue(recoil_.userState);
   
-  console.log("user: ", user.userId);
   const onMore = (e: any) => {
-    const index = e.target.dataset.index;
+    const index = e.currentTarget.dataset.index;
     setCurrentInfo(friends[index]);
     setMore(true);
   };
@@ -87,7 +86,7 @@ function FriendsList() {
 
   useEffect(() => {
     getFriends().then((res: any) => {
-      console.log(res);
+      // console.log(res);
       const follower = res.follower.map((data: any) => ({
         friend_id: data.friend_id,
         user_info: data.follower,
@@ -189,10 +188,11 @@ function FriendsList() {
                   onClick={onMore}
                 />
                 {more && (
+                  //
                   <More
                     item={currentInfo}
                     friendId={item.friend_id}
-                    closeMore={closeMore}
+                    closeMore={() => closeMore}
                   ></More>
                 )}
               </List>
