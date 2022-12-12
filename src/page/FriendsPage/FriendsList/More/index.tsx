@@ -128,7 +128,7 @@ function More({ item, friendId, closeMore }: IProps) {
     <Modal>
         <InfoBox>
             <ImageBox>
-                <Avatar size={50} variant="beam" name={"cc"} colors={AvatarColor} />
+                <Avatar size={50} variant="beam" name={friendId} colors={AvatarColor} />
             </ImageBox>
             <TextBox>
                 <Name>{item?.user_info?.name}</Name>

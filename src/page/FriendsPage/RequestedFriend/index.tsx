@@ -151,7 +151,7 @@ function RequestFriend() {
               <Avatar
                 size={45}
                 variant="beam"
-                name={"cc"}
+                name={item.friend_id}
                 colors={AvatarColor}
               />
             </ImageDiv>

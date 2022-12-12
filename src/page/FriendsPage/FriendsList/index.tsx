@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { EllipsisOutlined } from "@ant-design/icons";
+import { EllipsisOutlined, CopyOutlined } from "@ant-design/icons";
 import {
   InputDiv,
   Input,
@@ -11,7 +11,7 @@ import {
   FriendName,
   FriendMessage,
 } from "../styled";
-import message from 'antd';
+import { message } from 'antd';
 import { AvatarColor, COLOR } from "../../../constants";
 import Avatar from "boring-avatars";
 import { getFriends } from "./../api";
@@ -38,6 +38,15 @@ const TextBox = styled.div`
   padding-bottom: 10px;
 `;
 
+const CopyBtn = styled.button`
+  border: 0;
+  outline: 0;
+  background-color: ${COLOR.background};
+  float: right;
+  border-radius: 16px;
+  font-size: 1.3rem;
+  position: relative; bottom: 0.3rem;
+`
 function FriendsList() {
   const [friendInput, setFriendInput] = useState<string>("");
   const [friends, setFriends] = useState([]);
@@ -86,11 +95,54 @@ function FriendsList() {
     });
   }, []);
 
+  const doCopy = (user_id : string) => {
+    // 흐음 1.
+    if (navigator.clipboard) {
+      // (IE는 사용 못하고, 크롬은 66버전 이상일때 사용 가능합니다.)
+      navigator.clipboard
+        .writeText(user_id)
+        .then(() => {
+          alert("클립보드에 복사되었습니다.");
+        })
+        .catch(() => {
+          alert("복사를 다시 시도해주세요.");
+        });
+    } else {
+      // 흐름 2.
+      if (!document.queryCommandSupported("copy")) {
+        return alert("복사하기가 지원되지 않는 브라우저입니다.");
+      }
+
+      // 흐름 3.
+      const textarea = document.createElement("textarea");
+      textarea.value = user_id;
+      textarea.style.top = "";
+      textarea.style.left = "";
+      textarea.style.position = "fixed";
+
+      // 흐름 4.
+      document.body.appendChild(textarea);
+      // focus() -> 사파리 브라우저 서포팅
+      textarea.focus();
+      // select() -> 사용자가 입력한 내용을 영역을 설정할 때 필요
+      textarea.select();
+      // 흐름 5.
+      document.execCommand("copy");
+      // 흐름 6.
+      document.body.removeChild(textarea);
+      alert("클립보드에 복사되었습니다.");
+    }
+  }
   return (
     <>
       <form onSubmit={onSubmit}>
         <InputDiv>
-          <IdLabel>내 아이디 : {user.userId}</IdLabel>
+          <IdLabel>
+            내 아이디 : {user.userId}
+              <CopyBtn onClick={() => doCopy(user.userId)}>
+                <CopyOutlined />
+              </CopyBtn>
+          </IdLabel>
           <Input
             onChange={onChange}
             value={friendInput}
@@ -110,7 +162,7 @@ function FriendsList() {
                   <Avatar
                     size={40}
                     variant="beam"
-                    name={"cc"}
+                    name={item.friend_id}
                     colors={AvatarColor}
                   />
                 </ImageDiv>
@@ -143,5 +195,4 @@ function FriendsList() {
     </>
   );
 }
-
 export default FriendsList;

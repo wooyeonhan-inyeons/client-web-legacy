@@ -61,12 +61,8 @@ const FriendsPage = () => {
         >친구 요청
         <Num> ({numRe})</Num></TabBtn>
         { tabList ?
-        <FriendsList
-        // getNumber={getNumFr}
-        ></FriendsList> : 
-        <RequestFriend
-        // getNumber={getNumRe}
-        ></RequestFriend>}
+        <FriendsList></FriendsList> : 
+        <RequestFriend></RequestFriend>}
       </StyledContainer>
     </>
     );

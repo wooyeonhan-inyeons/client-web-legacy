@@ -112,7 +112,7 @@ function initMap(
   const renderer = {
     render: ({ count, position }: Cluster) =>
       new google.maps.Marker({
-        gridSize: 50,
+        // gridSize: 50,
         icon: MarkerClusterIcon2,
         label: { text: String(count), color: "#222", fontSize: "0.9rem" },
         position,

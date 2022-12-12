@@ -146,7 +146,7 @@ function ShowModal({ friendId, closeModal }: IProps) {
                         <Avatar
                         size={60}
                         variant="beam"
-                        name={"cc"}
+                        name={friendId}
                         colors={AvatarColor}
                         />
                     </ImageDiv>
