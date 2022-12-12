@@ -19,6 +19,9 @@ import MarkerClusterIcon from "./images/MarkerCluster.png";
 import MarkerClusterIcon2 from "./images/MarkerCluster2.png";
 
 export default function Map() {
+  useEffect(() => {
+    console.log(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
+  }, []);
   return (
     <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY!}>
       <MapComponent />
@@ -112,7 +115,7 @@ function initMap(
   const renderer = {
     render: ({ count, position }: Cluster) =>
       new google.maps.Marker({
-        gridSize: 50,
+        // gridSize: 50,
         icon: MarkerClusterIcon2,
         label: { text: String(count), color: "#222", fontSize: "0.9rem" },
         position,
