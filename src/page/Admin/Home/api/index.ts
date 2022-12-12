@@ -155,3 +155,34 @@ export const updatePost = (post_info: updateUserFormData) => {
     body: JSON.stringify(post_info),
   });
 };
+
+/**
+ * @function 어드민 신고 리스트 조회
+ */
+
+export const getAllReport = () => {
+  return fetch(`${BACK_URL}/admin/report/all`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("key")}`,
+    },
+  }).then((res) => res.json());
+};
+
+/**
+ * @function 어드민 게시물 삭제
+ * @param {string} report_id
+ */
+export const deleteReport = (report_id: string) => {
+  return fetch(`${BACK_URL}/admin/post`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("key")}`,
+    },
+    body: JSON.stringify({
+      report_id,
+    }),
+  });
+};
