@@ -45,7 +45,7 @@ export const PostCard = ({ props }: any) => {
 
   const { data: geoData, isSuccess: geoSuccess } = useQuery(
     "group/getRevGeo",
-    () => props.lat && GetRevGeocode({ lat: props.lat, lng: props.lng }),
+    () => props && GetRevGeocode({ lat: props.latitude, lng: props.longitude }),
     {
       retry: 1,
     }
@@ -54,6 +54,10 @@ export const PostCard = ({ props }: any) => {
   const onChange = (currentSlide: number) => {
     // console.log(currentSlide);
   };
+
+  useEffect(() => {
+    console.log(props);
+  }, [props]);
 
   return (
     <>
@@ -94,7 +98,7 @@ export const PostCard = ({ props }: any) => {
               {getFormattedDate(new Date(props.created_time!))}
             </div>
             <div className="location">
-              <EnvironmentOutlined /> {geoData}
+              <EnvironmentOutlined /> {geoData === undefined ? "-" : geoData}
             </div>
           </div>
         </div>

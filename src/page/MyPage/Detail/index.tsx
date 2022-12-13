@@ -66,7 +66,8 @@ export const MyDetail = () => {
   const { data: geoData, isSuccess: geoSuccess } = useQuery(
     "detail/getRevGeo",
     () =>
-      coordinate && GetRevGeocode({ lat: coordinate.lat, lng: coordinate.lng }),
+      postData &&
+      GetRevGeocode({ lat: postData?.latitude!, lng: postData?.longitude! }),
     {
       retry: 1,
     }
@@ -103,6 +104,7 @@ export const MyDetail = () => {
 
   if (!postSuccess) return <LoadingBox />;
   if (postData.statusCode === 500) return <ErrPost />;
+  if (!geoSuccess) return <LoadingBox />;
   // if (postData.statusCode !== 400) return <NoMatch />;
 
   return (
@@ -150,7 +152,7 @@ export const MyDetail = () => {
                 <FootCnt>{postData.footprint_count}</FootCnt>
               </div>
               <div className="location">
-                <EnvironmentOutlined /> {geoData}
+                <EnvironmentOutlined /> {geoData === undefined ? "-" : geoData}
               </div>
             </div>
           </div>
