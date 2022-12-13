@@ -30,7 +30,7 @@ export const MyProfile = ({ userPost }: any) => {
   const [postingCnt, setPostingCnt] = useState(0);
   const [emotionCnt, setEmotionCnt] = useState(0);
   const [friendsCnt, setFriendsCnt] = useState(0);
-  const { data } = useQuery<userProps>("mypage/user", GetUser, {
+  const { data, isSuccess } = useQuery<userProps>("mypage/user", GetUser, {
     retry: 1,
     refetchOnReconnect: false,
   });
@@ -43,6 +43,12 @@ export const MyProfile = ({ userPost }: any) => {
       setFriendsCnt(res.friend_count);
     });
   }, []);
+  if (!isSuccess)
+    return (
+      <ProfileContainer>
+        <ProfileInfoContainer></ProfileInfoContainer>
+      </ProfileContainer>
+    );
   return (
     <>
       <ProfileContainer>
