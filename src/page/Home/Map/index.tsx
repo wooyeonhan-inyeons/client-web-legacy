@@ -136,12 +136,11 @@ function initMap(
       mc.addListener("click", () => {
         // console.log(group);
         resetGroup();
-        markers &&
-          markers.map((item: any) =>
-            setGroup((prev: any) => [...prev, item.title])
-          );
 
-        if (map.getZoom()! <= 20) navigate("/group");
+        markers?.map((item: any) =>
+          setGroup((prev: any) => [...prev, item.title])
+        );
+        navigate("/group");
         // console.log(map.getZoom());
       });
 
@@ -162,6 +161,8 @@ function initMap(
     renderer,
   });
 }
+
+function setGroupMarker(): void {}
 
 export interface MarkerProps {
   content: string;

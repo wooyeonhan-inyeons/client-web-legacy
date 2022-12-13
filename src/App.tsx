@@ -32,6 +32,10 @@ function App() {
   const resetUser = useResetRecoilState(recoil_.userState);
   const [group] = useRecoilState(recoil_.groupState);
 
+  useEffect(() => {
+    console.log(group);
+  }, [group]);
+
   const router = createBrowserRouter([
     {
       path: "/*",
@@ -43,7 +47,7 @@ function App() {
           element: <Detail />,
         },
         {
-          path: "group/",
+          path: "group",
           element: <GroupDetail />,
           loader: () => group.length === 0 && redirect("/"),
         },

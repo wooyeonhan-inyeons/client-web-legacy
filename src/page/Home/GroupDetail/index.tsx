@@ -46,6 +46,7 @@ export const GroupDetail = () => {
   );
 
   useEffect(() => {
+    console.log("groupDetail!");
     //모달 상태에서 스크롤 막기
     document.body.style.overflow = "hidden";
     setHeader({
@@ -62,12 +63,13 @@ export const GroupDetail = () => {
         rightButton2: HEADER_FN.MYPAGE,
       });
     };
-  }, [groupData]);
+  }, []);
 
   useEffect(() => {
     if (inView && grouphasNextPage) groupfetchNextPage();
-  }, [inView]);
+  });
 
+  if (!groupData) return <LoadingBox />;
   return (
     <>
       <StyledDetail3 onClick={() => navigate("/")}>
